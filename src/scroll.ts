@@ -26,14 +26,34 @@ class Scroll {
   public onScroll: ((external?: boolean) => void) | null | undefined
   public easing: EasingFunction
   constructor(
-    options: {
-      element?: ElementOrQuery
-      horizontal?: boolean
-      onScroll?: (external?: boolean) => void
-      duration?: number
-      easing?: EasingFunction
-    } = {},
-  ) {
+    element?: ElementOrQuery,
+    horizontal?: boolean,
+    duration?: number,
+    easing?: EasingFunction,
+    onScroll?: (external?: boolean) => void,
+  )
+  constructor(options: {
+    element?: ElementOrQuery
+    horizontal?: boolean
+    duration?: number
+    easing?: EasingFunction
+    onScroll?: (external?: boolean) => void
+  })
+  constructor(...args: any) {
+    const options =
+      !!args[0].element ||
+      args[0].horizontal !== undefined ||
+      !!args[0].duration ||
+      !!args[0].easing ||
+      !!args[0].onScroll
+        ? args[0]
+        : {
+            element: args[0],
+            horizontal: args[1],
+            duration: args[2],
+            easing: args[3],
+            onScroll: args[4],
+          }
     const element = getElementFromQuery(options.element || window)
     this.element = element === document.documentElement ? window : element
     this.horizontal = !!options.horizontal
