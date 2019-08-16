@@ -1,4 +1,4 @@
-import { EasingFunction } from "./default-settings"
+import { EasingFunction } from "./easings"
 
 interface ScrollInstanceProps {
   duration: number

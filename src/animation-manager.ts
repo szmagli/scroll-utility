@@ -1,5 +1,5 @@
 import { Animation } from "./animation"
-import { EasingFunction } from "./default-settings"
+import { EasingFunction } from "./easings"
 
 class AnimationManager {
   public scrollAnimation: Animation[] = []

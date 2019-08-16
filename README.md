@@ -109,14 +109,14 @@ That's just a quick reference cheat sheet of how to use scroll-utility, if you w
 ## Creating a scroll manager
 
 ```ts
-import { Scroll } from "scroll-utility"
+import { Scroll, Easings } from "scroll-utility"
 
 const scrollManager = new Scroll({
   element: window, // default scroll container is window
   horizontal: false, // default direction vertical
   onScroll: null, // no onScroll callback by default
   duration: 0, // default duration to 0, 'instant' scroll
-  easing: defaultEasingFunction, // default easing function is inOutCubic
+  easing: Easings.easeInOutQuad, // some easing function
 })
 
 const scrollManagerWithOutOptions = new Scroll() // same as above
