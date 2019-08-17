@@ -1,15 +1,8 @@
 import { AnimationManager } from "./animation-manager"
-import { EasingFunction, Easings } from "./easings"
+import { EasingOrFunction, Easings } from "./easings"
 import * as ScrollElement from "./element"
 
 type ElementOrQuery = Window | Element | string
-type ScrollOptions = [number?, EasingFunction?]
-
-type ScrollType = ((value: number, ...args: ScrollOptions) => Scroll) & {
-  size: (value: number, ...args: ScrollOptions) => Scroll
-  scrollSize: (value: number, ...args: ScrollOptions) => Scroll
-  element: (elementOrQuery: ElementOrQuery, value?: number, ...args: ScrollOptions) => Scroll
-}
 
 function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (typeof elementOrQuery === "string") {
@@ -24,28 +17,29 @@ class Scroll {
   private horizontal: boolean
   public duration: number
   public onScroll: ((external?: boolean) => void) | null | undefined
-  public easing: EasingFunction
+  public easing: EasingOrFunction
   constructor(
     element?: ElementOrQuery,
     horizontal?: boolean,
     duration?: number,
-    easing?: EasingFunction,
+    easing?: EasingOrFunction,
     onScroll?: (external?: boolean) => void,
   )
   constructor(options: {
     element?: ElementOrQuery
     horizontal?: boolean
     duration?: number
-    easing?: EasingFunction
+    easing?: EasingOrFunction
     onScroll?: (external?: boolean) => void
   })
   constructor(...args: any) {
-    const options =
-      !!args[0].element ||
-      args[0].horizontal !== undefined ||
-      !!args[0].duration ||
-      !!args[0].easing ||
-      !!args[0].onScroll
+    const options = !!args
+      ? !!args[0] &&
+        (!!args[0].element ||
+          args[0].horizontal !== undefined ||
+          !!args[0].duration ||
+          !!args[0].easing ||
+          !!args[0].onScroll)
         ? args[0]
         : {
             element: args[0],
@@ -54,11 +48,12 @@ class Scroll {
             easing: args[3],
             onScroll: args[4],
           }
+      : {}
     const element = getElementFromQuery(options.element || window)
     this.element = element === document.documentElement ? window : element
     this.horizontal = !!options.horizontal
     this.onScroll = options.onScroll
-    this.duration = options.duration || 0
+    this.duration = options.duration || 1000
     this.easing = options.easing || Easings.easeInOutQuad
     this.element.addEventListener("scroll", () => {
       const changed = Math.floor(this.animationManager.position) !== Math.floor(this.scrollPosition)
@@ -88,51 +83,60 @@ class Scroll {
   stopAllAnimations() {
     this.animationManager.stopAllAnimations()
   }
-  scrollTo: ScrollType = Object.assign(
-    (position: number, ...args: ScrollOptions): Scroll => {
-      this.scrollBy(position - this.scrollPosition, ...args)
-      return this
-    },
-    {
-      size: (value: number, ...args: ScrollOptions) => this.scrollTo(this.size * value, ...args),
-      scrollSize: (value: number, ...args: ScrollOptions) =>
-        this.scrollTo(this.scrollSize * value, ...args),
-      element: (elementOrQuery: ElementOrQuery, value: number = 0, ...args: ScrollOptions) => {
-        return this.scrollBy(
-          ScrollElement.getDistToCenterElement(
+  scroll(value: number, duration?: number, easing?: EasingOrFunction): this
+  scroll(options: { value: number; duration?: number; easing?: EasingOrFunction }): this
+  scroll(element: ElementOrQuery, value: number, duration?: number, easing?: EasingOrFunction): this
+  scroll(options: {
+    element: ElementOrQuery
+    value?: number
+    duration?: number
+    easing?: EasingOrFunction
+  }): this
+  scroll(...args: any) {
+    const valueIndex = typeof args[0] !== "number" ? 1 : 0
+    const options = !!args
+      ? !!args[0].element || !!args[0].value
+        ? args[0]
+        : {
+            element: !!valueIndex ? args[0] : null,
+            value: args[valueIndex],
+            duration: args[valueIndex + 1],
+            easing: args[valueIndex + 2],
+          }
+      : {}
+    this.offset(
+      !!options.element
+        ? ScrollElement.getDistToCenterElement(
             this.element,
-            elementOrQuery,
+            options.element,
             this.horizontal,
-            value,
-          ),
-          ...args,
-        )
-      },
-    },
-  )
-  scrollBy: ScrollType = Object.assign(
-    (value: number, ...args: ScrollOptions): Scroll => {
-      const [duration, easing] = args
-      this.animationManager.createScrollAnimation({
-        distToScroll: value,
-        duration: duration || this.duration,
-        easing: easing || this.easing,
-      })
-
-      return this
-    },
-    {
-      size: (value: number, ...args: ScrollOptions) => this.scrollBy(this.size * value, ...args),
-      scrollSize: (value: number, ...args: ScrollOptions) =>
-        this.scrollBy(this.scrollSize * value, ...args),
-      element: (elementOrQuery: ElementOrQuery, value: number = 1, ...args: ScrollOptions) => {
-        return this.scrollBy(
-          ScrollElement.getSizeWithBorders(elementOrQuery, this.horizontal) * value,
-          ...args,
-        )
-      },
-    },
-  )
+            options.value,
+          )
+        : options.value - this.scrollPosition,
+      options.duration,
+      options.easing,
+    )
+    return this
+  }
+  offset(value: number, duration?: number, easing?: EasingOrFunction): this
+  offset(options: { value: number; duration?: number; easing?: EasingOrFunction }): this
+  offset(...args: any) {
+    const options = !!args
+      ? !!args[0].value
+        ? args[0]
+        : {
+            value: args[0],
+            duration: args[1],
+            easing: args[2],
+          }
+      : {}
+    this.animationManager.createScrollAnimation({
+      distToScroll: options.value,
+      duration: options.duration || this.duration,
+      easing: options.easing || this.easing,
+    })
+    return this
+  }
 }
 
 export { Scroll }

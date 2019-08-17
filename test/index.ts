@@ -38,7 +38,7 @@ for (const os in capabilities) {
                       element,
                       horizontal,
                     })
-                    scroll.scrollTo(value)
+                    scroll.scroll(value)
                   },
                   wrapper,
                   horizontal,
@@ -63,7 +63,7 @@ for (const os in capabilities) {
                     new window.ScrollUtility.Scroll({
                       element: wrapper,
                       horizontal: !horizontal,
-                    }).scrollTo.element(element, 0.5)
+                    }).scroll(element, 0.5)
                   },
                   wrapper,
                   horizontal,
@@ -74,7 +74,7 @@ for (const os in capabilities) {
                     new window.ScrollUtility.Scroll({
                       element: wrapper,
                       horizontal,
-                    }).scrollTo.element(element, value)
+                    }).scroll(element, value)
                   },
                   wrapper,
                   horizontal,

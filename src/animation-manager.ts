@@ -1,5 +1,5 @@
 import { Animation } from "./animation"
-import { EasingFunction } from "./easings"
+import { EasingOrFunction, Easings } from "./easings"
 
 class AnimationManager {
   public scrollAnimation: Animation[] = []
@@ -14,13 +14,13 @@ class AnimationManager {
   public createScrollAnimation(options: {
     distToScroll: number
     duration: number
-    easing: EasingFunction
+    easing: EasingOrFunction
   }): Animation {
     const duration = !!options.duration ? options.duration : 1
     const animation = new Animation({
       distToScroll: options.distToScroll,
       duration,
-      easing: options.easing,
+      easing: typeof options.easing === "string" ? Easings[options.easing] : options.easing,
     })
     this.scrollAnimation.push(animation)
     this.update()

@@ -1,5 +1,7 @@
 // tslint:disable
 
+export type EasingOrFunction = EasingFunction | string
+
 export type EasingFunction = (
   currentStep: number,
   offsetValue: number,
