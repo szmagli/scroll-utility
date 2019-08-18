@@ -1,0 +1,118 @@
+#+TITLE: Customizing
+# #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style1.css" />
+
+
+* Creating a Scroll instance
+
+To create an scroll instance:
+
+#+BEGIN_SRC typescript
+new Scroll(element, horizontal, duration, easing, onScroll)
+#+END_SRC
+
+|------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
+| parameter  | default value   | type                               | notes                                                                    |
+|------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
+| element    | window          | string; Window; Element            | element where the scroll will take place, a string means a querySelector |
+| horizontal | false           | boolean                            | direction of the scroll animation                                        |
+| duration   | 1000            | number                             | default duration of scroll animations, in miliseconds                    |
+| easing     | "easeInOutQuad" | string; (t, b, c, d) => number     | easing function used for scroll animations                               |
+| onScroll   | null            | null; (external?: boolean) => void | callback function onscroll                                               |
+
+For example, to create a horizontal *scrollManager* within "#container", with a
+duration of 500ms for its 'linear' scroll animation, that logs "hi" every time
+it scrolls:
+
+#+BEGIN_SRC typescript
+new Scroll({
+    element: "#container",
+    horizontal: true,
+    duration: 500,
+    easing: "linear",
+    onScroll: () => console.log("hi"),
+})
+#+END_SRC
+
+It's also posible to pass parameters without an object
+
+#+BEGIN_SRC typescript
+new Scroll("#container", true, 500, "linear", () => console.log("hi"))
+#+END_SRC
+
+In order *element*, *horizontal*, *duration*, *easing* and *onScroll*
+
+every parameter is optional
+
+** element
+#+BEGIN_SRC typescript
+new Scroll({ element: "#container" })
+#+END_SRC
+The *element* option when creating a 'scrollManager' indicates the element in which the scroll will take place.
+By default it will scroll normally in the page, as in *window* or in *document.documentElement*
+
+It can be the result of `document.getElementById` or `document.querySelector`.
+
+If it's a *string*, then it will use it as a querySelector with
+`document.querySelector` for getting an Element.
+
+You can call yourself `document.querySelector` beforehand if you want to ensure
+the element exists
+
+** horizontal
+#+BEGIN_SRC typescript
+new Scroll({ horizontal: true })
+#+END_SRC
+The *horizontal* option indicates the direction when scrolling, by default
+*false*, wich means vertical scroll
+
+** duration
+#+BEGIN_SRC typescript
+new Scroll({ duration: 0 })
+#+END_SRC
+The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_
+It will be used along with [[easing]] for creating the *smooth* animation when scrolling
+
+If you want to disable the /smooth/ animation, set *duration* to 0.
+
+** easing
+
+#+BEGIN_SRC typescript
+new Scroll({ easing: "linear" }) // default value
+#+END_SRC
+
+The *easing* option indicates the default animation of the scroll, by default *inOutQuad*
+
+```ts
+import { Scroll, defaultEasingFunction } from "scroll-utility"
+
+let scrollManager = new Scroll() // inOutCubic animation by default
+scrollManager = new Scroll({ easing: defaultEasingFunction }) // same as above
+
+// can also be changed later:
+scrollManager.easing = (currentStep, offsetValue, distance, totalSteps) => {
+  // some linear function (I think is linear)
+  return distance * (currentStep / totalSteps) + offsetValue
+}
+```
+
+[Here](https://gist.github.com/davidpa9708/ba0d2940aee851f65f75c0ca5ba5fb60) are some more easing functions
+** onScroll callback
+#+BEGIN_SRC typescript
+new Scroll({ onScroll: null }) // default value
+#+END_SRC
+
+```js
+let scrollManager = new Scroll() // no callback by default :)
+scrollManager = new Scroll({
+  onScroll: external => {
+    console.log("scrolled!")
+    if (external) {
+      // external === true if the scroll was triggered by other means (the user with the mouse or other js running in the browser)
+    }
+  },
+})
+
+// can be changed later:
+scrollManager.onScroll = () => console.log("new onScroll callback") // callback changed
+scrollManager.onScroll = null // go back to default config :)
+```
