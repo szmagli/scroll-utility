@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-17 Sat 23:55 -->
+<!-- 2019-08-18 Sun 00:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Customizing</title>
+<title>scroll utility: A simple to use scroll utility package for centering elements, and smooth animations</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="David Perez Alvarez" />
 <style type="text/css">
@@ -242,200 +242,282 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Customizing</h1>
+<h1 class="title">scroll utility: A simple to use scroll utility package for centering elements, and smooth animations</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga7bdd1b">1. Creating a Scroll instance</a>
+<li><a href="#org3a4994d">1. Features</a></li>
+<li><a href="#org0ee96ef">2. Installation</a></li>
+<li><a href="#orgf53b3e5">3. How to scroll</a></li>
+<li><a href="#org0f6e523">4. Usage</a>
 <ul>
-<li><a href="#orgb042f0e">1.1. element</a></li>
-<li><a href="#org1b06d32">1.2. horizontal</a></li>
-<li><a href="#org06eb978">1.3. duration</a></li>
-<li><a href="#orge77ea93">1.4. easing</a></li>
-<li><a href="#org22a19b5">1.5. onScroll callback</a></li>
+<li><a href="#org3428c14">4.1. Basic Scroll</a></li>
+<li><a href="#org87e8791">4.2. Creating a scroll manager</a>
+<ul>
+<li><a href="#org70ec4fc">4.2.1. scroll wrapper</a></li>
+<li><a href="#org34e9041">4.2.2. direction</a></li>
+<li><a href="#orgcfec044">4.2.3. onScroll callback</a></li>
+<li><a href="#org652848a">4.2.4. default duration</a></li>
+<li><a href="#org644aa10">4.2.5. easing</a></li>
+</ul>
+</li>
+<li><a href="#org16b8953">4.3. Scrolling</a>
+<ul>
+<li><a href="#org79c5105">4.3.1. scrollBy</a></li>
+<li><a href="#org0a2a4e4">4.3.2. scrollTo</a></li>
+</ul>
+</li>
+<li><a href="#org2050c26">4.4. Computed values</a>
+<ul>
+<li><a href="#orgebc398f">4.4.1. scrollPosition</a></li>
+<li><a href="#orge2ad52a">4.4.2. size</a></li>
+<li><a href="#orgd3cd4e8">4.4.3. scrollSize</a></li>
+<li><a href="#org238c296">4.4.4. relativeElementPosition</a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li><a href="#org00b2d3f">5. Browser Compatibility</a></li>
+<li><a href="#orgd24cc5a">6. Why?</a></li>
+<li><a href="#org193ced6">7. License</a></li>
+<li><a href="#org18f7620">8. Support</a></li>
+</ul>
 </div>
 </div>
 
-
-<div id="outline-container-orga7bdd1b" class="outline-2">
-<h2 id="orga7bdd1b"><span class="section-number-2">1</span> Creating a Scroll instance</h2>
+<div id="outline-container-org3a4994d" class="outline-2">
+<h2 id="org3a4994d"><span class="section-number-2">1</span> Features</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-To create an scroll instance:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span>element, horizontal, duration, easing, onScroll<span style="color: #51afef;">)</span>
-</pre>
+<ul class="org-ul">
+<li>Extremely powerful for scrolling to anywhere in the page, like centering
+elements to certain degree.</li>
+<li>Custom easing animations for scrolling</li>
+<li>Detect onScroll events and differentiate between user and utility scroll</li>
+<li>High performance</li>
+<li>Dependency free</li>
+<li>Small footprint 9.32KiB</li>
+<li>Typescript friendly</li>
+<li>Handle multiple scroll animation at the time</li>
+</ul>
+</div>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">parameter</th>
-<th scope="col" class="org-left">default value</th>
-<th scope="col" class="org-left">type</th>
-<th scope="col" class="org-left">notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">element</td>
-<td class="org-left">window</td>
-<td class="org-left">string; Window; Element</td>
-<td class="org-left">element where the scroll will take place, a string means a querySelector</td>
-</tr>
-
-<tr>
-<td class="org-left">horizontal</td>
-<td class="org-left">false</td>
-<td class="org-left">boolean</td>
-<td class="org-left">direction of the scroll animation</td>
-</tr>
-
-<tr>
-<td class="org-left">duration</td>
-<td class="org-left">1000</td>
-<td class="org-left">number</td>
-<td class="org-left">default duration of scroll animations, in miliseconds</td>
-</tr>
-
-<tr>
-<td class="org-left">easing</td>
-<td class="org-left">"easeInOutQuad"</td>
-<td class="org-left">string; (t, b, c, d) =&gt; number</td>
-<td class="org-left">easing function used for scroll animations</td>
-</tr>
-
-<tr>
-<td class="org-left">onScroll</td>
-<td class="org-left">null</td>
-<td class="org-left">null; (external?: boolean) =&gt; void</td>
-<td class="org-left">callback function onscroll</td>
-</tr>
-</tbody>
-</table>
-
+<div id="outline-container-org0ee96ef" class="outline-2">
+<h2 id="org0ee96ef"><span class="section-number-2">2</span> Installation</h2>
+<div class="outline-text-2" id="text-2">
 <p>
-For example, to create a horizontal <b>scrollManager</b> within "#container", with a
-duration of 500ms for its 'linear' scroll animation, that logs "hi" every time
-it scrolls:
+From npm:
 </p>
-
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
-    element: <span style="color: #98be65;">"#container"</span>,
-    horizontal: <span style="color: #51afef;">true</span>,
-    duration: <span style="color: #da8548; font-weight: bold;">500</span>,
-    easing: <span style="color: #98be65;">"linear"</span>,
-    onScroll: <span style="color: #98be65;">()</span> =&gt; console.log<span style="color: #98be65;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #98be65;">)</span>,
-<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+<pre class="src src-bash">$ npm install --save scroll-utility
 </pre>
 </div>
 
 <p>
-It's also posible to pass parameters without an object
+From a cdn: <a href="https://www.jsdelivr.com/package/npm/scroll-utility">jsdelivr</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #c678dd;">script</span> <span style="color: #dcaeea;">src</span>=<span style="color: #98be65;">"https://cdn.jsdelivr.net/npm/scroll-utility@5"</span>&gt;&lt;/<span style="color: #c678dd;">script</span>&gt;
+</pre>
+</div>
+<p>
+when downloading from a cdn the package will be globally exported as `ScrollUtility`
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf53b3e5" class="outline-2">
+<h2 id="orgf53b3e5"><span class="section-number-2">3</span> How to scroll</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
+
+<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">100</span><span style="color: #51afef;">)</span>
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #98be65;">"#some-element"</span><span style="color: #51afef;">)</span>
+scrollManager.offset<span style="color: #51afef;">(</span>-<span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>The method `scroll` is used to scroll to a specific position, such as a scroll</li>
+</ul>
+<p>
+position or an html element.
 </p>
 
+<ul class="org-ul">
+<li>`offset` is used to offset the current scroll position</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0f6e523" class="outline-2">
+<h2 id="org0f6e523"><span class="section-number-2">4</span> Usage</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org3428c14" class="outline-3">
+<h3 id="org3428c14"><span class="section-number-3">4.1</span> Basic Scroll</h3>
+<div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #98be65;">"#container"</span>, <span style="color: #51afef;">true</span>, <span style="color: #da8548; font-weight: bold;">500</span>, <span style="color: #98be65;">"linear"</span>, <span style="color: #c678dd;">()</span> =&gt; console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">const Scroll = ScrollUtility.Scroll // if using from a cdn</span>
+
+<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+scrollManager.scrollTo<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to position = 50px</span>
+scrollManager.scrollTo<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll in 1000ms</span>
+scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element"</span>
+scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0.5</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element" and center it</span>
+scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element" and place it at the bottom of the screen in 1000ms</span>
+scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the top of the page</span>
+scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the bottom</span>
+scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.5</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the middle in 1000ms</span>
+scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to top (1st 'screen')</span>
+scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the 2nd screen</span>
+scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">2</span>, <span style="color: #da8548; font-weight: bold;">999</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the 3rd screen in 999ms</span>
+
+scrollManager.scrollBy<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 50px</span>
+scrollManager.scrollBy<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 50px in 1000ms</span>
+scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by "*some-element"'s size</span>
+scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0.5</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by half of the size of "*some-element"</span>
+scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by "*some-element"' size in 1000ms</span>
+scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">this don't do any scroll</span>
+scrollManager.scrollBy.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 10% of the scroll size</span>
+scrollManager.scrollBy.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll a screen down</span>
+scrollManager.scrollBy.size<span style="color: #51afef;">(</span>-<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll a screen up</span>
+scrollManager.scrollBy.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.5</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll half a screen down</span>
 </pre>
 </div>
 
 <p>
-In order <b>element</b>, <b>horizontal</b>, <b>duration</b>, <b>easing</b> and <b>onScroll</b>
-</p>
-
-<p>
-every parameter is optional
-</p>
-</div>
-
-<div id="outline-container-orgb042f0e" class="outline-3">
-<h3 id="orgb042f0e"><span class="section-number-3">1.1</span> element</h3>
-<div class="outline-text-3" id="text-1-1">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> element: <span style="color: #98be65;">"#container"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-<p>
-The <b>element</b> option when creating a 'scrollManager' indicates the element in which the scroll will take place.
-By default it will scroll normally in the page, as in <b>window</b> or in <b>document.documentElement</b>
-</p>
-
-<p>
-It can be the result of `document.getElementById` or `document.querySelector`.
-</p>
-
-<p>
-If it's a <b>string</b>, then it will use it as a querySelector with
-`document.querySelector` for getting an Element.
-</p>
-
-<p>
-You can call yourself `document.querySelector` beforehand if you want to ensure
-the element exists
+That's just a quick reference cheat sheet of how to use scroll-utility, if you want to learn more keep reading :)
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1b06d32" class="outline-3">
-<h3 id="org1b06d32"><span class="section-number-3">1.2</span> horizontal</h3>
-<div class="outline-text-3" id="text-1-2">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> horizontal: <span style="color: #51afef;">true</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
+<div id="outline-container-org87e8791" class="outline-3">
+<h3 id="org87e8791"><span class="section-number-3">4.2</span> Creating a scroll manager</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
-The <b>horizontal</b> option indicates the direction when scrolling, by default
-<b>false</b>, wich means vertical scroll
+```ts
+import { Scroll } from "scroll-utility"
+</p>
+
+<p>
+const scrollManager = new Scroll({
+  element: window, <i>/ default scroll container is window
+  horizontal: false, /</i> default direction vertical
+  onScroll: null, <i>/ no onScroll callback by default
+  duration: 0, /</i> default duration to 0, 'instant' scroll
+  easing: defaultEasingFunction, // default easing function is inOutCubic
+})
+</p>
+
+<p>
+const scrollManagerWithOutOptions = new Scroll() // same as above
+```
+</p>
+</div>
+
+<div id="outline-container-org70ec4fc" class="outline-4">
+<h4 id="org70ec4fc"><span class="section-number-4">4.2.1</span> scroll wrapper</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+The <span class="underline">element</span> option when creating a 'scrollManager' indicates the element in which the scroll will take place, by default the window
+</p>
+
+<p>
+```ts
+const documentElement = document.querySelector("html")!
+</p>
+
+<p>
+let scrollManager = new Scroll() // create a scrollManager for the window
+scrollManager = new Scroll({ element: window }) //same as above
+scrollManager = new Scroll({ element: "html" }) //same as above
+scrollManager = new Scroll({ element: documentElement }) //same as above
+scrollManager = new Scroll({ element: document.documentElement }) //same as above
+</p>
+
+<p>
+scrollManager = new Scroll({ element: "*some-element" }) <i>/ create a scrollManager for the "*some-element"
+scrollManager = new Scroll({ element: document.getElementById("some-element") }) /</i> same as above
+```
 </p>
 </div>
 </div>
 
-<div id="outline-container-org06eb978" class="outline-3">
-<h3 id="org06eb978"><span class="section-number-3">1.3</span> duration</h3>
-<div class="outline-text-3" id="text-1-3">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> duration: <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
+<div id="outline-container-org34e9041" class="outline-4">
+<h4 id="org34e9041"><span class="section-number-4">4.2.2</span> direction</h4>
+<div class="outline-text-4" id="text-4-2-2">
 <p>
-The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span>
-It will be used along with <a href="#orge77ea93">1.4</a> for creating the <b>smooth</b> animation when scrolling
+The <span class="underline">horizontal</span> option indicates the direction when scrolling, by default vertical
 </p>
 
 <p>
-If you want to disable the <i>smooth</i> animation, set <b>duration</b> to 0.
+```ts
+let scrollManager = new Scroll() <i>/ create a scrollManager with vertical scroll (default behavior)
+scrollManager = new Scroll({ horizontal: false }) /</i> same as above
+scrollManager = new Scroll({ horizontal: true }) // create a scrollManager with horizontal scroll
+```
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge77ea93" class="outline-3">
-<h3 id="orge77ea93"><span class="section-number-3">1.4</span> easing</h3>
-<div class="outline-text-3" id="text-1-4">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> easing: <span style="color: #98be65;">"linear"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">default value</span>
-</pre>
-</div>
+<div id="outline-container-orgcfec044" class="outline-4">
+<h4 id="orgcfec044"><span class="section-number-4">4.2.3</span> onScroll callback</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+```js
+let scrollManager = new Scroll() // no callback by default :)
+scrollManager = new Scroll({
+  onScroll: external =&gt; {
+    console.log("scrolled!")
+    if (external) {
+      // external <code>=</code> true if the scroll was triggered by other means (the user with the mouse or other js running in the browser)
+    }
+  },
+})
+</p>
 
 <p>
-The <b>easing</b> option indicates the default animation of the scroll, by default <b>inOutQuad</b>
+<i>/ can be changed later:
+scrollManager.onScroll = () =&gt; console.log("new onScroll callback") /</i> callback changed
+scrollManager.onScroll = null // go back to default config :)
+```
+</p>
+</div>
+</div>
+
+<div id="outline-container-org652848a" class="outline-4">
+<h4 id="org652848a"><span class="section-number-4">4.2.4</span> default duration</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+The <span class="underline">duration</span> option indicates the default duration of the scroll animations in milliseconds, by default 0
+</p>
+
+<p>
+```ts
+let scrollManager = new Scroll() <i>/ default duration is 0ms (instant scroll)
+scrollManager = new Scroll({ duration: 350 }) /</i> 350ms scroll duration
+</p>
+
+<p>
+<i>/ can be changed later:
+scrollManager.duration = 1000 /</i> 1 second scroll duration
+```
+</p>
+</div>
+</div>
+
+<div id="outline-container-org644aa10" class="outline-4">
+<h4 id="org644aa10"><span class="section-number-4">4.2.5</span> easing</h4>
+<div class="outline-text-4" id="text-4-2-5">
+<p>
+The <span class="underline">easing</span> option indicates the default animation of the scroll, which is by default <span class="underline">inOutQuad</span>
 </p>
 
 <p>
@@ -462,40 +544,285 @@ scrollManager.easing = (currentStep, offsetValue, distance, totalSteps) =&gt; {
 </p>
 </div>
 </div>
-<div id="outline-container-org22a19b5" class="outline-3">
-<h3 id="org22a19b5"><span class="section-number-3">1.5</span> onScroll callback</h3>
-<div class="outline-text-3" id="text-1-5">
+</div>
+
+<div id="outline-container-org16b8953" class="outline-3">
+<h3 id="org16b8953"><span class="section-number-3">4.3</span> Scrolling</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org79c5105" class="outline-4">
+<h4 id="org79c5105"><span class="section-number-4">4.3.1</span> scrollBy</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+<span class="underline">scrollBy</span> will accept a value (the number of px to scroll down), a duration (to override the default duration), and a easing function (to override the default one).
+If the value in negative it will scroll up
+</p>
+
+<p>
+```ts
+scrollManager.scrollBy(50) <i>/ scroll 50px down
+scrollManager.scrollBy(-50) /</i> scroll 50px up
+scrollManager.scrollBy(50, 1000) <i>/ scroll by 50px in 1000ms
+scrollManager.scrollBy(50, 1000, customEasingFunction) /</i> it can also be specified an easing function just for that scroll animation
+```
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org55bdbcf"></a>scrollBy element<br />
+<div class="outline-text-5" id="text-4-3-1-1">
+<p>
+The 1st parameter of scrollBy.element is the element whose size will be used to scroll, the rest of parameters same as plane scrollBy
+</p>
+
+<p>
+```ts
+scrollManager.scrollBy.element("*some-element") <i>/ scroll by "*some-element"'s size
+scrollManager.scrollBy.element("*some-element", 0.5) /</i> scroll by half of the size of "*some-element"
+scrollManager.scrollBy.element("*some-element", -1, 1000) <i>/ scroll by "*some-element"' size up in 1000ms
+scrollManager.scrollBy.element("*some-element", 1, 1000, customEasingFunction) /</i> scroll by "*some-element"' size in 1000ms with a customEasingFunction
+```
+</p>
+</div>
+</li>
+
+<li><a id="orgb682ff6"></a>scrollBy size<br />
+<div class="outline-text-5" id="text-4-3-1-2">
+<p>
+Here the <span class="underline">size</span> is the size of the scroll container, and the value passed is a modifier, been 1 the full size, 0.5 half, and a negative value will mean the scroll will be up instead of down (or left instead of right)
+</p>
+
+<p>
+```ts
+scrollManager.scrollBy.size(1) <i>/ scroll a screen down
+scrollManager.scrollBy.size(-1) /</i> scroll a screen up
+scrollManager.scrollBy.size(0.5, 1000) // scroll half a screen down
+```
+</p>
+
+<p>
+See [size](*size)
+</p>
+</div>
+</li>
+
+<li><a id="orgf2af4d7"></a>scrollBy scrollSize<br />
+<div class="outline-text-5" id="text-4-3-1-3">
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> onScroll: <span style="color: #51afef;">null</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">default value</span>
+<pre class="src src-ts">scrollManager.scrollBy.scrollSize(0.1) // scroll by 10% of the scroll size
 </pre>
 </div>
 
 <p>
-```js
-let scrollManager = new Scroll() // no callback by default :)
-scrollManager = new Scroll({
-  onScroll: external =&gt; {
-    console.log("scrolled!")
-    if (external) {
-      // external <code>=</code> true if the scroll was triggered by other means (the user with the mouse or other js running in the browser)
-    }
-  },
-})
+See [scrollSize](*scrollsize)
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org0a2a4e4" class="outline-4">
+<h4 id="org0a2a4e4"><span class="section-number-4">4.3.2</span> scrollTo</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<p>
+<span class="underline">scrollTo</span> will accept a value (the position to scroll to), a duration (to override the default duration), and a easing function (to override the default one).
 </p>
 
 <p>
-<i>/ can be changed later:
-scrollManager.onScroll = () =&gt; console.log("new onScroll callback") /</i> callback changed
-scrollManager.onScroll = null // go back to default config :)
+```ts
+scrollManager.scrollTo(50) <i>/ scroll to position = 50px
+scrollManager.scrollTo(50, 1000) /</i> scroll in 1000ms
+```
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org46d87d2"></a>scrollTo element<br />
+<div class="outline-text-5" id="text-4-3-2-1">
+<p>
+The 1st parameter of scrollTo.element is the element whose position will be used to scroll, the rest of parameters same as plane scrollTo
+</p>
+
+<p>
+For the value used to center the element, it matches the same criteria used in [getRelativeElementPosition](*relativeelementposition)
+</p>
+
+<p>
+```ts
+scrollManager.scrollTo.element("*some-element") <i>/ scroll to "*some-element"
+scrollManager.scrollTo.element("*some-element", 0.5) /</i> scroll to "*some-element" and center it
+scrollManager.scrollTo.element("*some-element", 1, 1000) // scroll to "*some-element" and place it at the bottom of the screen in 1000ms
+```
+</p>
+</div>
+</li>
+
+<li><a id="org8e7638a"></a>scrollTo size<br />
+<div class="outline-text-5" id="text-4-3-2-2">
+<p>
+Pretty much the same as [scrollBy.size](*scrollby-size), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
+</p>
+
+<p>
+```ts
+scrollManager.scrollTo.size(0) <i>/ scroll to top (1st 'screen')
+scrollManager.scrollTo.size(1) /</i> scroll to the 2nd screen
+scrollManager.scrollTo.size(2, 999) // scroll to the 3rd screen in 999ms
+```
+</p>
+
+<p>
+See [size](*size)
+</p>
+</div>
+</li>
+
+<li><a id="orgcf37dad"></a>scrollTo scrollSize<br />
+<div class="outline-text-5" id="text-4-3-2-3">
+<p>
+Same as [scrollBy.scrollSize](*scrollby-scrollsize), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
+</p>
+
+<p>
+```ts
+scrollManager.scrollTo.scrollSize(0) <i>/ scroll to the top of the page
+scrollManager.scrollTo.scrollSize(1) /</i> scroll to the bottom
+scrollManager.scrollTo.scrollSize(0.5, 1000) // scroll to the middle in 1000ms
+```
+</p>
+
+<p>
+See [scrollSize](*scrollsize)
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org2050c26" class="outline-3">
+<h3 id="org2050c26"><span class="section-number-3">4.4</span> Computed values</h3>
+<div class="outline-text-3" id="text-4-4">
+</div>
+<div id="outline-container-orgebc398f" class="outline-4">
+<h4 id="orgebc398f"><span class="section-number-4">4.4.1</span> scrollPosition</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<p>
+```ts
+const scrollManager = new Scroll()
+</p>
+
+<p>
+scrollManager.scrollPosition // current position of the scroll (direction depends of the default value passed in the constructor)
+```
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge2ad52a" class="outline-4">
+<h4 id="orge2ad52a"><span class="section-number-4">4.4.2</span> size</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+```ts
+const scrollManager = new Scroll()
+</p>
+
+<p>
+scrollManager.size // the size of the element (excluding its borders and scrollbar's size)
+```
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd3cd4e8" class="outline-4">
+<h4 id="orgd3cd4e8"><span class="section-number-4">4.4.3</span> scrollSize</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<p>
+```ts
+const scrollManager = new Scroll()
+</p>
+
+<p>
+scrollManager.scrollSize // the total scroll you can do, (scrollHeight - height (or width depending on the direction))
+```
+</p>
+</div>
+</div>
+
+<div id="outline-container-org238c296" class="outline-4">
+<h4 id="org238c296"><span class="section-number-4">4.4.4</span> relativeElementPosition</h4>
+<div class="outline-text-4" id="text-4-4-4">
+<p>
+```ts
+const relativePosition = new Scroll().getRelativeElementPosition("*some-elemet")
+</p>
+
+<p>
+if (relativePosition &lt; -1) {
+  <i>/</i> element is out of view
+}
+if (relativePosition &gt; -1 &amp;&amp; relativePosition &lt; 0) {
+  // element bottom is partially visible
+}
+if (relativePosition &gt; 0 &amp;&amp; relativePosition &lt; 1) {
+  // element is fully visible
+  if (relativePosition <code>=</code> 0.5) {
+    // &#x2026;element is centered in view
+  }
+}
+if (relativePosition &gt; 1 &amp;&amp; relativePosition &lt; 2) {
+  // element top is partially visible
+}
+if (relativePosition &gt; 2) {
+  // element is out of view
+}
 ```
 </p>
 </div>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org00b2d3f" class="outline-2">
+<h2 id="org00b2d3f"><span class="section-number-2">5</span> Browser Compatibility</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Test are made using automate testing with [Browserstack](<a href="https://www.browserstack.com">https://www.browserstack.com</a>) [for open source](<a href="https://www.browserstack.com/open-source?ref=pricing">https://www.browserstack.com/open-source?ref=pricing</a>).
+&lt;span&gt; &lt;img src="./assets/BrowserStack-logo.png" width="200px" align="middle" /&gt; &lt;/span&gt;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd24cc5a" class="outline-2">
+<h2 id="orgd24cc5a"><span class="section-number-2">6</span> Why?</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+There are a lot of packages about smooth scrolling, so, what's the difference?
+Well, the main idea is to be able to stack multiple scroll animations together, and with high precision. That is not an extra feature, that's what this package does, you can trigger multiple animations to several places, and it will be as precise as it can be.
+</p>
+</div>
+</div>
+<div id="outline-container-org193ced6" class="outline-2">
+<h2 id="org193ced6"><span class="section-number-2">7</span> License</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+[MIT](./LICENSE.md)
+</p>
+</div>
+</div>
+<div id="outline-container-org18f7620" class="outline-2">
+<h2 id="org18f7620"><span class="section-number-2">8</span> Support</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+This project is free and open-source, so if you think this project can help you or anyone else, you should star it in [github](<a href="https://github.com/LeDDGroup/scroll-utility/">https://github.com/LeDDGroup/scroll-utility/</a>)
+Also feel free to open an [issue](<a href="https://github.com/LeDDGroup/scroll-utility/issues">https://github.com/LeDDGroup/scroll-utility/issues</a>) if you have any idea, question, or you've found a bug. Any feedback is good support
+</p>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-08-17 Sat 23:55</p>
+<p class="date">Created: 2019-08-18 Sun 00:10</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
