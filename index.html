@@ -3,196 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-18 Sun 00:10 -->
+<!-- 2019-08-18 Sun 00:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>scroll utility: A simple to use scroll utility package for centering elements, and smooth animations</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="David Perez Alvarez" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -247,47 +63,47 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3a4994d">1. Features</a></li>
-<li><a href="#org0ee96ef">2. Installation</a></li>
-<li><a href="#orgf53b3e5">3. How to scroll</a></li>
-<li><a href="#org0f6e523">4. Usage</a>
+<li><a href="#orgd59e1a6">1. Features</a></li>
+<li><a href="#org9fe8603">2. Installation</a></li>
+<li><a href="#org9e2bb3a">3. How to scroll</a></li>
+<li><a href="#orge8a62c3">4. Usage</a>
 <ul>
-<li><a href="#org3428c14">4.1. Basic Scroll</a></li>
-<li><a href="#org87e8791">4.2. Creating a scroll manager</a>
+<li><a href="#org2e47076">4.1. Basic Scroll</a></li>
+<li><a href="#orga109dff">4.2. Creating a scroll manager</a>
 <ul>
-<li><a href="#org70ec4fc">4.2.1. scroll wrapper</a></li>
-<li><a href="#org34e9041">4.2.2. direction</a></li>
-<li><a href="#orgcfec044">4.2.3. onScroll callback</a></li>
-<li><a href="#org652848a">4.2.4. default duration</a></li>
-<li><a href="#org644aa10">4.2.5. easing</a></li>
+<li><a href="#orgec2c34c">4.2.1. scroll wrapper</a></li>
+<li><a href="#org5a352e2">4.2.2. direction</a></li>
+<li><a href="#org56972cd">4.2.3. onScroll callback</a></li>
+<li><a href="#orgcc09bf8">4.2.4. default duration</a></li>
+<li><a href="#org6e24844">4.2.5. easing</a></li>
 </ul>
 </li>
-<li><a href="#org16b8953">4.3. Scrolling</a>
+<li><a href="#org38d5dfe">4.3. Scrolling</a>
 <ul>
-<li><a href="#org79c5105">4.3.1. scrollBy</a></li>
-<li><a href="#org0a2a4e4">4.3.2. scrollTo</a></li>
+<li><a href="#org216327c">4.3.1. scrollBy</a></li>
+<li><a href="#org7902060">4.3.2. scrollTo</a></li>
 </ul>
 </li>
-<li><a href="#org2050c26">4.4. Computed values</a>
+<li><a href="#orgcdcea74">4.4. Computed values</a>
 <ul>
-<li><a href="#orgebc398f">4.4.1. scrollPosition</a></li>
-<li><a href="#orge2ad52a">4.4.2. size</a></li>
-<li><a href="#orgd3cd4e8">4.4.3. scrollSize</a></li>
-<li><a href="#org238c296">4.4.4. relativeElementPosition</a></li>
+<li><a href="#orgaf397fa">4.4.1. scrollPosition</a></li>
+<li><a href="#orgf7fd502">4.4.2. size</a></li>
+<li><a href="#org815e64c">4.4.3. scrollSize</a></li>
+<li><a href="#orgffc126a">4.4.4. relativeElementPosition</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org00b2d3f">5. Browser Compatibility</a></li>
-<li><a href="#orgd24cc5a">6. Why?</a></li>
-<li><a href="#org193ced6">7. License</a></li>
-<li><a href="#org18f7620">8. Support</a></li>
+<li><a href="#org4cf9832">5. Browser Compatibility</a></li>
+<li><a href="#org004d2dd">6. Why?</a></li>
+<li><a href="#org2b901f8">7. License</a></li>
+<li><a href="#org43a118b">8. Support</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3a4994d" class="outline-2">
-<h2 id="org3a4994d"><span class="section-number-2">1</span> Features</h2>
+<div id="outline-container-orgd59e1a6" class="outline-2">
+<h2 id="orgd59e1a6"><span class="section-number-2">1</span> Features</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>Extremely powerful for scrolling to anywhere in the page, like centering
@@ -303,8 +119,8 @@ elements to certain degree.</li>
 </div>
 </div>
 
-<div id="outline-container-org0ee96ef" class="outline-2">
-<h2 id="org0ee96ef"><span class="section-number-2">2</span> Installation</h2>
+<div id="outline-container-org9fe8603" class="outline-2">
+<h2 id="org9fe8603"><span class="section-number-2">2</span> Installation</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 From npm:
@@ -327,8 +143,8 @@ when downloading from a cdn the package will be globally exported as `ScrollUtil
 </div>
 </div>
 
-<div id="outline-container-orgf53b3e5" class="outline-2">
-<h2 id="orgf53b3e5"><span class="section-number-2">3</span> How to scroll</h2>
+<div id="outline-container-org9e2bb3a" class="outline-2">
+<h2 id="org9e2bb3a"><span class="section-number-2">3</span> How to scroll</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
@@ -354,12 +170,12 @@ position or an html element.
 </div>
 </div>
 
-<div id="outline-container-org0f6e523" class="outline-2">
-<h2 id="org0f6e523"><span class="section-number-2">4</span> Usage</h2>
+<div id="outline-container-orge8a62c3" class="outline-2">
+<h2 id="orge8a62c3"><span class="section-number-2">4</span> Usage</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org3428c14" class="outline-3">
-<h3 id="org3428c14"><span class="section-number-3">4.1</span> Basic Scroll</h3>
+<div id="outline-container-org2e47076" class="outline-3">
+<h3 id="org2e47076"><span class="section-number-3">4.1</span> Basic Scroll</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
@@ -398,8 +214,8 @@ That's just a quick reference cheat sheet of how to use scroll-utility, if you w
 </div>
 </div>
 
-<div id="outline-container-org87e8791" class="outline-3">
-<h3 id="org87e8791"><span class="section-number-3">4.2</span> Creating a scroll manager</h3>
+<div id="outline-container-orga109dff" class="outline-3">
+<h3 id="orga109dff"><span class="section-number-3">4.2</span> Creating a scroll manager</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 ```ts
@@ -422,8 +238,8 @@ const scrollManagerWithOutOptions = new Scroll() // same as above
 </p>
 </div>
 
-<div id="outline-container-org70ec4fc" class="outline-4">
-<h4 id="org70ec4fc"><span class="section-number-4">4.2.1</span> scroll wrapper</h4>
+<div id="outline-container-orgec2c34c" class="outline-4">
+<h4 id="orgec2c34c"><span class="section-number-4">4.2.1</span> scroll wrapper</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 The <span class="underline">element</span> option when creating a 'scrollManager' indicates the element in which the scroll will take place, by default the window
@@ -450,8 +266,8 @@ scrollManager = new Scroll({ element: document.getElementById("some-element") })
 </div>
 </div>
 
-<div id="outline-container-org34e9041" class="outline-4">
-<h4 id="org34e9041"><span class="section-number-4">4.2.2</span> direction</h4>
+<div id="outline-container-org5a352e2" class="outline-4">
+<h4 id="org5a352e2"><span class="section-number-4">4.2.2</span> direction</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 The <span class="underline">horizontal</span> option indicates the direction when scrolling, by default vertical
@@ -467,8 +283,8 @@ scrollManager = new Scroll({ horizontal: true }) // create a scrollManager with 
 </div>
 </div>
 
-<div id="outline-container-orgcfec044" class="outline-4">
-<h4 id="orgcfec044"><span class="section-number-4">4.2.3</span> onScroll callback</h4>
+<div id="outline-container-org56972cd" class="outline-4">
+<h4 id="org56972cd"><span class="section-number-4">4.2.3</span> onScroll callback</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 ```js
@@ -492,8 +308,8 @@ scrollManager.onScroll = null // go back to default config :)
 </div>
 </div>
 
-<div id="outline-container-org652848a" class="outline-4">
-<h4 id="org652848a"><span class="section-number-4">4.2.4</span> default duration</h4>
+<div id="outline-container-orgcc09bf8" class="outline-4">
+<h4 id="orgcc09bf8"><span class="section-number-4">4.2.4</span> default duration</h4>
 <div class="outline-text-4" id="text-4-2-4">
 <p>
 The <span class="underline">duration</span> option indicates the default duration of the scroll animations in milliseconds, by default 0
@@ -513,8 +329,8 @@ scrollManager.duration = 1000 /</i> 1 second scroll duration
 </div>
 </div>
 
-<div id="outline-container-org644aa10" class="outline-4">
-<h4 id="org644aa10"><span class="section-number-4">4.2.5</span> easing</h4>
+<div id="outline-container-org6e24844" class="outline-4">
+<h4 id="org6e24844"><span class="section-number-4">4.2.5</span> easing</h4>
 <div class="outline-text-4" id="text-4-2-5">
 <p>
 The <span class="underline">easing</span> option indicates the default animation of the scroll, which is by default <span class="underline">inOutQuad</span>
@@ -546,12 +362,12 @@ scrollManager.easing = (currentStep, offsetValue, distance, totalSteps) =&gt; {
 </div>
 </div>
 
-<div id="outline-container-org16b8953" class="outline-3">
-<h3 id="org16b8953"><span class="section-number-3">4.3</span> Scrolling</h3>
+<div id="outline-container-org38d5dfe" class="outline-3">
+<h3 id="org38d5dfe"><span class="section-number-3">4.3</span> Scrolling</h3>
 <div class="outline-text-3" id="text-4-3">
 </div>
-<div id="outline-container-org79c5105" class="outline-4">
-<h4 id="org79c5105"><span class="section-number-4">4.3.1</span> scrollBy</h4>
+<div id="outline-container-org216327c" class="outline-4">
+<h4 id="org216327c"><span class="section-number-4">4.3.1</span> scrollBy</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 <span class="underline">scrollBy</span> will accept a value (the number of px to scroll down), a duration (to override the default duration), and a easing function (to override the default one).
@@ -569,7 +385,7 @@ scrollManager.scrollBy(50, 1000, customEasingFunction) /</i> it can also be spec
 </div>
 
 <ol class="org-ol">
-<li><a id="org55bdbcf"></a>scrollBy element<br />
+<li><a id="orgd661fde"></a>scrollBy element<br />
 <div class="outline-text-5" id="text-4-3-1-1">
 <p>
 The 1st parameter of scrollBy.element is the element whose size will be used to scroll, the rest of parameters same as plane scrollBy
@@ -586,7 +402,7 @@ scrollManager.scrollBy.element("*some-element", 1, 1000, customEasingFunction) /
 </div>
 </li>
 
-<li><a id="orgb682ff6"></a>scrollBy size<br />
+<li><a id="org0636960"></a>scrollBy size<br />
 <div class="outline-text-5" id="text-4-3-1-2">
 <p>
 Here the <span class="underline">size</span> is the size of the scroll container, and the value passed is a modifier, been 1 the full size, 0.5 half, and a negative value will mean the scroll will be up instead of down (or left instead of right)
@@ -606,7 +422,7 @@ See [size](*size)
 </div>
 </li>
 
-<li><a id="orgf2af4d7"></a>scrollBy scrollSize<br />
+<li><a id="org9573ea4"></a>scrollBy scrollSize<br />
 <div class="outline-text-5" id="text-4-3-1-3">
 <div class="org-src-container">
 <pre class="src src-ts">scrollManager.scrollBy.scrollSize(0.1) // scroll by 10% of the scroll size
@@ -621,8 +437,8 @@ See [scrollSize](*scrollsize)
 </ol>
 </div>
 
-<div id="outline-container-org0a2a4e4" class="outline-4">
-<h4 id="org0a2a4e4"><span class="section-number-4">4.3.2</span> scrollTo</h4>
+<div id="outline-container-org7902060" class="outline-4">
+<h4 id="org7902060"><span class="section-number-4">4.3.2</span> scrollTo</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 <span class="underline">scrollTo</span> will accept a value (the position to scroll to), a duration (to override the default duration), and a easing function (to override the default one).
@@ -637,7 +453,7 @@ scrollManager.scrollTo(50, 1000) /</i> scroll in 1000ms
 </div>
 
 <ol class="org-ol">
-<li><a id="org46d87d2"></a>scrollTo element<br />
+<li><a id="org8f48f31"></a>scrollTo element<br />
 <div class="outline-text-5" id="text-4-3-2-1">
 <p>
 The 1st parameter of scrollTo.element is the element whose position will be used to scroll, the rest of parameters same as plane scrollTo
@@ -657,7 +473,7 @@ scrollManager.scrollTo.element("*some-element", 1, 1000) // scroll to "*some-ele
 </div>
 </li>
 
-<li><a id="org8e7638a"></a>scrollTo size<br />
+<li><a id="org3845b64"></a>scrollTo size<br />
 <div class="outline-text-5" id="text-4-3-2-2">
 <p>
 Pretty much the same as [scrollBy.size](*scrollby-size), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
@@ -677,7 +493,7 @@ See [size](*size)
 </div>
 </li>
 
-<li><a id="orgcf37dad"></a>scrollTo scrollSize<br />
+<li><a id="orgefb2c37"></a>scrollTo scrollSize<br />
 <div class="outline-text-5" id="text-4-3-2-3">
 <p>
 Same as [scrollBy.scrollSize](*scrollby-scrollsize), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
@@ -700,12 +516,12 @@ See [scrollSize](*scrollsize)
 </div>
 </div>
 
-<div id="outline-container-org2050c26" class="outline-3">
-<h3 id="org2050c26"><span class="section-number-3">4.4</span> Computed values</h3>
+<div id="outline-container-orgcdcea74" class="outline-3">
+<h3 id="orgcdcea74"><span class="section-number-3">4.4</span> Computed values</h3>
 <div class="outline-text-3" id="text-4-4">
 </div>
-<div id="outline-container-orgebc398f" class="outline-4">
-<h4 id="orgebc398f"><span class="section-number-4">4.4.1</span> scrollPosition</h4>
+<div id="outline-container-orgaf397fa" class="outline-4">
+<h4 id="orgaf397fa"><span class="section-number-4">4.4.1</span> scrollPosition</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
 ```ts
@@ -719,8 +535,8 @@ scrollManager.scrollPosition // current position of the scroll (direction depend
 </div>
 </div>
 
-<div id="outline-container-orge2ad52a" class="outline-4">
-<h4 id="orge2ad52a"><span class="section-number-4">4.4.2</span> size</h4>
+<div id="outline-container-orgf7fd502" class="outline-4">
+<h4 id="orgf7fd502"><span class="section-number-4">4.4.2</span> size</h4>
 <div class="outline-text-4" id="text-4-4-2">
 <p>
 ```ts
@@ -734,8 +550,8 @@ scrollManager.size // the size of the element (excluding its borders and scrollb
 </div>
 </div>
 
-<div id="outline-container-orgd3cd4e8" class="outline-4">
-<h4 id="orgd3cd4e8"><span class="section-number-4">4.4.3</span> scrollSize</h4>
+<div id="outline-container-org815e64c" class="outline-4">
+<h4 id="org815e64c"><span class="section-number-4">4.4.3</span> scrollSize</h4>
 <div class="outline-text-4" id="text-4-4-3">
 <p>
 ```ts
@@ -749,8 +565,8 @@ scrollManager.scrollSize // the total scroll you can do, (scrollHeight - height 
 </div>
 </div>
 
-<div id="outline-container-org238c296" class="outline-4">
-<h4 id="org238c296"><span class="section-number-4">4.4.4</span> relativeElementPosition</h4>
+<div id="outline-container-orgffc126a" class="outline-4">
+<h4 id="orgffc126a"><span class="section-number-4">4.4.4</span> relativeElementPosition</h4>
 <div class="outline-text-4" id="text-4-4-4">
 <p>
 ```ts
@@ -783,8 +599,8 @@ if (relativePosition &gt; 2) {
 </div>
 </div>
 
-<div id="outline-container-org00b2d3f" class="outline-2">
-<h2 id="org00b2d3f"><span class="section-number-2">5</span> Browser Compatibility</h2>
+<div id="outline-container-org4cf9832" class="outline-2">
+<h2 id="org4cf9832"><span class="section-number-2">5</span> Browser Compatibility</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Test are made using automate testing with [Browserstack](<a href="https://www.browserstack.com">https://www.browserstack.com</a>) [for open source](<a href="https://www.browserstack.com/open-source?ref=pricing">https://www.browserstack.com/open-source?ref=pricing</a>).
@@ -793,8 +609,8 @@ Test are made using automate testing with [Browserstack](<a href="https://www.br
 </div>
 </div>
 
-<div id="outline-container-orgd24cc5a" class="outline-2">
-<h2 id="orgd24cc5a"><span class="section-number-2">6</span> Why?</h2>
+<div id="outline-container-org004d2dd" class="outline-2">
+<h2 id="org004d2dd"><span class="section-number-2">6</span> Why?</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 There are a lot of packages about smooth scrolling, so, what's the difference?
@@ -802,16 +618,16 @@ Well, the main idea is to be able to stack multiple scroll animations together, 
 </p>
 </div>
 </div>
-<div id="outline-container-org193ced6" class="outline-2">
-<h2 id="org193ced6"><span class="section-number-2">7</span> License</h2>
+<div id="outline-container-org2b901f8" class="outline-2">
+<h2 id="org2b901f8"><span class="section-number-2">7</span> License</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 [MIT](./LICENSE.md)
 </p>
 </div>
 </div>
-<div id="outline-container-org18f7620" class="outline-2">
-<h2 id="org18f7620"><span class="section-number-2">8</span> Support</h2>
+<div id="outline-container-org43a118b" class="outline-2">
+<h2 id="org43a118b"><span class="section-number-2">8</span> Support</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 This project is free and open-source, so if you think this project can help you or anyone else, you should star it in [github](<a href="https://github.com/LeDDGroup/scroll-utility/">https://github.com/LeDDGroup/scroll-utility/</a>)
@@ -822,7 +638,7 @@ Also feel free to open an [issue](<a href="https://github.com/LeDDGroup/scroll-u
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-08-18 Sun 00:10</p>
+<p class="date">Created: 2019-08-18 Sun 00:16</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
