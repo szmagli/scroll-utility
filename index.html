@@ -3,12 +3,270 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-18 Sun 00:16 -->
+<!-- 2019-08-18 Sun 08:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>scroll utility: A simple to use scroll utility package for centering elements, and smooth animations</title>
+<title>scroll-utility: A simple to use scroll utility package for centering elements, and smooth animations</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="David Perez Alvarez" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="awsm.css" />
+<style> body { margin: auto; width: 80%; } pre.src { background: #141414; color: white; } pre.src::before { color: black; }</style>
+
+<script type="text/javascript" src="https://orgmode.org/org-info.js">
+/**
+ *
+ * @source: https://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in https://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2019 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in https://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -58,53 +316,30 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">scroll utility: A simple to use scroll utility package for centering elements, and smooth animations</h1>
+<h1 class="title">scroll-utility: A simple to use scroll utility package for centering elements, and smooth animations</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd59e1a6">1. Features</a></li>
-<li><a href="#org9fe8603">2. Installation</a></li>
-<li><a href="#org9e2bb3a">3. How to scroll</a></li>
-<li><a href="#orge8a62c3">4. Usage</a>
+<li><a href="#orgc5a63a5">Features</a></li>
+<li><a href="#org827da97">Installation</a></li>
+<li><a href="#org41c96e2">How to scroll</a></li>
+<li><a href="#orgacc8fed">Creating a <b>Scroll</b> instance</a>
 <ul>
-<li><a href="#org2e47076">4.1. Basic Scroll</a></li>
-<li><a href="#orga109dff">4.2. Creating a scroll manager</a>
-<ul>
-<li><a href="#orgec2c34c">4.2.1. scroll wrapper</a></li>
-<li><a href="#org5a352e2">4.2.2. direction</a></li>
-<li><a href="#org56972cd">4.2.3. onScroll callback</a></li>
-<li><a href="#orgcc09bf8">4.2.4. default duration</a></li>
-<li><a href="#org6e24844">4.2.5. easing</a></li>
+<li><a href="#org37ef6d7">element</a></li>
+<li><a href="#orgd5e4099">horizontal</a></li>
+<li><a href="#org940f3a8">duration</a></li>
+<li><a href="#org1e9ff26">easing</a></li>
+<li><a href="#org0570242">onScroll callback</a></li>
 </ul>
 </li>
-<li><a href="#org38d5dfe">4.3. Scrolling</a>
-<ul>
-<li><a href="#org216327c">4.3.1. scrollBy</a></li>
-<li><a href="#org7902060">4.3.2. scrollTo</a></li>
-</ul>
-</li>
-<li><a href="#orgcdcea74">4.4. Computed values</a>
-<ul>
-<li><a href="#orgaf397fa">4.4.1. scrollPosition</a></li>
-<li><a href="#orgf7fd502">4.4.2. size</a></li>
-<li><a href="#org815e64c">4.4.3. scrollSize</a></li>
-<li><a href="#orgffc126a">4.4.4. relativeElementPosition</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org4cf9832">5. Browser Compatibility</a></li>
-<li><a href="#org004d2dd">6. Why?</a></li>
-<li><a href="#org2b901f8">7. License</a></li>
-<li><a href="#org43a118b">8. Support</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd59e1a6" class="outline-2">
-<h2 id="orgd59e1a6"><span class="section-number-2">1</span> Features</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgc5a63a5" class="outline-2">
+<h2 id="orgc5a63a5">Features</h2>
+<div class="outline-text-2" id="text-orgc5a63a5">
 <ul class="org-ul">
 <li>Extremely powerful for scrolling to anywhere in the page, like centering
 elements to certain degree.</li>
@@ -114,14 +349,14 @@ elements to certain degree.</li>
 <li>Dependency free</li>
 <li>Small footprint 9.32KiB</li>
 <li>Typescript friendly</li>
-<li>Handle multiple scroll animation at the time</li>
+<li>Handle multiple scroll animation at the same time</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9fe8603" class="outline-2">
-<h2 id="org9fe8603"><span class="section-number-2">2</span> Installation</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org827da97" class="outline-2">
+<h2 id="org827da97">Installation</h2>
+<div class="outline-text-2" id="text-org827da97">
 <p>
 From npm:
 </p>
@@ -138,154 +373,224 @@ From a cdn: <a href="https://www.jsdelivr.com/package/npm/scroll-utility">jsdeli
 </pre>
 </div>
 <p>
-when downloading from a cdn the package will be globally exported as `ScrollUtility`
+when downloading from a cdn the package will be globally exported as <span class="underline">ScrollUtility</span>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9e2bb3a" class="outline-2">
-<h2 id="org9e2bb3a"><span class="section-number-2">3</span> How to scroll</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org41c96e2" class="outline-2">
+<h2 id="org41c96e2">How to scroll</h2>
+<div class="outline-text-2" id="text-org41c96e2">
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
+<pre class="src src-js"><span style="color: #51afef;">import</span> { Scroll } from <span style="color: #98be65;">"scroll-utility"</span>
 
-<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span>()
 
-scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">100</span><span style="color: #51afef;">)</span>
-scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #98be65;">"#some-element"</span><span style="color: #51afef;">)</span>
-scrollManager.offset<span style="color: #51afef;">(</span>-<span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>The method `scroll` is used to scroll to a specific position, such as a scroll</li>
-</ul>
-<p>
-position or an html element.
-</p>
-
-<ul class="org-ul">
-<li>`offset` is used to offset the current scroll position</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orge8a62c3" class="outline-2">
-<h2 id="orge8a62c3"><span class="section-number-2">4</span> Usage</h2>
-<div class="outline-text-2" id="text-4">
-</div>
-<div id="outline-container-org2e47076" class="outline-3">
-<h3 id="org2e47076"><span class="section-number-3">4.1</span> Basic Scroll</h3>
-<div class="outline-text-3" id="text-4-1">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
-<span style="color: #5B6268;">// </span><span style="color: #5B6268;">const Scroll = ScrollUtility.Scroll // if using from a cdn</span>
-
-<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
-
-scrollManager.scrollTo<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to position = 50px</span>
-scrollManager.scrollTo<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll in 1000ms</span>
-scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element"</span>
-scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0.5</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element" and center it</span>
-scrollManager.scrollTo.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to "*some-element" and place it at the bottom of the screen in 1000ms</span>
-scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the top of the page</span>
-scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the bottom</span>
-scrollManager.scrollTo.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.5</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the middle in 1000ms</span>
-scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to top (1st 'screen')</span>
-scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the 2nd screen</span>
-scrollManager.scrollTo.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">2</span>, <span style="color: #da8548; font-weight: bold;">999</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll to the 3rd screen in 999ms</span>
-
-scrollManager.scrollBy<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 50px</span>
-scrollManager.scrollBy<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">50</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 50px in 1000ms</span>
-scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by "*some-element"'s size</span>
-scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0.5</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by half of the size of "*some-element"</span>
-scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">1</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by "*some-element"' size in 1000ms</span>
-scrollManager.scrollBy.element<span style="color: #51afef;">(</span><span style="color: #98be65;">"*some-element"</span>, <span style="color: #da8548; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">this don't do any scroll</span>
-scrollManager.scrollBy.scrollSize<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll by 10% of the scroll size</span>
-scrollManager.scrollBy.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll a screen down</span>
-scrollManager.scrollBy.size<span style="color: #51afef;">(</span>-<span style="color: #da8548; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll a screen up</span>
-scrollManager.scrollBy.size<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">0.5</span>, <span style="color: #da8548; font-weight: bold;">1000</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scroll half a screen down</span>
+scrollManager.scroll(<span style="color: #98be65;">"#some-element"</span>).offset(-<span style="color: #da8548; font-weight: bold;">50</span>)
 </pre>
 </div>
 
 <p>
-That's just a quick reference cheat sheet of how to use scroll-utility, if you want to learn more keep reading :)
+That's just a limited overview of how to use <b>scroll-utility</b>. It can be a lot
+more powerful and flexlible
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga109dff" class="outline-3">
-<h3 id="orga109dff"><span class="section-number-3">4.2</span> Creating a scroll manager</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-orgacc8fed" class="outline-2">
+<h2 id="orgacc8fed">Creating a <b>Scroll</b> instance</h2>
+<div class="outline-text-2" id="text-orgacc8fed">
 <p>
-```ts
-import { Scroll } from "scroll-utility"
+To create a <b>Scroll</b> instance you only need to call its contructor:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">import</span> Scroll <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>;
+<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+</pre>
+</div>
+
+<p>
+That will create a "scrollManager"
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">parameter</th>
+<th scope="col" class="org-left">default value</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-left">notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">element</td>
+<td class="org-left">window</td>
+<td class="org-left">string; Window; Element</td>
+<td class="org-left">element where the scroll will take place, a string means a querySelector</td>
+</tr>
+
+<tr>
+<td class="org-left">horizontal</td>
+<td class="org-left">false</td>
+<td class="org-left">boolean</td>
+<td class="org-left">direction of the scroll animation</td>
+</tr>
+
+<tr>
+<td class="org-left">duration</td>
+<td class="org-left">1000</td>
+<td class="org-left">number</td>
+<td class="org-left">default duration of scroll animations, in miliseconds</td>
+</tr>
+
+<tr>
+<td class="org-left">easing</td>
+<td class="org-left">"easeInOutQuad"</td>
+<td class="org-left">string; (t, b, c, d) =&gt; number</td>
+<td class="org-left">easing function used for scroll animations</td>
+</tr>
+
+<tr>
+<td class="org-left">onScroll</td>
+<td class="org-left">null</td>
+<td class="org-left">null; (external?: boolean) =&gt; void</td>
+<td class="org-left">callback function onscroll</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+For example, to create a horizontal <b>scrollManager</b> within "#container", with a
+duration of 500ms for its 'linear' scroll animation, that logs "hi" every time
+it scrolls:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+    element: <span style="color: #98be65;">"#container"</span>,
+    horizontal: <span style="color: #51afef;">true</span>,
+    duration: <span style="color: #da8548; font-weight: bold;">500</span>,
+    easing: <span style="color: #98be65;">"linear"</span>,
+    onScroll: <span style="color: #98be65;">()</span> =&gt; console.log<span style="color: #98be65;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #98be65;">)</span>,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+It's also posible to pass parameters without an object
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #98be65;">"#container"</span>, <span style="color: #51afef;">true</span>, <span style="color: #da8548; font-weight: bold;">500</span>, <span style="color: #98be65;">"linear"</span>, <span style="color: #c678dd;">()</span> =&gt; console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+In order <b>element</b>, <b>horizontal</b>, <b>duration</b>, <b>easing</b> and <b>onScroll</b>
 </p>
 
 <p>
-const scrollManager = new Scroll({
-  element: window, <i>/ default scroll container is window
-  horizontal: false, /</i> default direction vertical
-  onScroll: null, <i>/ no onScroll callback by default
-  duration: 0, /</i> default duration to 0, 'instant' scroll
-  easing: defaultEasingFunction, // default easing function is inOutCubic
-})
-</p>
-
-<p>
-const scrollManagerWithOutOptions = new Scroll() // same as above
-```
+every parameter is optional
 </p>
 </div>
 
-<div id="outline-container-orgec2c34c" class="outline-4">
-<h4 id="orgec2c34c"><span class="section-number-4">4.2.1</span> scroll wrapper</h4>
-<div class="outline-text-4" id="text-4-2-1">
+<div id="outline-container-org37ef6d7" class="outline-3">
+<h3 id="org37ef6d7">element</h3>
+<div class="outline-text-3" id="text-org37ef6d7">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> element: <span style="color: #98be65;">"#container"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 <p>
-The <span class="underline">element</span> option when creating a 'scrollManager' indicates the element in which the scroll will take place, by default the window
+The <b>element</b> option when creating a 'scrollManager' indicates the element in which the scroll will take place.
+By default it will scroll normally in the page, as in <b>window</b> or in <b>document.documentElement</b>
 </p>
 
 <p>
-```ts
-const documentElement = document.querySelector("html")!
+It can be the result of `document.getElementById` or `document.querySelector`.
 </p>
 
 <p>
-let scrollManager = new Scroll() // create a scrollManager for the window
-scrollManager = new Scroll({ element: window }) //same as above
-scrollManager = new Scroll({ element: "html" }) //same as above
-scrollManager = new Scroll({ element: documentElement }) //same as above
-scrollManager = new Scroll({ element: document.documentElement }) //same as above
+If it's a <b>string</b>, then it will use it as a querySelector with
+`document.querySelector` for getting an Element.
 </p>
 
 <p>
-scrollManager = new Scroll({ element: "*some-element" }) <i>/ create a scrollManager for the "*some-element"
-scrollManager = new Scroll({ element: document.getElementById("some-element") }) /</i> same as above
-```
+You can call yourself `document.querySelector` beforehand if you want to ensure
+the element exists
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5a352e2" class="outline-4">
-<h4 id="org5a352e2"><span class="section-number-4">4.2.2</span> direction</h4>
-<div class="outline-text-4" id="text-4-2-2">
+<div id="outline-container-orgd5e4099" class="outline-3">
+<h3 id="orgd5e4099">horizontal</h3>
+<div class="outline-text-3" id="text-orgd5e4099">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> horizontal: <span style="color: #51afef;">true</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 <p>
-The <span class="underline">horizontal</span> option indicates the direction when scrolling, by default vertical
-</p>
-
-<p>
-```ts
-let scrollManager = new Scroll() <i>/ create a scrollManager with vertical scroll (default behavior)
-scrollManager = new Scroll({ horizontal: false }) /</i> same as above
-scrollManager = new Scroll({ horizontal: true }) // create a scrollManager with horizontal scroll
-```
+The <b>horizontal</b> option indicates the direction when scrolling, by default
+<b>false</b>, wich means vertical scroll
 </p>
 </div>
 </div>
 
-<div id="outline-container-org56972cd" class="outline-4">
-<h4 id="org56972cd"><span class="section-number-4">4.2.3</span> onScroll callback</h4>
-<div class="outline-text-4" id="text-4-2-3">
+<div id="outline-container-org940f3a8" class="outline-3">
+<h3 id="org940f3a8">duration</h3>
+<div class="outline-text-3" id="text-org940f3a8">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> duration: <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span>
+It will be used along with <a href="#org1e9ff26">easing</a> for creating the <b>smooth</b> animation when scrolling
+</p>
+
+<p>
+If you want to disable the <i>smooth</i> animation, set <b>duration</b> to 0.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1e9ff26" class="outline-3">
+<h3 id="org1e9ff26">easing</h3>
+<div class="outline-text-3" id="text-org1e9ff26">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> easing: <span style="color: #98be65;">"linear"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+The <b>easing</b> option indicates the default animation of the scroll, by default <b>inOutQuad</b>
+</p>
+
+<p>
+<a href="https://easings.net/en">Here</a> are some more easing functions
+</p>
+</div>
+</div>
+<div id="outline-container-org0570242" class="outline-3">
+<h3 id="org0570242">onScroll callback</h3>
+<div class="outline-text-3" id="text-org0570242">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> onScroll: <span style="color: #51afef;">null</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">default value</span>
+</pre>
+</div>
+
 <p>
 ```js
 let scrollManager = new Scroll() // no callback by default :)
@@ -307,338 +612,11 @@ scrollManager.onScroll = null // go back to default config :)
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgcc09bf8" class="outline-4">
-<h4 id="orgcc09bf8"><span class="section-number-4">4.2.4</span> default duration</h4>
-<div class="outline-text-4" id="text-4-2-4">
-<p>
-The <span class="underline">duration</span> option indicates the default duration of the scroll animations in milliseconds, by default 0
-</p>
-
-<p>
-```ts
-let scrollManager = new Scroll() <i>/ default duration is 0ms (instant scroll)
-scrollManager = new Scroll({ duration: 350 }) /</i> 350ms scroll duration
-</p>
-
-<p>
-<i>/ can be changed later:
-scrollManager.duration = 1000 /</i> 1 second scroll duration
-```
-</p>
-</div>
-</div>
-
-<div id="outline-container-org6e24844" class="outline-4">
-<h4 id="org6e24844"><span class="section-number-4">4.2.5</span> easing</h4>
-<div class="outline-text-4" id="text-4-2-5">
-<p>
-The <span class="underline">easing</span> option indicates the default animation of the scroll, which is by default <span class="underline">inOutQuad</span>
-</p>
-
-<p>
-```ts
-import { Scroll, defaultEasingFunction } from "scroll-utility"
-</p>
-
-<p>
-let scrollManager = new Scroll() <i>/ inOutCubic animation by default
-scrollManager = new Scroll({ easing: defaultEasingFunction }) /</i> same as above
-</p>
-
-<p>
-// can also be changed later:
-scrollManager.easing = (currentStep, offsetValue, distance, totalSteps) =&gt; {
-  // some linear function (I think is linear)
-  return distance * (currentStep / totalSteps) + offsetValue
-}
-```
-</p>
-
-<p>
-[Here](<a href="https://gist.github.com/davidpa9708/ba0d2940aee851f65f75c0ca5ba5fb60">https://gist.github.com/davidpa9708/ba0d2940aee851f65f75c0ca5ba5fb60</a>) are some more easing functions
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org38d5dfe" class="outline-3">
-<h3 id="org38d5dfe"><span class="section-number-3">4.3</span> Scrolling</h3>
-<div class="outline-text-3" id="text-4-3">
-</div>
-<div id="outline-container-org216327c" class="outline-4">
-<h4 id="org216327c"><span class="section-number-4">4.3.1</span> scrollBy</h4>
-<div class="outline-text-4" id="text-4-3-1">
-<p>
-<span class="underline">scrollBy</span> will accept a value (the number of px to scroll down), a duration (to override the default duration), and a easing function (to override the default one).
-If the value in negative it will scroll up
-</p>
-
-<p>
-```ts
-scrollManager.scrollBy(50) <i>/ scroll 50px down
-scrollManager.scrollBy(-50) /</i> scroll 50px up
-scrollManager.scrollBy(50, 1000) <i>/ scroll by 50px in 1000ms
-scrollManager.scrollBy(50, 1000, customEasingFunction) /</i> it can also be specified an easing function just for that scroll animation
-```
-</p>
-</div>
-
-<ol class="org-ol">
-<li><a id="orgd661fde"></a>scrollBy element<br />
-<div class="outline-text-5" id="text-4-3-1-1">
-<p>
-The 1st parameter of scrollBy.element is the element whose size will be used to scroll, the rest of parameters same as plane scrollBy
-</p>
-
-<p>
-```ts
-scrollManager.scrollBy.element("*some-element") <i>/ scroll by "*some-element"'s size
-scrollManager.scrollBy.element("*some-element", 0.5) /</i> scroll by half of the size of "*some-element"
-scrollManager.scrollBy.element("*some-element", -1, 1000) <i>/ scroll by "*some-element"' size up in 1000ms
-scrollManager.scrollBy.element("*some-element", 1, 1000, customEasingFunction) /</i> scroll by "*some-element"' size in 1000ms with a customEasingFunction
-```
-</p>
-</div>
-</li>
-
-<li><a id="org0636960"></a>scrollBy size<br />
-<div class="outline-text-5" id="text-4-3-1-2">
-<p>
-Here the <span class="underline">size</span> is the size of the scroll container, and the value passed is a modifier, been 1 the full size, 0.5 half, and a negative value will mean the scroll will be up instead of down (or left instead of right)
-</p>
-
-<p>
-```ts
-scrollManager.scrollBy.size(1) <i>/ scroll a screen down
-scrollManager.scrollBy.size(-1) /</i> scroll a screen up
-scrollManager.scrollBy.size(0.5, 1000) // scroll half a screen down
-```
-</p>
-
-<p>
-See [size](*size)
-</p>
-</div>
-</li>
-
-<li><a id="org9573ea4"></a>scrollBy scrollSize<br />
-<div class="outline-text-5" id="text-4-3-1-3">
-<div class="org-src-container">
-<pre class="src src-ts">scrollManager.scrollBy.scrollSize(0.1) // scroll by 10% of the scroll size
-</pre>
-</div>
-
-<p>
-See [scrollSize](*scrollsize)
-</p>
-</div>
-</li>
-</ol>
-</div>
-
-<div id="outline-container-org7902060" class="outline-4">
-<h4 id="org7902060"><span class="section-number-4">4.3.2</span> scrollTo</h4>
-<div class="outline-text-4" id="text-4-3-2">
-<p>
-<span class="underline">scrollTo</span> will accept a value (the position to scroll to), a duration (to override the default duration), and a easing function (to override the default one).
-</p>
-
-<p>
-```ts
-scrollManager.scrollTo(50) <i>/ scroll to position = 50px
-scrollManager.scrollTo(50, 1000) /</i> scroll in 1000ms
-```
-</p>
-</div>
-
-<ol class="org-ol">
-<li><a id="org8f48f31"></a>scrollTo element<br />
-<div class="outline-text-5" id="text-4-3-2-1">
-<p>
-The 1st parameter of scrollTo.element is the element whose position will be used to scroll, the rest of parameters same as plane scrollTo
-</p>
-
-<p>
-For the value used to center the element, it matches the same criteria used in [getRelativeElementPosition](*relativeelementposition)
-</p>
-
-<p>
-```ts
-scrollManager.scrollTo.element("*some-element") <i>/ scroll to "*some-element"
-scrollManager.scrollTo.element("*some-element", 0.5) /</i> scroll to "*some-element" and center it
-scrollManager.scrollTo.element("*some-element", 1, 1000) // scroll to "*some-element" and place it at the bottom of the screen in 1000ms
-```
-</p>
-</div>
-</li>
-
-<li><a id="org3845b64"></a>scrollTo size<br />
-<div class="outline-text-5" id="text-4-3-2-2">
-<p>
-Pretty much the same as [scrollBy.size](*scrollby-size), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
-</p>
-
-<p>
-```ts
-scrollManager.scrollTo.size(0) <i>/ scroll to top (1st 'screen')
-scrollManager.scrollTo.size(1) /</i> scroll to the 2nd screen
-scrollManager.scrollTo.size(2, 999) // scroll to the 3rd screen in 999ms
-```
-</p>
-
-<p>
-See [size](*size)
-</p>
-</div>
-</li>
-
-<li><a id="orgefb2c37"></a>scrollTo scrollSize<br />
-<div class="outline-text-5" id="text-4-3-2-3">
-<p>
-Same as [scrollBy.scrollSize](*scrollby-scrollsize), except it scrolls <span class="underline">to</span> instead of <span class="underline">by</span>.
-</p>
-
-<p>
-```ts
-scrollManager.scrollTo.scrollSize(0) <i>/ scroll to the top of the page
-scrollManager.scrollTo.scrollSize(1) /</i> scroll to the bottom
-scrollManager.scrollTo.scrollSize(0.5, 1000) // scroll to the middle in 1000ms
-```
-</p>
-
-<p>
-See [scrollSize](*scrollsize)
-</p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-orgcdcea74" class="outline-3">
-<h3 id="orgcdcea74"><span class="section-number-3">4.4</span> Computed values</h3>
-<div class="outline-text-3" id="text-4-4">
-</div>
-<div id="outline-container-orgaf397fa" class="outline-4">
-<h4 id="orgaf397fa"><span class="section-number-4">4.4.1</span> scrollPosition</h4>
-<div class="outline-text-4" id="text-4-4-1">
-<p>
-```ts
-const scrollManager = new Scroll()
-</p>
-
-<p>
-scrollManager.scrollPosition // current position of the scroll (direction depends of the default value passed in the constructor)
-```
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgf7fd502" class="outline-4">
-<h4 id="orgf7fd502"><span class="section-number-4">4.4.2</span> size</h4>
-<div class="outline-text-4" id="text-4-4-2">
-<p>
-```ts
-const scrollManager = new Scroll()
-</p>
-
-<p>
-scrollManager.size // the size of the element (excluding its borders and scrollbar's size)
-```
-</p>
-</div>
-</div>
-
-<div id="outline-container-org815e64c" class="outline-4">
-<h4 id="org815e64c"><span class="section-number-4">4.4.3</span> scrollSize</h4>
-<div class="outline-text-4" id="text-4-4-3">
-<p>
-```ts
-const scrollManager = new Scroll()
-</p>
-
-<p>
-scrollManager.scrollSize // the total scroll you can do, (scrollHeight - height (or width depending on the direction))
-```
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgffc126a" class="outline-4">
-<h4 id="orgffc126a"><span class="section-number-4">4.4.4</span> relativeElementPosition</h4>
-<div class="outline-text-4" id="text-4-4-4">
-<p>
-```ts
-const relativePosition = new Scroll().getRelativeElementPosition("*some-elemet")
-</p>
-
-<p>
-if (relativePosition &lt; -1) {
-  <i>/</i> element is out of view
-}
-if (relativePosition &gt; -1 &amp;&amp; relativePosition &lt; 0) {
-  // element bottom is partially visible
-}
-if (relativePosition &gt; 0 &amp;&amp; relativePosition &lt; 1) {
-  // element is fully visible
-  if (relativePosition <code>=</code> 0.5) {
-    // &#x2026;element is centered in view
-  }
-}
-if (relativePosition &gt; 1 &amp;&amp; relativePosition &lt; 2) {
-  // element top is partially visible
-}
-if (relativePosition &gt; 2) {
-  // element is out of view
-}
-```
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org4cf9832" class="outline-2">
-<h2 id="org4cf9832"><span class="section-number-2">5</span> Browser Compatibility</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-Test are made using automate testing with [Browserstack](<a href="https://www.browserstack.com">https://www.browserstack.com</a>) [for open source](<a href="https://www.browserstack.com/open-source?ref=pricing">https://www.browserstack.com/open-source?ref=pricing</a>).
-&lt;span&gt; &lt;img src="./assets/BrowserStack-logo.png" width="200px" align="middle" /&gt; &lt;/span&gt;
-</p>
-</div>
-</div>
-
-<div id="outline-container-org004d2dd" class="outline-2">
-<h2 id="org004d2dd"><span class="section-number-2">6</span> Why?</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-There are a lot of packages about smooth scrolling, so, what's the difference?
-Well, the main idea is to be able to stack multiple scroll animations together, and with high precision. That is not an extra feature, that's what this package does, you can trigger multiple animations to several places, and it will be as precise as it can be.
-</p>
-</div>
-</div>
-<div id="outline-container-org2b901f8" class="outline-2">
-<h2 id="org2b901f8"><span class="section-number-2">7</span> License</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-[MIT](./LICENSE.md)
-</p>
-</div>
-</div>
-<div id="outline-container-org43a118b" class="outline-2">
-<h2 id="org43a118b"><span class="section-number-2">8</span> Support</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-This project is free and open-source, so if you think this project can help you or anyone else, you should star it in [github](<a href="https://github.com/LeDDGroup/scroll-utility/">https://github.com/LeDDGroup/scroll-utility/</a>)
-Also feel free to open an [issue](<a href="https://github.com/LeDDGroup/scroll-utility/issues">https://github.com/LeDDGroup/scroll-utility/issues</a>) if you have any idea, question, or you've found a bug. Any feedback is good support
-</p>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-08-18 Sun 00:16</p>
+<p class="date">Created: 2019-08-18 Sun 08:37</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
