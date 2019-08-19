@@ -1,4 +1,4 @@
-#+TITLE: scroll-utility: A simple to use scroll utility package for centering elements, and smooth animations
+#+TITLE: scroll-utility
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css" />
 #+INFOJS_OPT: path:org-info.js view:info
@@ -17,7 +17,6 @@
 - Handle multiple scroll animation at the same time
 
 * Installation
-
 From npm:
 #+BEGIN_SRC bash
 $ npm install --save scroll-utility
@@ -29,28 +28,22 @@ From a cdn: [[https://www.jsdelivr.com/package/npm/scroll-utility][jsdelivr]]
 #+END_SRC
 when downloading from a cdn the package will be globally exported as _ScrollUtility_
 
-* How to scroll
-
+* *Scroll*
+The *Scroll* class is the one used to scroll
 #+BEGIN_SRC typescript
 import { Scroll } from "scroll-utility"
 
 const scrollManager = new Scroll()
-
 scrollManager.scroll("#some-element").offset(-50)
 #+END_SRC
-
 That's just a limited overview of how to use *scroll-utility*. It can be a lot
 more powerful and flexlible
-
-* Creating a *Scroll* instance
-
-To create a *Scroll* instance you only need to call its contructor:
+** Customizing *Scroll*
+The *Scroll* constructor accepts several options:
 #+BEGIN_SRC typescript
 import Scroll from "scroll-utility";
 
-const scrollManger = new Scroll()
-
-const scrollManager = new Scroll(options?: {
+const scrollManager = new Scroll({
     element?,
     horizontal?,
     duration?,
@@ -59,8 +52,7 @@ const scrollManager = new Scroll(options?: {
 })
 #+END_SRC
 
-That will create a "scrollManager", wich can be used to scroll the page
-
+Quick overview of customiation options:
 |------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
 | parameter  | default value   | type                               | notes                                                                    |
 |------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
@@ -70,9 +62,8 @@ That will create a "scrollManager", wich can be used to scroll the page
 | easing     | "easeInOutQuad" | string; (t, b, c, d) => number     | easing function used for scroll animations                               |
 | onScroll   | null            | null; (external?: boolean) => void | callback function onscroll                                               |
 
-
 For example, to create a horizontal *scrollManager* within "#container", with a
-duration of 500ms for its 'linear' scroll animation, that logs "hi" every time
+duration of *500ms* for its '*linear*' scroll animation, that logs *"hi"* every time
 it scrolls:
 
 #+BEGIN_SRC typescript
@@ -84,9 +75,7 @@ new Scroll({
     onScroll: () => console.log("hi"),
 })
 #+END_SRC
-
 It's also posible to pass parameters without an object
-
 #+BEGIN_SRC typescript
 new Scroll(
     "#container",
@@ -97,11 +86,8 @@ new Scroll(
 )
 #+END_SRC
 
-In order *element*, *horizontal*, *duration*, *easing* and *onScroll*
 
-Every parameter is optional
-
-** element
+*** element
 #+BEGIN_SRC typescript
 new Scroll({ element: "#container" })
 #+END_SRC
@@ -116,14 +102,14 @@ If it's a *string*, then it will use it as a *querySelector* with
 You can call *document.querySelector* beforehand if you want to ensure
 the element exists
 
-** horizontal
+*** horizontal
 #+BEGIN_SRC typescript
 new Scroll({ horizontal: true })
 #+END_SRC
 The *horizontal* option indicates the direction when scrolling, by default
 *false*, wich means vertical scroll
 
-** duration
+*** duration
 #+BEGIN_SRC typescript
 new Scroll({ duration: 0 })
 #+END_SRC
@@ -138,7 +124,7 @@ const scrollManager = new Scroll({ duration: 0 })
 
 scrollManager.duration = 999
 #+END_SRC
-** easing
+*** easing
 #+BEGIN_SRC typescript
 new Scroll({ easing: "linear" })
 #+END_SRC
@@ -161,7 +147,7 @@ const scrollManager = new Scroll({ easing: "linear" })
 
 scrollManager.easing = "easeOutBounce"
 #+END_SRC
-** onScroll
+*** onScroll
 #+BEGIN_SRC typescript
 new Scroll({
   onScroll: (external) => {
@@ -182,3 +168,12 @@ const scrollManager = new Scroll({ onScroll: null })
 scrollManager.onScroll = () => alert("hi")
 
 #+END_SRC
+** scroll
+** offset
+** Misc
+*** stopAllAnimations
+*** size
+*** scrollSize
+*** scrollPosition
+*** getRelativeElementPosition
+* Other useful functions
