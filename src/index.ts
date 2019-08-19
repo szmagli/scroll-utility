@@ -1,6 +1,6 @@
 import { Scroll } from "./scroll"
-export * from "./scroll"
-export * from "./animation"
-export * from "./element"
+export { Misc } from "./misc"
 export { Easings } from "./easings"
-export default Scroll
+const scrollManger = new Scroll()
+export { Scroll, scrollManger }
+export default scrollManger
