@@ -1,8 +1,6 @@
 import { AnimationManager } from "./animation-manager"
 import { EasingOrFunction, Easings } from "./easings"
-import * as ScrollElement from "./element"
-
-type ElementOrQuery = Window | Element | string
+import { ElementOrQuery, Misc } from "./misc"
 
 function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (typeof elementOrQuery === "string") {
@@ -64,21 +62,21 @@ class Scroll {
     })
     this.animationManager = new AnimationManager(
       this.scrollPosition,
-      value => ScrollElement.scrollTo(this.element, value, this.horizontal),
+      value => Misc.scrollTo(this.element, value, this.horizontal),
       () => this.scrollSize,
     )
   }
   get size() {
-    return ScrollElement.getSize(this.element, this.horizontal)
+    return Misc.getSize(this.element, this.horizontal)
   }
   get scrollSize() {
-    return ScrollElement.getScrollSize(this.element, this.horizontal) - this.size
+    return Misc.getScrollSize(this.element, this.horizontal) - this.size
   }
   get scrollPosition() {
-    return ScrollElement.getScrollPosition(this.element, this.horizontal)
+    return Misc.getScrollPosition(this.element, this.horizontal)
   }
   getRelativeElementPosition(elementOrQuery: ElementOrQuery): number {
-    return ScrollElement.getRelativeElementPosition(this.element, elementOrQuery, this.horizontal)
+    return Misc.getRelativeElementPosition(this.element, elementOrQuery, this.horizontal)
   }
   stopAllAnimations() {
     this.animationManager.stopAllAnimations()
@@ -106,12 +104,7 @@ class Scroll {
       : {}
     this.offset(
       !!options.element
-        ? ScrollElement.getDistToCenterElement(
-            this.element,
-            options.element,
-            this.horizontal,
-            options.value,
-          )
+        ? Misc.getDistToCenterElement(this.element, options.element, this.horizontal, options.value)
         : options.value - this.scrollPosition,
       options.duration,
       options.easing,
