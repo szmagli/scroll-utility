@@ -297,5 +297,5 @@ There are automated test for several browsers, thanks to [[https://www.browserst
 
 Compatibility garanteed in all major browsers.
 
-#+ATTR_HTML: :align middle :width 300px
-[[../assets/BrowserStack-logo.png]]
+#+ATTR_HTML: :align middle
+[[https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg]]
