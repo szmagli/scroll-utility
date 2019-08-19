@@ -1,6 +1,5 @@
 #+TITLE: scroll-utility
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
 #+INFOJS_OPT: path:org-info.js view:info
 #+STARTUP: content
 #+OPTIONS: num:nil
