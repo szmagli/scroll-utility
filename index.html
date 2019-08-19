@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-18 Sun 08:37 -->
+<!-- 2019-08-19 Mon 19:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>scroll-utility: A simple to use scroll utility package for centering elements, and smooth animations</title>
+<title>scroll-utility</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="David Perez Alvarez" />
 <style type="text/css">
@@ -193,16 +193,15 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="awsm.css" />
-<style> body { margin: auto; width: 80%; } pre.src { background: #141414; color: white; } pre.src::before { color: black; }</style>
+<link rel="stylesheet" type="text/css" href="index.css" />
 
-<script type="text/javascript" src="https://orgmode.org/org-info.js">
+<script type="text/javascript" src="org-info.js">
 /**
  *
- * @source: https://orgmode.org/org-info.js
+ * @source: org-info.js
  *
  * @licstart  The following is the entire license notice for the
- *  JavaScript code in https://orgmode.org/org-info.js.
+ *  JavaScript code in org-info.js.
  *
  * Copyright (C) 2012-2019 Free Software Foundation, Inc.
  *
@@ -222,7 +221,7 @@
  * through which recipients can access the Corresponding Source.
  *
  * @licend  The above is the entire license notice
- * for the JavaScript code in https://orgmode.org/org-info.js.
+ * for the JavaScript code in org-info.js.
  *
  */
 </script>
@@ -316,30 +315,51 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">scroll-utility: A simple to use scroll utility package for centering elements, and smooth animations</h1>
+<h1 class="title">scroll-utility</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc5a63a5">Features</a></li>
-<li><a href="#org827da97">Installation</a></li>
-<li><a href="#org41c96e2">How to scroll</a></li>
-<li><a href="#orgacc8fed">Creating a <b>Scroll</b> instance</a>
+<li><a href="#org53c59c1">Features</a></li>
+<li><a href="#org62a0a75">Installation</a></li>
+<li><a href="#orgd8174ea"><b>Scroll</b></a>
 <ul>
-<li><a href="#org37ef6d7">element</a></li>
-<li><a href="#orgd5e4099">horizontal</a></li>
-<li><a href="#org940f3a8">duration</a></li>
-<li><a href="#org1e9ff26">easing</a></li>
-<li><a href="#org0570242">onScroll callback</a></li>
+<li><a href="#org4c86e5a">constructor</a>
+<ul>
+<li><a href="#orgefc5a30">element</a></li>
+<li><a href="#org277acba">horizontal</a></li>
+<li><a href="#org09a231e">duration</a></li>
+<li><a href="#org6e4548d">easing</a></li>
+<li><a href="#orgbd4645f">onScroll</a></li>
 </ul>
 </li>
+<li><a href="#org2d2ae1b">scroll</a>
+<ul>
+<li><a href="#org5126f55">to "position"</a></li>
+<li><a href="#org9f92690">to "element"</a></li>
+</ul>
+</li>
+<li><a href="#orgef80674">offset</a></li>
+<li><a href="#org965fab1">other</a>
+<ul>
+<li><a href="#orgbc1e54c">stopAllAnimations</a></li>
+<li><a href="#orgb8a9b95">size</a></li>
+<li><a href="#orga312b10">scrollSize</a></li>
+<li><a href="#org7483f6f">scrollPosition</a></li>
+<li><a href="#org25db4b2">getRelativeElementPosition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfe16994">Other useful functions</a></li>
+<li><a href="#orgf94b9bf">Browser Compatibility</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc5a63a5" class="outline-2">
-<h2 id="orgc5a63a5">Features</h2>
-<div class="outline-text-2" id="text-orgc5a63a5">
+<div id="outline-container-org53c59c1" class="outline-2">
+<h2 id="org53c59c1">Features</h2>
+<div class="outline-text-2" id="text-org53c59c1">
 <ul class="org-ul">
 <li>Extremely powerful for scrolling to anywhere in the page, like centering
 elements to certain degree.</li>
@@ -354,9 +374,9 @@ elements to certain degree.</li>
 </div>
 </div>
 
-<div id="outline-container-org827da97" class="outline-2">
-<h2 id="org827da97">Installation</h2>
-<div class="outline-text-2" id="text-org827da97">
+<div id="outline-container-org62a0a75" class="outline-2">
+<h2 id="org62a0a75">Installation</h2>
+<div class="outline-text-2" id="text-org62a0a75">
 <p>
 From npm:
 </p>
@@ -378,41 +398,44 @@ when downloading from a cdn the package will be globally exported as <span class
 </div>
 </div>
 
-<div id="outline-container-org41c96e2" class="outline-2">
-<h2 id="org41c96e2">How to scroll</h2>
-<div class="outline-text-2" id="text-org41c96e2">
+<div id="outline-container-orgd8174ea" class="outline-2">
+<h2 id="orgd8174ea"><b>Scroll</b></h2>
+<div class="outline-text-2" id="text-orgd8174ea">
+<p>
+The <b>Scroll</b> class is the one used to scroll
+</p>
 <div class="org-src-container">
-<pre class="src src-js"><span style="color: #51afef;">import</span> { Scroll } from <span style="color: #98be65;">"scroll-utility"</span>
+<pre class="src src-typescript"><span style="color: #51afef;">import</span> <span style="color: #51afef;">{</span> Scroll <span style="color: #51afef;">}</span> <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">const Scroll = ScrollUtility.Scroll // from cdn</span>
 
-<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span>()
-
-scrollManager.scroll(<span style="color: #98be65;">"#some-element"</span>).offset(-<span style="color: #da8548; font-weight: bold;">50</span>)
+<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #98be65;">"#some-element"</span><span style="color: #51afef;">)</span>.offset<span style="color: #51afef;">(</span>-<span style="color: #da8548; font-weight: bold;">50</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
-
-<p>
-That's just a limited overview of how to use <b>scroll-utility</b>. It can be a lot
-more powerful and flexlible
-</p>
 </div>
-</div>
-
-<div id="outline-container-orgacc8fed" class="outline-2">
-<h2 id="orgacc8fed">Creating a <b>Scroll</b> instance</h2>
-<div class="outline-text-2" id="text-orgacc8fed">
+<div id="outline-container-org4c86e5a" class="outline-3">
+<h3 id="org4c86e5a">constructor</h3>
+<div class="outline-text-3" id="text-org4c86e5a">
 <p>
-To create a <b>Scroll</b> instance you only need to call its contructor:
+The <b>Scroll</b> constructor accepts several options:
 </p>
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">import</span> Scroll <span style="color: #51afef;">from</span> <span style="color: #98be65;">"scroll-utility"</span>;
-<span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+<span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+    element?,
+    horizontal?,
+    duration?,
+    easing?,
+    onScroll?,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">or</span>
+<span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span>element?, horizontal?, duration?, easing?, onScroll?<span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-That will create a "scrollManager"
+Quick overview of each parameter:
 </p>
-
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -471,10 +494,9 @@ That will create a "scrollManager"
 </tbody>
 </table>
 
-
 <p>
 For example, to create a horizontal <b>scrollManager</b> within "#container", with a
-duration of 500ms for its 'linear' scroll animation, that logs "hi" every time
+duration of <b>500ms</b> for its '<b>linear</b>' scroll animation, that logs <b>"hi"</b> every time
 it scrolls:
 </p>
 
@@ -488,28 +510,24 @@ it scrolls:
 <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
-
 <p>
 It's also posible to pass parameters without an object
 </p>
-
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #98be65;">"#container"</span>, <span style="color: #51afef;">true</span>, <span style="color: #da8548; font-weight: bold;">500</span>, <span style="color: #98be65;">"linear"</span>, <span style="color: #c678dd;">()</span> =&gt; console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span>
+    <span style="color: #98be65;">"#container"</span>,
+    <span style="color: #51afef;">true</span>,
+    <span style="color: #da8548; font-weight: bold;">500</span>,
+    <span style="color: #98be65;">"linear"</span>,
+    <span style="color: #c678dd;">()</span> =&gt; console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #c678dd;">)</span>
+<span style="color: #51afef;">)</span>
 </pre>
 </div>
-
-<p>
-In order <b>element</b>, <b>horizontal</b>, <b>duration</b>, <b>easing</b> and <b>onScroll</b>
-</p>
-
-<p>
-every parameter is optional
-</p>
 </div>
 
-<div id="outline-container-org37ef6d7" class="outline-3">
-<h3 id="org37ef6d7">element</h3>
-<div class="outline-text-3" id="text-org37ef6d7">
+<div id="outline-container-orgefc5a30" class="outline-4">
+<h4 id="orgefc5a30">element</h4>
+<div class="outline-text-4" id="text-orgefc5a30">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> element: <span style="color: #98be65;">"#container"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
@@ -520,24 +538,24 @@ By default it will scroll normally in the page, as in <b>window</b> or in <b>doc
 </p>
 
 <p>
-It can be the result of `document.getElementById` or `document.querySelector`.
+It can be the result of <b>document.getElementById</b> or <b>document.querySelector</b>.
 </p>
 
 <p>
-If it's a <b>string</b>, then it will use it as a querySelector with
-`document.querySelector` for getting an Element.
+If it's a <b>string</b>, then it will use it as a <b>querySelector</b> with
+<b>document.querySelector</b> for getting an <b>Element</b>.
 </p>
 
 <p>
-You can call yourself `document.querySelector` beforehand if you want to ensure
+You can call <b>document.querySelector</b> beforehand if you want to ensure
 the element exists
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd5e4099" class="outline-3">
-<h3 id="orgd5e4099">horizontal</h3>
-<div class="outline-text-3" id="text-orgd5e4099">
+<div id="outline-container-org277acba" class="outline-4">
+<h4 id="org277acba">horizontal</h4>
+<div class="outline-text-4" id="text-org277acba">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> horizontal: <span style="color: #51afef;">true</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
@@ -549,66 +567,338 @@ The <b>horizontal</b> option indicates the direction when scrolling, by default
 </div>
 </div>
 
-<div id="outline-container-org940f3a8" class="outline-3">
-<h3 id="org940f3a8">duration</h3>
-<div class="outline-text-3" id="text-org940f3a8">
+<div id="outline-container-org09a231e" class="outline-4">
+<h4 id="org09a231e">duration</h4>
+<div class="outline-text-4" id="text-org09a231e">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> duration: <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
 The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span>
-It will be used along with <a href="#org1e9ff26">easing</a> for creating the <b>smooth</b> animation when scrolling
+It will be used along with <a href="#org6e4548d">easing</a> for creating the <b>smooth</b> animation when scrolling
 </p>
 
 <p>
 If you want to disable the <i>smooth</i> animation, set <b>duration</b> to 0.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org1e9ff26" class="outline-3">
-<h3 id="org1e9ff26">easing</h3>
-<div class="outline-text-3" id="text-org1e9ff26">
+<p>
+It can be changed any time:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> duration: <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+
+scrollManager.duration = <span style="color: #da8548; font-weight: bold;">999</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6e4548d" class="outline-4">
+<h4 id="org6e4548d">easing</h4>
+<div class="outline-text-4" id="text-org6e4548d">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> easing: <span style="color: #98be65;">"linear"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
-The <b>easing</b> option indicates the default animation of the scroll, by default <b>inOutQuad</b>
+The <b>easing</b> option indicates the default animation of the scroll, by default <b>"inOutQuad"</b>
 </p>
 
 <p>
-<a href="https://easings.net/en">Here</a> are some more easing functions
+Posible values are "linear" and some of the form: 'easeIn{<b>type</b>}' | "easeOut{<b>type</b>}" | "easeInOut{<b>type</b>}"; being <b>type</b>: "Quart",
+"Cubic", "Bounce"&#x2026;
 </p>
-</div>
-</div>
-<div id="outline-container-org0570242" class="outline-3">
-<h3 id="org0570242">onScroll callback</h3>
-<div class="outline-text-3" id="text-org0570242">
+
+<p>
+You can also create your own easing function:
+</p>
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> onScroll: <span style="color: #51afef;">null</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">default value</span>
+<pre class="src src-typescript">  <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> easing: <span style="color: #98be65;">(</span>t, b, c, d<span style="color: #98be65;">)</span> =&gt; c / d + b <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+Thats the function I use for "linear"
+</p>
+
+<p>
+Learn more about easing functions <a href="https://easings.net/en">here</a>
+</p>
+
+<p>
+It can be changed any time:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> easing: <span style="color: #98be65;">"linear"</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+
+scrollManager.easing = <span style="color: #98be65;">"easeOutBounce"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbd4645f" class="outline-4">
+<h4 id="orgbd4645f">onScroll</h4>
+<div class="outline-text-4" id="text-orgbd4645f">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+  onScroll: <span style="color: #98be65;">(</span>external<span style="color: #98be65;">)</span> =&gt; <span style="color: #98be65;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span>external<span style="color: #51afef;">)</span> <span style="color: #51afef;">{</span>
+        console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"external scroll"</span><span style="color: #c678dd;">)</span>
+    <span style="color: #51afef;">}</span> <span style="color: #51afef;">else</span> <span style="color: #51afef;">{</span>
+        console.log<span style="color: #c678dd;">(</span><span style="color: #98be65;">"internal scroll"</span><span style="color: #c678dd;">)</span>
+    <span style="color: #51afef;">}</span>
+  <span style="color: #98be65;">}</span>,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
 <p>
-```js
-let scrollManager = new Scroll() // no callback by default :)
-scrollManager = new Scroll({
-  onScroll: external =&gt; {
-    console.log("scrolled!")
-    if (external) {
-      // external <code>=</code> true if the scroll was triggered by other means (the user with the mouse or other js running in the browser)
-    }
-  },
-})
+What does it mean?, well, <b>external</b> is an attempt
+It can be changed any time:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span> onScroll: <span style="color: #51afef;">null</span> <span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+
+scrollManager.onScroll = <span style="color: #51afef;">()</span> =&gt; alert<span style="color: #51afef;">(</span><span style="color: #98be65;">"hi"</span><span style="color: #51afef;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2d2ae1b" class="outline-3">
+<h3 id="org2d2ae1b">scroll</h3>
+<div class="outline-text-3" id="text-org2d2ae1b">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">toPosition</span>
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+    value,
+    duration?,
+    easing?
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">or</span>
+scrollManager.scroll<span style="color: #51afef;">(</span>value, duration?, easing?<span style="color: #51afef;">)</span>
+
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">toElement</span>
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+    element,
+    value?,
+    duration?,
+    easing?
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span> <span style="color: #5B6268;">// </span><span style="color: #5B6268;">or</span>
+scrollManager.scroll<span style="color: #51afef;">(</span>element, value?, duration?, easing?<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+<div id="outline-container-org5126f55" class="outline-4">
+<h4 id="org5126f55">to "position"</h4>
+<div class="outline-text-4" id="text-org5126f55">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+  value,
+  duration?,
+  easing?,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+<span style="color: #5B6268;">//</span><span style="color: #5B6268;">or</span>
+scrollManager.scroll<span style="color: #51afef;">(</span>value, duration?, easing?<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Calling <b>scroll</b> will do scroll to the position <b>value</b>: eg. <b>0</b> will do scroll
+to the top of the page
 </p>
 
 <p>
-<i>/ can be changed later:
-scrollManager.onScroll = () =&gt; console.log("new onScroll callback") /</i> callback changed
-scrollManager.onScroll = null // go back to default config :)
-```
+<b>duration</b> is the duration of that scroll action. If not specified it will use the
+one in <a href="#org09a231e">constructor</a>.
+</p>
+
+<p>
+<b>easing</b> is the ease animation of that scroll action. If not specified it will use the
+one in <a href="#org6e4548d">constructor</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-org9f92690" class="outline-4">
+<h4 id="org9f92690">to "element"</h4>
+<div class="outline-text-4" id="text-org9f92690">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+scrollManager.scroll<span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+    element,
+    value?,
+    duration?,
+    easing?,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+<span style="color: #5B6268;">//</span><span style="color: #5B6268;">or</span>
+scrollManager.scroll<span style="color: #51afef;">(</span>element, value?, duration?, easing?<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Calling <b>scroll</b> will do scroll to the position of the element <b>element</b>, and
+will center it at <b>value</b>, 0 by default. ie. the element will be at the top of
+the screen
+</p>
+
+<p>
+<b>duration</b> is the duration of that scroll action. If not specified it will use the
+one in <a href="#org09a231e">constructor</a>.
+</p>
+
+<p>
+<b>easing</b> is the ease animation of that scroll action. If not specified it will use the
+one in <a href="#org6e4548d">constructor</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgef80674" class="outline-3">
+<h3 id="orgef80674">offset</h3>
+<div class="outline-text-3" id="text-orgef80674">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+
+scrollManager.offset<span style="color: #51afef;">(</span><span style="color: #c678dd;">{</span>
+  value: <span style="color: #da8548; font-weight: bold;">100</span>,
+  duration: <span style="color: #da8548; font-weight: bold;">1000</span>,
+  easing: <span style="color: #98be65;">"some"</span>,
+<span style="color: #c678dd;">}</span><span style="color: #51afef;">)</span>
+<span style="color: #5B6268;">//</span><span style="color: #5B6268;">or</span>
+scrollManager.offset<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">100</span>, <span style="color: #da8548; font-weight: bold;">1000</span>, <span style="color: #98be65;">"some"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org965fab1" class="outline-3">
+<h3 id="org965fab1">other</h3>
+<div class="outline-text-3" id="text-org965fab1">
+</div>
+<div id="outline-container-orgbc1e54c" class="outline-4">
+<h4 id="orgbc1e54c">stopAllAnimations</h4>
+<div class="outline-text-4" id="text-orgbc1e54c">
+<p>
+To stop all scroll animations:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">const</span> <span style="color: #dcaeea;">scrollManager</span> = <span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #51afef;">()</span>
+scrollManager.stopAllAnimations<span style="color: #51afef;">()</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb8a9b95" class="outline-4">
+<h4 id="orgb8a9b95">size</h4>
+<div class="outline-text-4" id="text-orgb8a9b95">
+<p>
+The size of the <b>Scroll</b> container
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.size <span style="color: #5B6268;">// </span><span style="color: #5B6268;">size of the window</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">(</span><span style="color: #98be65;">"#container"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>.size <span style="color: #5B6268;">// </span><span style="color: #5B6268;">size of the element #container</span>
+</pre>
+</div>
+<p>
+The orientation of the value returned depends on the direction specified in the <a href="#org277acba">contructor</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orga312b10" class="outline-4">
+<h4 id="orga312b10">scrollSize</h4>
+<div class="outline-text-4" id="text-orga312b10">
+<p>
+The total scroll you can do within the <b>Scroll</b> container
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.scrollSize <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scrollSize of the windows</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">(</span><span style="color: #98be65;">"#container"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>.scrollSize <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scrollSize of the element #container</span>
+</pre>
+</div>
+<p>
+It's related to <b>scrollWidth/scrollHeight</b> properties of <i>HTMLElements</i>.
+</p>
+
+<p>
+The orientation of the value returned depends on the direction specified in the <a href="#org277acba">contructor</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org7483f6f" class="outline-4">
+<h4 id="org7483f6f">scrollPosition</h4>
+<div class="outline-text-4" id="text-org7483f6f">
+<p>
+The current position of the scroll
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.scrollPosition <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scrollPosition of the windows</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">(</span><span style="color: #98be65;">"#container"</span><span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span>.scrollPosition <span style="color: #5B6268;">// </span><span style="color: #5B6268;">scrollPosition of the element #container</span>
+</pre>
+</div>
+
+<p>
+For example, if you
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.scroll<span style="color: #51afef;">(</span><span style="color: #da8548; font-weight: bold;">100</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+the <b>scrollPosition</b> will be 100
+</p>
+
+
+<p>
+The orientation of the value returned depends on the direction specified in the <a href="#org277acba">contructor</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org25db4b2" class="outline-4">
+<h4 id="org25db4b2">getRelativeElementPosition</h4>
+<div class="outline-text-4" id="text-org25db4b2">
+<p>
+The relative position of certain element
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.getRelativeElementPosition<span style="color: #51afef;">(</span><span style="color: #98be65;">"#some-element"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+It relates to <a href="#org9f92690">scroll</a> (to "element"), so for example, if you
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #51afef;">(</span><span style="color: #51afef;">new</span> <span style="color: #ECBE7B;">Scroll</span><span style="color: #c678dd;">()</span><span style="color: #51afef;">)</span>.scroll<span style="color: #51afef;">(</span><span style="color: #98be65;">"#some-element"</span>, <span style="color: #da8548; font-weight: bold;">0.5</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+the relative position will be <b>0.5</b>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe16994" class="outline-2">
+<h2 id="orgfe16994">Other useful functions</h2>
+</div>
+<div id="outline-container-orgf94b9bf" class="outline-2">
+<h2 id="orgf94b9bf">Browser Compatibility</h2>
+<div class="outline-text-2" id="text-orgf94b9bf">
+<p>
+There are automated test for several browsers, thanks to <a href="https://www.browserstack.com">Browserstack</a>.
+</p>
+
+<p>
+Compatibility garanteed in all major browsers.
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg" class="org-svg" align="middle">
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
@@ -616,7 +906,7 @@ scrollManager.onScroll = null // go back to default config :)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-08-18 Sun 08:37</p>
+<p class="date">Created: 2019-08-19 Mon 19:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
