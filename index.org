@@ -246,6 +246,7 @@ scrollManager.offset(100, 1000, "some")
 ** other
 *** stopAllAnimations
 To stop all scroll animations:
+
 #+BEGIN_SRC typescript
 const scrollManager = new Scroll()
 scrollManager.stopAllAnimations()
@@ -291,7 +292,72 @@ It relates to [[to "element"][scroll]] (to "element"), so for example, if you
 (new Scroll()).scroll("#some-element", 0.5)
 #+END_SRC
 the relative position will be *0.5*
-* Other useful functions
+* *Misc* 
+Here I export some other useful functions.  
+
+They're meant for scroll-utility internal use, but I export them just in case someone 
+wouldn't want to create a *Scroll* instance to access some of it's element properties.
+#+BEGIN_SRC typescript
+  import { Misc } from "scroll-utility"
+
+  const Misc = ScrollUtility.Scroll // from cdn
+#+END_SRC
+** getSize
+   Returns the size (width/height) of the element that match *element* selector
+   #+BEGIN_SRC typescript
+    Misc.getSize(element: string, horizontal)
+
+    Misc.getSize(window, true)
+    Misc.getSize("#container") // horizontal: false by default
+   #+END_SRC
+** getSizeWithBorders 
+   Returns the size (including borders) of the element that match *element* selector
+   #+BEGIN_SRC typescript
+    Misc.getSizeWithBorders(element: string, horizontal)
+
+    Misc.getSizeWithBorders(window, true)
+    Misc.getSizeWithBorders("#container") // horizontal: false by default
+   #+END_SRC
+** getScrollPosition
+   Returns the position of the scroll (top/left)
+   #+BEGIN_SRC typescript
+    Misc.getScrollPosition(element: string, horizontal)
+
+    Misc.getScrollPosition(window, true)
+    Misc.getScrollPosition("#container") // horizontal: false by default
+   #+END_SRC
+** getScrollSize
+   Returns equivalent of scrollWidth/scrollHeight of elements
+   #+BEGIN_SRC typescript
+    Misc.getScrollSize(element: string, horizontal)
+
+    Misc.getScrollSize(window, true)
+    Misc.getScrollSize("#container") // horizontal: false by default
+   #+END_SRC
+** getRelativeElementPosition
+   Returns the degree in which the element is centered:
+   - < -1: above top
+   - -1 < x < 0: leaving top
+   - 0: top
+   - .5: centered
+   - 1: bottom
+   - 2 > x > 1: leaving bottom
+   - > 2: bellow bottom
+   #+BEGIN_SRC typescript
+    Misc.getRelativeElementPosition(container: string, element: string, horizontal: boolean)
+
+    Misc.getRelativeElementPosition(window, "#some-element")
+   #+END_SRC
+** getDistToCenterElement
+   Returns the distance (in pxs) to center some element
+   #+BEGIN_SRC typescript
+    Misc.getDistToCenterElement(container: string, element: string, value: number, horizontal: boolean)
+
+    Misc.getDistToCenterElement(window, "#some-element", 0) // top
+    Misc.getDistToCenterElement(window, "#some-element", .5) // centered
+    Misc.getDistToCenterElement(window, "#some-element", 1) // bottom
+   #+END_SRC
+** scrollTo
 * Browser Compatibility
 There are automated test for several browsers, thanks to [[https://www.browserstack.com][Browserstack]].
 
