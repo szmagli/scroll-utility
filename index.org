@@ -364,4 +364,14 @@ There are automated test for several browsers, thanks to [[https://www.browserst
 Compatibility garanteed in all major browsers.
 
 #+ATTR_HTML: :align middle
-[[https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg]]
+[[https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg]
+* Examples
+  Codepen examples:
+  #+BEGIN_HTML
+  <p class="codepen" data-height="265" data-theme-id="0" data-default-tab="result" data-user="theiades" data-slug-hash="EGrQVr" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="scroll-utility">
+    <span>See the Pen <a href="https://codepen.io/theiades/pen/EGrQVr/">
+    scroll-utility</a> by David Perez Alvarez (<a href="https://codepen.io/theiades">@theiades</a>)
+    on <a href="https://codepen.io">CodePen</a>.</span>
+  </p>
+  <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+  #+END_HTML
