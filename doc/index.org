@@ -2,7 +2,8 @@
 #+HTML_LINK_HOME: https://leddgroup.github.io/scroll-utility
 #+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
-#+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
+#+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
 #+INFOJS_OPT: path:org-info.js view:info
 #+STARTUP: content
 #+OPTIONS: num:nil
@@ -118,6 +119,21 @@
     It will be used along with [[easing]] for creating the *smooth* animation when scrolling
 
     If you want to disable the /smooth/ animation, set *duration* to 0.
+    
+    @@html: 
+      <div id="scroll-duration" class="scroll-container">
+        <div class="button-container">
+        <button class="scroll-button" onclick="scrollDuration()"> default: 1000 </button>
+        <button class="scroll-button" onclick="scrollDuration(750)"> 750 </button>
+        <button class="scroll-button" onclick="scrollDuration(500)"> 500 </button>
+        <button class="scroll-button" onclick="scrollDuration(250)"> 250 </button>
+        <button class="scroll-button" onclick="scrollDuration(0)"> 0 </button>
+        </div>
+      <h1> Top </h1>
+        <hr class="spacer" /> <hr class="spacer" />
+      <h1> Bottom </h1>
+    </div>
+    @@
 
     It can be changed any time:
     #+BEGIN_SRC typescript
@@ -130,27 +146,31 @@
       new Scroll({ easing: "linear" })
     #+END_SRC
     The *easing* option indicates the default animation of the scroll, by default *"inOutQuad"*
-
-    Posible values are "linear" and some of the form: 'easeIn{*type*}' | "easeOut{*type*}" | "easeInOut{*type*}"; being *type*: "Quart",
-    "Cubic", "Bounce"...
+    # Posible values are "linear" and some of the form: 'easeIn{*type*}' | "easeOut{*type*}" | "easeInOut{*type*}"; being *type*: "Quart",
+    # "Cubic", "Bounce"...
     
-    Easings:
-    @@html:
-      <div class="scroll-container">
+    @@html: 
+      <div id="scroll-easings" class="scroll-container">
+      top
         <div class="button-container">
-          <button onclick="window.ScrollUtility.scrollManager.offset(-1000)" class="scroll-button"> scroll up </button>
-          <button onclick="window.ScrollUtility.scrollManager.offset(1000)" class="scroll-button"> scroll down </button>
+        <button class="scroll-button" onclick="scrollEasing('linear')"> linear </button>
+        <button class="scroll-button" onclick="scrollEasing('easeInOutQuad')"> easeInOutQuad </button>
+        <button class="scroll-button" onclick="scrollEasing('easeInOutCubic')"> easeInOutCubic </button>
+        <button class="scroll-button" onclick="scrollEasing('easeInOutQuint')"> easeInOutQuint </button>
+        <button class="scroll-button" onclick="scrollEasing('easeOutBounce')"> easeOutBounce </button>
+        <button class="scroll-button" onclick="scrollEasing('easeInBack')"> easeInBack </button>
+        <button class="scroll-button" onclick="scrollEasing('easeInOutBack')"> easeInOutBack </button>
         </div>
         <hr class="spacer" /> <hr class="spacer" />
-        <hr class="spacer" /> <hr class="spacer" />
-      </div>
+      bottom
+    </div>
     @@
     
     You can also create your own easing function:
     #+BEGIN_SRC typescript
-      new Scroll({ easing: (t, b, c, d) => c / d + b })
+      new Scroll({ easing: (t, b, c, d) => (c * t) / d + b})
     #+END_SRC
-    Thats the function I use for "linear"
+    That's the one I use for "linear"
 
     It can be changed any time:
     #+BEGIN_SRC typescript
@@ -166,20 +186,42 @@
       new Scroll({
           onScroll: (external) => {
               if (external) {
-                  console.log("external scroll")
+                  // external scroll
               } else {
-                  console.log("internal scroll")
+                  // internal scroll
               }
           },
       })
     #+END_SRC
 
     What does it mean?, well, *external* is an attempt
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new Scroll({ onScroll: null })
+    
+    @@html: 
+      <div id="scroll-onScroll" class="scroll-container">
+      top
+        <div class="button-container">
+        <button class="scroll-button" onclick="scrollOnScroll()"> alert on scroll </button>
+        </div>
+    @@
+    #+BEGIN_SRC javascript
+      scrollManager.onScroll = (external) => {
+          if (external) {
+              alert("external scroll detected!");
+              scrollManager.onScroll = null;
+          }
+      };
+    #+END_SRC
+      @@html:
+        <hr class="spacer" /> <hr class="spacer" />
+        bottom
+      </div>
+      @@
 
-      scrollManager.onScroll = () => alert("hi")
+      It can be changed any time:
+      ,#+BEGIN_SRC typescript
+        const scrollManager = new Scroll({ onScroll: null })
+
+        scrollManager.onScroll = () => alert("hi")
 
     #+END_SRC
 ** scroll
