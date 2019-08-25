@@ -1,8 +1,10 @@
 #+TITLE: scroll-utility
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
-#+INFOJS_OPT: path:org-info.js view:info
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="doc/index.css" />
+#+INFOJS_OPT: path:doc/org-info.js view:info
 #+STARTUP: content
 #+OPTIONS: num:nil
+#+MACRO: html some
+#+MACRO: myname something
 
 * Features
 - Extremely powerful for scrolling to anywhere in the page, like centering
@@ -359,9 +361,12 @@ wouldn't want to create a *Scroll* instance to access some of it's element prope
    #+END_SRC
 ** scrollTo
 * Browser Compatibility
-There are automated test for several browsers, thanks to [[https://www.browserstack.com][Browserstack]].
-
-Compatibility garanteed in all major browsers.
-
+There are automated test for several browsers, thanks to [[https://www.browserstack.com][Browserstack]].\\
+Compatibility garanteed in all major browsers.\\
 #+ATTR_HTML: :align middle
-[[https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg]]
+https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg
+* Examples
+  @@html:
+  <h1> hello world! </h1>
+  @@
+  
