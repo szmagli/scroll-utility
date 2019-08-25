@@ -2,6 +2,8 @@ import { AnimationManager } from "./animation-manager"
 import { EasingOrFunction, Easings } from "./easings"
 import { ElementOrQuery, Misc } from "./misc"
 
+const THRESHOLD = 1.5
+
 function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (typeof elementOrQuery === "string") {
     return document.querySelector(elementOrQuery) as Element
@@ -54,7 +56,8 @@ class Scroll {
     this.duration = options.duration || 1000
     this.easing = options.easing || Easings.easeInOutQuad
     this.element.addEventListener("scroll", () => {
-      const changed = Math.floor(this.animationManager.position) !== Math.floor(this.scrollPosition)
+      const diff = Math.abs(this.scrollPosition - this.animationManager.position)
+      const changed = diff >= THRESHOLD
       if (changed) {
         this.animationManager.position = this.scrollPosition
       }
@@ -119,13 +122,13 @@ class Scroll {
         ? args[0]
         : {
             value: args[0],
-            duration: args[1],
+            duration: args[1] === undefined ? this.duration : args[1],
             easing: args[2],
           }
       : {}
     this.animationManager.createScrollAnimation({
       distToScroll: options.value,
-      duration: options.duration || this.duration,
+      duration: options.duration,
       easing: options.easing || this.easing,
     })
     return this
