@@ -1,5 +1,8 @@
-#+TITLE: [[https://leddgroup.github.io/scroll-utility][scroll-utility]]
+#+TITLE: scroll-utility
+#+HTML_LINK_HOME: https://leddgroup.github.io/scroll-utility
+#+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
+#+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"></script>
 #+INFOJS_OPT: path:org-info.js view:info
 #+STARTUP: content
 #+OPTIONS: num:nil
@@ -130,14 +133,24 @@
 
     Posible values are "linear" and some of the form: 'easeIn{*type*}' | "easeOut{*type*}" | "easeInOut{*type*}"; being *type*: "Quart",
     "Cubic", "Bounce"...
-
+    
+    Easings:
+    @@html:
+      <div class="scroll-container">
+        <div class="button-container">
+          <button onclick="window.ScrollUtility.scrollManager.offset(-1000)" class="scroll-button"> scroll up </button>
+          <button onclick="window.ScrollUtility.scrollManager.offset(1000)" class="scroll-button"> scroll down </button>
+        </div>
+        <hr class="spacer" /> <hr class="spacer" />
+        <hr class="spacer" /> <hr class="spacer" />
+      </div>
+    @@
+    
     You can also create your own easing function:
     #+BEGIN_SRC typescript
       new Scroll({ easing: (t, b, c, d) => c / d + b })
     #+END_SRC
     Thats the function I use for "linear"
-
-    Learn more about easing functions [[https://easings.net/en][here]]
 
     It can be changed any time:
     #+BEGIN_SRC typescript
@@ -145,6 +158,9 @@
 
       scrollManager.easing = "easeOutBounce"
     #+END_SRC
+    
+    Learn more about easing functions [[https://easings.net/en][here]]:
+    
 *** onScroll
     #+BEGIN_SRC typescript
       new Scroll({
