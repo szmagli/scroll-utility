@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-24 Sat 23:19 -->
+<!-- 2019-08-25 Sun 01:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title><a href="https://leddgroup.github.io/scroll-utility">scroll-utility</a></title>
+<title>scroll-utility</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="David Perez Alvarez" />
 <style type="text/css">
@@ -193,6 +193,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="normalize.css" />
 <link rel="stylesheet" type="text/css" href="index.css" />
 
 <script type="text/javascript" src="org-info.js">
@@ -255,7 +256,7 @@ for the JavaScript code in this tag.
 
 <!--/*--><![CDATA[/*><!--*/
 org_html_manager.set("TOC_DEPTH", "3");
-org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_HOME", "https://leddgroup.github.io/scroll-utility");
 org_html_manager.set("LINK_UP", "");
 org_html_manager.set("LOCAL_TOC", "1");
 org_html_manager.set("VIEW_BUTTONS", "0");
@@ -314,63 +315,67 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
-<h1 class="title"><a href="https://leddgroup.github.io/scroll-utility">scroll-utility</a></h1>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="https://leddgroup.github.io/scroll-utility"> HOME </a>
+</div><div id="content">
+<h1 class="title">scroll-utility</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1fca32b">Features</a></li>
-<li><a href="#org6e04345">Installation</a></li>
-<li><a href="#org90cbba2"><b>Scroll</b></a>
+<li><a href="#org751a0a4">Features</a></li>
+<li><a href="#orgc352dce">Installation</a></li>
+<li><a href="#org996fe05"><b>Scroll</b></a>
 <ul>
-<li><a href="#orge76654c">constructor</a>
+<li><a href="#org5b0e7cf">constructor</a>
 <ul>
-<li><a href="#org28b328d">element</a></li>
-<li><a href="#orge2320e4">horizontal</a></li>
-<li><a href="#orgc5bbf7b">duration</a></li>
-<li><a href="#org9b0d05b">easing</a></li>
-<li><a href="#org060672e">onScroll</a></li>
+<li><a href="#org9ab59e4">element</a></li>
+<li><a href="#orgb1c72d5">horizontal</a></li>
+<li><a href="#orge79aa75">duration</a></li>
+<li><a href="#org70c0ff6">easing</a></li>
+<li><a href="#org1a742bb">onScroll</a></li>
 </ul>
 </li>
-<li><a href="#org2131b5a">scroll</a>
+<li><a href="#orgaf97b31">scroll</a>
 <ul>
-<li><a href="#org2f1a1aa">to "position"</a></li>
-<li><a href="#orge327627">to "element"</a></li>
+<li><a href="#orga9c371d">to "position"</a></li>
+<li><a href="#orgddf29f3">to "element"</a></li>
 </ul>
 </li>
-<li><a href="#orgadc75b0">offset</a></li>
-<li><a href="#org4166b25">other</a>
+<li><a href="#org54eb2c0">offset</a></li>
+<li><a href="#org1a3c263">other</a>
 <ul>
-<li><a href="#orgdbd1dd4">stopAllAnimations</a></li>
-<li><a href="#org74283d8">size</a></li>
-<li><a href="#org2a68e7d">scrollSize</a></li>
-<li><a href="#org710028b">scrollPosition</a></li>
-<li><a href="#org277e27d">getRelativeElementPosition</a></li>
+<li><a href="#org233255b">stopAllAnimations</a></li>
+<li><a href="#org84ee296">size</a></li>
+<li><a href="#orgbfc10a2">scrollSize</a></li>
+<li><a href="#org22c45b7">scrollPosition</a></li>
+<li><a href="#org356cddc">getRelativeElementPosition</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org699c6a1"><b>Misc</b></a>
+<li><a href="#org91f600e"><b>Misc</b></a>
 <ul>
-<li><a href="#org8ae20ef">getSize</a></li>
-<li><a href="#org6d82ab9">getSizeWithBorders</a></li>
-<li><a href="#org5d8b464">getScrollPosition</a></li>
-<li><a href="#orgd95a43c">getScrollSize</a></li>
-<li><a href="#orgf158f7d">getRelativeElementPosition</a></li>
-<li><a href="#orgb9d55e5">getDistToCenterElement</a></li>
-<li><a href="#orgfe62607">scrollTo</a></li>
+<li><a href="#orga8ebe77">getSize</a></li>
+<li><a href="#org7e1c040">getSizeWithBorders</a></li>
+<li><a href="#orge30d7f9">getScrollPosition</a></li>
+<li><a href="#org3b9d1eb">getScrollSize</a></li>
+<li><a href="#orgc1f543d">getRelativeElementPosition</a></li>
+<li><a href="#org6bf0c85">getDistToCenterElement</a></li>
+<li><a href="#org7c77a1d">scrollTo</a></li>
 </ul>
 </li>
-<li><a href="#orgce2cba0">Browser Compatibility</a></li>
-<li><a href="#orgfff56e2">Examples</a></li>
+<li><a href="#org405a684">Browser Compatibility</a></li>
+<li><a href="#org42658e2">Examples</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1fca32b" class="outline-2">
-<h2 id="org1fca32b">Features</h2>
-<div class="outline-text-2" id="text-org1fca32b">
+<div id="outline-container-org751a0a4" class="outline-2">
+<h2 id="org751a0a4">Features</h2>
+<div class="outline-text-2" id="text-org751a0a4">
 <ul class="org-ul">
 <li>Extremely powerful for scrolling to anywhere in the page, like centering
     elements to certain degree.</li>
@@ -385,9 +390,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6e04345" class="outline-2">
-<h2 id="org6e04345">Installation</h2>
-<div class="outline-text-2" id="text-org6e04345">
+<div id="outline-container-orgc352dce" class="outline-2">
+<h2 id="orgc352dce">Installation</h2>
+<div class="outline-text-2" id="text-orgc352dce">
 <p>
 From npm:
 </p>
@@ -409,9 +414,9 @@ when downloading from a cdn the package will be globally exported as <span class
 </div>
 </div>
 
-<div id="outline-container-org90cbba2" class="outline-2">
-<h2 id="org90cbba2"><b>Scroll</b></h2>
-<div class="outline-text-2" id="text-org90cbba2">
+<div id="outline-container-org996fe05" class="outline-2">
+<h2 id="org996fe05"><b>Scroll</b></h2>
+<div class="outline-text-2" id="text-org996fe05">
 <p>
 The <b>Scroll</b> class is the one used to scroll
 </p>
@@ -424,9 +429,9 @@ scrollManager.scroll(<span style="font-style: italic;">"#some-element"</span>).o
 </pre>
 </div>
 </div>
-<div id="outline-container-orge76654c" class="outline-3">
-<h3 id="orge76654c">constructor</h3>
-<div class="outline-text-3" id="text-orge76654c">
+<div id="outline-container-org5b0e7cf" class="outline-3">
+<h3 id="org5b0e7cf">constructor</h3>
+<div class="outline-text-3" id="text-org5b0e7cf">
 <p>
 The <b>Scroll</b> constructor accepts several options:
 </p>
@@ -536,9 +541,9 @@ It's also posible to pass parameters without an object
 </div>
 </div>
 
-<div id="outline-container-org28b328d" class="outline-4">
-<h4 id="org28b328d">element</h4>
-<div class="outline-text-4" id="text-org28b328d">
+<div id="outline-container-org9ab59e4" class="outline-4">
+<h4 id="org9ab59e4">element</h4>
+<div class="outline-text-4" id="text-org9ab59e4">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>({ element: <span style="font-style: italic;">"#container"</span> })
 </pre>
@@ -564,9 +569,9 @@ the element exists
 </div>
 </div>
 
-<div id="outline-container-orge2320e4" class="outline-4">
-<h4 id="orge2320e4">horizontal</h4>
-<div class="outline-text-4" id="text-orge2320e4">
+<div id="outline-container-orgb1c72d5" class="outline-4">
+<h4 id="orgb1c72d5">horizontal</h4>
+<div class="outline-text-4" id="text-orgb1c72d5">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>({ horizontal: <span style="font-weight: bold;">true</span> })
 </pre>
@@ -578,16 +583,16 @@ The <b>horizontal</b> option indicates the direction when scrolling, by default
 </div>
 </div>
 
-<div id="outline-container-orgc5bbf7b" class="outline-4">
-<h4 id="orgc5bbf7b">duration</h4>
-<div class="outline-text-4" id="text-orgc5bbf7b">
+<div id="outline-container-orge79aa75" class="outline-4">
+<h4 id="orge79aa75">duration</h4>
+<div class="outline-text-4" id="text-orge79aa75">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>({ duration: <span style="font-weight: bold; text-decoration: underline;">0</span> })
 </pre>
 </div>
 <p>
 The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span>
-It will be used along with <a href="#org9b0d05b">easing</a> for creating the <b>smooth</b> animation when scrolling
+It will be used along with <a href="#org70c0ff6">easing</a> for creating the <b>smooth</b> animation when scrolling
 </p>
 
 <p>
@@ -605,9 +610,9 @@ scrollManager.duration = <span style="font-weight: bold; text-decoration: underl
 </div>
 </div>
 </div>
-<div id="outline-container-org9b0d05b" class="outline-4">
-<h4 id="org9b0d05b">easing</h4>
-<div class="outline-text-4" id="text-org9b0d05b">
+<div id="outline-container-org70c0ff6" class="outline-4">
+<h4 id="org70c0ff6">easing</h4>
+<div class="outline-text-4" id="text-org70c0ff6">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>({ easing: <span style="font-style: italic;">"linear"</span> })
 </pre>
@@ -647,9 +652,9 @@ scrollManager.easing = <span style="font-style: italic;">"easeOutBounce"</span>
 </div>
 </div>
 </div>
-<div id="outline-container-org060672e" class="outline-4">
-<h4 id="org060672e">onScroll</h4>
-<div class="outline-text-4" id="text-org060672e">
+<div id="outline-container-org1a742bb" class="outline-4">
+<h4 id="org1a742bb">onScroll</h4>
+<div class="outline-text-4" id="text-org1a742bb">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>({
     onScroll: (external) =&gt; {
@@ -677,9 +682,9 @@ scrollManager.onScroll = () =&gt; alert(<span style="font-style: italic;">"hi"</
 </div>
 </div>
 </div>
-<div id="outline-container-org2131b5a" class="outline-3">
-<h3 id="org2131b5a">scroll</h3>
-<div class="outline-text-3" id="text-org2131b5a">
+<div id="outline-container-orgaf97b31" class="outline-3">
+<h3 id="orgaf97b31">scroll</h3>
+<div class="outline-text-3" id="text-orgaf97b31">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">const</span> <span style="font-weight: bold; font-style: italic;">scrollManager</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>()
 
@@ -702,9 +707,9 @@ scrollManager.scroll(element, value?, duration?, easing?)
 </pre>
 </div>
 </div>
-<div id="outline-container-org2f1a1aa" class="outline-4">
-<h4 id="org2f1a1aa">to "position"</h4>
-<div class="outline-text-4" id="text-org2f1a1aa">
+<div id="outline-container-orga9c371d" class="outline-4">
+<h4 id="orga9c371d">to "position"</h4>
+<div class="outline-text-4" id="text-orga9c371d">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">const</span> <span style="font-weight: bold; font-style: italic;">scrollManager</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>()
 
@@ -725,18 +730,18 @@ to the top of the page
 
 <p>
 <b>duration</b> is the duration of that scroll action. If not specified it will use the
-one in <a href="#orgc5bbf7b">constructor</a>.
+one in <a href="#orge79aa75">constructor</a>.
 </p>
 
 <p>
 <b>easing</b> is the ease animation of that scroll action. If not specified it will use the
-one in <a href="#org9b0d05b">constructor</a>.
+one in <a href="#org70c0ff6">constructor</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-orge327627" class="outline-4">
-<h4 id="orge327627">to "element"</h4>
-<div class="outline-text-4" id="text-orge327627">
+<div id="outline-container-orgddf29f3" class="outline-4">
+<h4 id="orgddf29f3">to "element"</h4>
+<div class="outline-text-4" id="text-orgddf29f3">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">const</span> <span style="font-weight: bold; font-style: italic;">scrollManager</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>()
 
@@ -759,19 +764,19 @@ the screen
 
 <p>
 <b>duration</b> is the duration of that scroll action. If not specified it will use the
-one in <a href="#orgc5bbf7b">constructor</a>.
+one in <a href="#orge79aa75">constructor</a>.
 </p>
 
 <p>
 <b>easing</b> is the ease animation of that scroll action. If not specified it will use the
-one in <a href="#org9b0d05b">constructor</a>.
+one in <a href="#org70c0ff6">constructor</a>.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgadc75b0" class="outline-3">
-<h3 id="orgadc75b0">offset</h3>
-<div class="outline-text-3" id="text-orgadc75b0">
+<div id="outline-container-org54eb2c0" class="outline-3">
+<h3 id="org54eb2c0">offset</h3>
+<div class="outline-text-3" id="text-org54eb2c0">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="font-weight: bold;">const</span> <span style="font-weight: bold; font-style: italic;">scrollManager</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>()
 
@@ -786,13 +791,13 @@ scrollManager.offset(<span style="font-weight: bold; text-decoration: underline;
 </div>
 </div>
 </div>
-<div id="outline-container-org4166b25" class="outline-3">
-<h3 id="org4166b25">other</h3>
-<div class="outline-text-3" id="text-org4166b25">
+<div id="outline-container-org1a3c263" class="outline-3">
+<h3 id="org1a3c263">other</h3>
+<div class="outline-text-3" id="text-org1a3c263">
 </div>
-<div id="outline-container-orgdbd1dd4" class="outline-4">
-<h4 id="orgdbd1dd4">stopAllAnimations</h4>
-<div class="outline-text-4" id="text-orgdbd1dd4">
+<div id="outline-container-org233255b" class="outline-4">
+<h4 id="org233255b">stopAllAnimations</h4>
+<div class="outline-text-4" id="text-org233255b">
 <p>
 To stop all scroll animations:
 </p>
@@ -804,9 +809,9 @@ scrollManager.stopAllAnimations()
 </div>
 </div>
 </div>
-<div id="outline-container-org74283d8" class="outline-4">
-<h4 id="org74283d8">size</h4>
-<div class="outline-text-4" id="text-org74283d8">
+<div id="outline-container-org84ee296" class="outline-4">
+<h4 id="org84ee296">size</h4>
+<div class="outline-text-4" id="text-org84ee296">
 <p>
 The size of the <b>Scroll</b> container
 </p>
@@ -816,13 +821,13 @@ The size of the <b>Scroll</b> container
 </pre>
 </div>
 <p>
-The orientation of the value returned depends on the direction specified in the <a href="#orge2320e4">contructor</a>
+The orientation of the value returned depends on the direction specified in the <a href="#orgb1c72d5">contructor</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org2a68e7d" class="outline-4">
-<h4 id="org2a68e7d">scrollSize</h4>
-<div class="outline-text-4" id="text-org2a68e7d">
+<div id="outline-container-orgbfc10a2" class="outline-4">
+<h4 id="orgbfc10a2">scrollSize</h4>
+<div class="outline-text-4" id="text-orgbfc10a2">
 <p>
 The total scroll you can do within the <b>Scroll</b> container
 </p>
@@ -836,13 +841,13 @@ It's related to <b>scrollWidth/scrollHeight</b> properties of <i>HTMLElements</i
 </p>
 
 <p>
-The orientation of the value returned depends on the direction specified in the <a href="#orge2320e4">contructor</a>
+The orientation of the value returned depends on the direction specified in the <a href="#orgb1c72d5">contructor</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org710028b" class="outline-4">
-<h4 id="org710028b">scrollPosition</h4>
-<div class="outline-text-4" id="text-org710028b">
+<div id="outline-container-org22c45b7" class="outline-4">
+<h4 id="org22c45b7">scrollPosition</h4>
+<div class="outline-text-4" id="text-org22c45b7">
 <p>
 The current position of the scroll
 </p>
@@ -865,13 +870,13 @@ the <b>scrollPosition</b> will be 100
 
 
 <p>
-The orientation of the value returned depends on the direction specified in the <a href="#orge2320e4">contructor</a>
+The orientation of the value returned depends on the direction specified in the <a href="#orgb1c72d5">contructor</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org277e27d" class="outline-4">
-<h4 id="org277e27d">getRelativeElementPosition</h4>
-<div class="outline-text-4" id="text-org277e27d">
+<div id="outline-container-org356cddc" class="outline-4">
+<h4 id="org356cddc">getRelativeElementPosition</h4>
+<div class="outline-text-4" id="text-org356cddc">
 <p>
 The relative position of certain element
 </p>
@@ -880,7 +885,7 @@ The relative position of certain element
 </pre>
 </div>
 <p>
-It relates to <a href="#orge327627">scroll</a> (to "element"), so for example, if you
+It relates to <a href="#orgddf29f3">scroll</a> (to "element"), so for example, if you
 </p>
 <div class="org-src-container">
 <pre class="src src-typescript">(<span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">Scroll</span>()).scroll(<span style="font-style: italic;">"#some-element"</span>, <span style="font-weight: bold; text-decoration: underline;">0</span>.<span style="font-weight: bold; text-decoration: underline;">5</span>)
@@ -893,9 +898,9 @@ the relative position will be <b>0.5</b>
 </div>
 </div>
 </div>
-<div id="outline-container-org699c6a1" class="outline-2">
-<h2 id="org699c6a1"><b>Misc</b></h2>
-<div class="outline-text-2" id="text-org699c6a1">
+<div id="outline-container-org91f600e" class="outline-2">
+<h2 id="org91f600e"><b>Misc</b></h2>
+<div class="outline-text-2" id="text-org91f600e">
 <p>
 Here I export some other useful functions.
 </p>
@@ -911,9 +916,9 @@ wouldn't want to create a <b>Scroll</b> instance to access some of it's element 
 </pre>
 </div>
 </div>
-<div id="outline-container-org8ae20ef" class="outline-3">
-<h3 id="org8ae20ef">getSize</h3>
-<div class="outline-text-3" id="text-org8ae20ef">
+<div id="outline-container-orga8ebe77" class="outline-3">
+<h3 id="orga8ebe77">getSize</h3>
+<div class="outline-text-3" id="text-orga8ebe77">
 <p>
 Returns the size (width/height) of the element that match <b>element</b> selector
 </p>
@@ -926,9 +931,9 @@ Misc.getSize(<span style="font-style: italic;">"#container"</span>) <span style=
 </div>
 </div>
 </div>
-<div id="outline-container-org6d82ab9" class="outline-3">
-<h3 id="org6d82ab9">getSizeWithBorders</h3>
-<div class="outline-text-3" id="text-org6d82ab9">
+<div id="outline-container-org7e1c040" class="outline-3">
+<h3 id="org7e1c040">getSizeWithBorders</h3>
+<div class="outline-text-3" id="text-org7e1c040">
 <p>
 Returns the size (including borders) of the element that match <b>element</b> selector
 </p>
@@ -941,9 +946,9 @@ Misc.getSizeWithBorders(<span style="font-style: italic;">"#container"</span>) <
 </div>
 </div>
 </div>
-<div id="outline-container-org5d8b464" class="outline-3">
-<h3 id="org5d8b464">getScrollPosition</h3>
-<div class="outline-text-3" id="text-org5d8b464">
+<div id="outline-container-orge30d7f9" class="outline-3">
+<h3 id="orge30d7f9">getScrollPosition</h3>
+<div class="outline-text-3" id="text-orge30d7f9">
 <p>
 Returns the position of the scroll (top/left)
 </p>
@@ -956,9 +961,9 @@ Misc.getScrollPosition(<span style="font-style: italic;">"#container"</span>) <s
 </div>
 </div>
 </div>
-<div id="outline-container-orgd95a43c" class="outline-3">
-<h3 id="orgd95a43c">getScrollSize</h3>
-<div class="outline-text-3" id="text-orgd95a43c">
+<div id="outline-container-org3b9d1eb" class="outline-3">
+<h3 id="org3b9d1eb">getScrollSize</h3>
+<div class="outline-text-3" id="text-org3b9d1eb">
 <p>
 Returns equivalent of scrollWidth/scrollHeight of elements
 </p>
@@ -971,9 +976,9 @@ Misc.getScrollSize(<span style="font-style: italic;">"#container"</span>) <span 
 </div>
 </div>
 </div>
-<div id="outline-container-orgf158f7d" class="outline-3">
-<h3 id="orgf158f7d">getRelativeElementPosition</h3>
-<div class="outline-text-3" id="text-orgf158f7d">
+<div id="outline-container-orgc1f543d" class="outline-3">
+<h3 id="orgc1f543d">getRelativeElementPosition</h3>
+<div class="outline-text-3" id="text-orgc1f543d">
 <p>
 Returns the degree in which the element is centered:
 </p>
@@ -994,9 +999,9 @@ Misc.getRelativeElementPosition(window, <span style="font-style: italic;">"#some
 </div>
 </div>
 </div>
-<div id="outline-container-orgb9d55e5" class="outline-3">
-<h3 id="orgb9d55e5">getDistToCenterElement</h3>
-<div class="outline-text-3" id="text-orgb9d55e5">
+<div id="outline-container-org6bf0c85" class="outline-3">
+<h3 id="org6bf0c85">getDistToCenterElement</h3>
+<div class="outline-text-3" id="text-org6bf0c85">
 <p>
 Returns the distance (in pxs) to center some element
 </p>
@@ -1010,13 +1015,13 @@ Misc.getDistToCenterElement(window, <span style="font-style: italic;">"#some-ele
 </div>
 </div>
 </div>
-<div id="outline-container-orgfe62607" class="outline-3">
-<h3 id="orgfe62607">scrollTo</h3>
+<div id="outline-container-org7c77a1d" class="outline-3">
+<h3 id="org7c77a1d">scrollTo</h3>
 </div>
 </div>
-<div id="outline-container-orgce2cba0" class="outline-2">
-<h2 id="orgce2cba0">Browser Compatibility</h2>
-<div class="outline-text-2" id="text-orgce2cba0">
+<div id="outline-container-org405a684" class="outline-2">
+<h2 id="org405a684">Browser Compatibility</h2>
+<div class="outline-text-2" id="text-org405a684">
 <p>
 There are automated test for several browsers, thanks to <a href="https://www.browserstack.com">Browserstack</a>.<br />
 Compatibility garanteed in all major browsers.<br />
@@ -1029,9 +1034,9 @@ Sorry, your browser does not support SVG.</object>
 </div>
 </div>
 </div>
-<div id="outline-container-orgfff56e2" class="outline-2">
-<h2 id="orgfff56e2">Examples</h2>
-<div class="outline-text-2" id="text-orgfff56e2">
+<div id="outline-container-org42658e2" class="outline-2">
+<h2 id="org42658e2">Examples</h2>
+<div class="outline-text-2" id="text-org42658e2">
 <p>
 See examples <a href="https://leddgroup.github.io/scroll-utility/examples">here</a>
 </p>
@@ -1040,7 +1045,7 @@ See examples <a href="https://leddgroup.github.io/scroll-utility/examples">here<
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-08-24 Sat 23:19</p>
+<p class="date">Created: 2019-08-25 Sun 01:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
