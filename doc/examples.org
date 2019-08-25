@@ -1,4 +1,4 @@
-#+TITLE: scroll-utility examples
+#+TITLE: [[https://leddgroup.github.io/scroll-utility/examples][scroll-utility examples]]
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
 #+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"></script>
 #+INFOJS_OPT: path:org-info.js view:info

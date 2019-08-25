@@ -1,36 +1,36 @@
 # Table of Contents
 
-- [Features](#orge2baee8)
-- [Installation](#org2daf5da)
-- [**Scroll**](#orgc2a387c)
-  - [constructor](#org454f98d)
-    - [element](#org9a07130)
-    - [horizontal](#org985393d)
-    - [duration](#org05664b1)
-    - [easing](#org93057fa)
-    - [onScroll](#orgbf8ef10)
-  - [scroll](#orgf6756dd)
-    - [to "position"](#orgbec0673)
-    - [to "element"](#org44dff33)
-  - [offset](#orgb753566)
-  - [other](#org2f6d3db)
-    - [stopAllAnimations](#orge6bab70)
-    - [size](#orgd67007b)
-    - [scrollSize](#org0e395a0)
-    - [scrollPosition](#org7744e0b)
-    - [getRelativeElementPosition](#orgdf5062b)
-- [**Misc**](#org5fc5f49)
-  - [getSize](#orgc47295f)
-  - [getSizeWithBorders](#org9b7301c)
-  - [getScrollPosition](#orgdd69ffa)
-  - [getScrollSize](#orgf8a12da)
-  - [getRelativeElementPosition](#orgece1d93)
-  - [getDistToCenterElement](#org6de8946)
-  - [scrollTo](#org2f84717)
-- [Browser Compatibility](#org5ff5062)
-- [Examples](#orgcc18640)
+- [Features](#org7bcade9)
+- [Installation](#org6d4b476)
+- [**Scroll**](#org6668b6f)
+  - [constructor](#orge79c58f)
+    - [element](#org3b99f5b)
+    - [horizontal](#org33809eb)
+    - [duration](#org69f1fe6)
+    - [easing](#orgf3bb51b)
+    - [onScroll](#org0134747)
+  - [scroll](#org4294fa9)
+    - [to "position"](#orgb18393d)
+    - [to "element"](#org7da20c7)
+  - [offset](#orga9a5071)
+  - [other](#org74755d3)
+    - [stopAllAnimations](#org11873de)
+    - [size](#orgc4f467f)
+    - [scrollSize](#org51aba5e)
+    - [scrollPosition](#orgf9c9339)
+    - [getRelativeElementPosition](#orgbb10d86)
+- [**Misc**](#org5eff2b7)
+  - [getSize](#orgecf9b2d)
+  - [getSizeWithBorders](#orgc1e1303)
+  - [getScrollPosition](#org1d322e6)
+  - [getScrollSize](#org6a5b2e3)
+  - [getRelativeElementPosition](#org4fef708)
+  - [getDistToCenterElement](#org5448207)
+  - [scrollTo](#orge03f6b0)
+- [Browser Compatibility](#org85680be)
+- [Examples](#org7f84f0f)
 
-<a id="orge2baee8"></a>
+<a id="org7bcade9"></a>
 
 # Features
 
@@ -44,7 +44,7 @@
 - Typescript friendly
 - Handle multiple scroll animation at the same time
 
-<a id="org2daf5da"></a>
+<a id="org6d4b476"></a>
 
 # Installation
 
@@ -58,7 +58,7 @@ From a cdn: [jsdelivr](https://www.jsdelivr.com/package/npm/scroll-utility)
 
 when downloading from a cdn the package will be globally exported as <span class="underline">ScrollUtility</span>
 
-<a id="orgc2a387c"></a>
+<a id="org6668b6f"></a>
 
 # **Scroll**
 
@@ -70,7 +70,7 @@ The **Scroll** class is the one used to scroll
     const scrollManager = new Scroll()
     scrollManager.scroll("#some-element").offset(-50)
 
-<a id="org454f98d"></a>
+<a id="orge79c58f"></a>
 
 ## constructor
 
@@ -169,7 +169,7 @@ It's also posible to pass parameters without an object
         () => console.log("hi")
     )
 
-<a id="org9a07130"></a>
+<a id="org3b99f5b"></a>
 
 ### element
 
@@ -186,7 +186,7 @@ If it's a **string**, then it will use it as a **querySelector** with
 You can call **document.querySelector** beforehand if you want to ensure
 the element exists
 
-<a id="org985393d"></a>
+<a id="org33809eb"></a>
 
 ### horizontal
 
@@ -195,14 +195,14 @@ the element exists
 The **horizontal** option indicates the direction when scrolling, by default
 **false**, wich means vertical scroll
 
-<a id="org05664b1"></a>
+<a id="org69f1fe6"></a>
 
 ### duration
 
     new Scroll({ duration: 0 })
 
 The **duration** option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span>
-It will be used along with [easing](#org93057fa) for creating the **smooth** animation when scrolling
+It will be used along with [easing](#orgf3bb51b) for creating the **smooth** animation when scrolling
 
 If you want to disable the _smooth_ animation, set **duration** to 0.
 
@@ -212,7 +212,7 @@ It can be changed any time:
 
     scrollManager.duration = 999
 
-<a id="org93057fa"></a>
+<a id="orgf3bb51b"></a>
 
 ### easing
 
@@ -237,18 +237,18 @@ It can be changed any time:
 
     scrollManager.easing = "easeOutBounce"
 
-<a id="orgbf8ef10"></a>
+<a id="org0134747"></a>
 
 ### onScroll
 
     new Scroll({
-      onScroll: (external) => {
-        if (external) {
-            console.log("external scroll")
-        } else {
-            console.log("internal scroll")
-        }
-      },
+        onScroll: (external) => {
+            if (external) {
+                console.log("external scroll")
+            } else {
+                console.log("internal scroll")
+            }
+        },
     })
 
 What does it mean?, well, **external** is an attempt
@@ -258,7 +258,7 @@ It can be changed any time:
 
     scrollManager.onScroll = () => alert("hi")
 
-<a id="orgf6756dd"></a>
+<a id="org4294fa9"></a>
 
 ## scroll
 
@@ -281,16 +281,16 @@ It can be changed any time:
     }) // or
     scrollManager.scroll(element, value?, duration?, easing?)
 
-<a id="orgbec0673"></a>
+<a id="orgb18393d"></a>
 
 ### to "position"
 
     const scrollManager = new Scroll()
 
     scrollManager.scroll({
-      value,
-      duration?,
-      easing?,
+        value,
+        duration?,
+        easing?,
     })
     //or
     scrollManager.scroll(value, duration?, easing?)
@@ -299,12 +299,12 @@ Calling **scroll** will do scroll to the position **value**: eg. **0** will do s
 to the top of the page
 
 **duration** is the duration of that scroll action. If not specified it will use the
-one in [constructor](#org05664b1).
+one in [constructor](#org69f1fe6).
 
 **easing** is the ease animation of that scroll action. If not specified it will use the
-one in [constructor](#org93057fa).
+one in [constructor](#orgf3bb51b).
 
-<a id="org44dff33"></a>
+<a id="org7da20c7"></a>
 
 ### to "element"
 
@@ -324,30 +324,30 @@ will center it at **value**, 0 by default. ie. the element will be at the top of
 the screen
 
 **duration** is the duration of that scroll action. If not specified it will use the
-one in [constructor](#org05664b1).
+one in [constructor](#org69f1fe6).
 
 **easing** is the ease animation of that scroll action. If not specified it will use the
-one in [constructor](#org93057fa).
+one in [constructor](#orgf3bb51b).
 
-<a id="orgb753566"></a>
+<a id="orga9a5071"></a>
 
 ## offset
 
     const scrollManager = new Scroll()
 
     scrollManager.offset({
-      value: 100,
-      duration: 1000,
-      easing: "some",
+        value: 100,
+        duration: 1000,
+        easing: "some",
     })
     //or
     scrollManager.offset(100, 1000, "some")
 
-<a id="org2f6d3db"></a>
+<a id="org74755d3"></a>
 
 ## other
 
-<a id="orge6bab70"></a>
+<a id="org11873de"></a>
 
 ### stopAllAnimations
 
@@ -356,7 +356,7 @@ To stop all scroll animations:
     const scrollManager = new Scroll()
     scrollManager.stopAllAnimations()
 
-<a id="orgd67007b"></a>
+<a id="orgc4f467f"></a>
 
 ### size
 
@@ -365,9 +365,9 @@ The size of the **Scroll** container
     (new Scroll()).size // size of the window
     (new Scroll("#container")).size // size of the element #container
 
-The orientation of the value returned depends on the direction specified in the [contructor](#org985393d)
+The orientation of the value returned depends on the direction specified in the [contructor](#org33809eb)
 
-<a id="org0e395a0"></a>
+<a id="org51aba5e"></a>
 
 ### scrollSize
 
@@ -378,9 +378,9 @@ The total scroll you can do within the **Scroll** container
 
 It's related to **scrollWidth/scrollHeight** properties of _HTMLElements_.
 
-The orientation of the value returned depends on the direction specified in the [contructor](#org985393d)
+The orientation of the value returned depends on the direction specified in the [contructor](#org33809eb)
 
-<a id="org7744e0b"></a>
+<a id="orgf9c9339"></a>
 
 ### scrollPosition
 
@@ -395,9 +395,9 @@ For example, if you
 
 the **scrollPosition** will be 100
 
-The orientation of the value returned depends on the direction specified in the [contructor](#org985393d)
+The orientation of the value returned depends on the direction specified in the [contructor](#org33809eb)
 
-<a id="orgdf5062b"></a>
+<a id="orgbb10d86"></a>
 
 ### getRelativeElementPosition
 
@@ -405,13 +405,13 @@ The relative position of certain element
 
     (new Scroll()).getRelativeElementPosition("#some-element")
 
-It relates to [scroll](#org44dff33) (to "element"), so for example, if you
+It relates to [scroll](#org7da20c7) (to "element"), so for example, if you
 
     (new Scroll()).scroll("#some-element", 0.5)
 
 the relative position will be **0.5**
 
-<a id="org5fc5f49"></a>
+<a id="org5eff2b7"></a>
 
 # **Misc**
 
@@ -424,7 +424,7 @@ wouldn't want to create a **Scroll** instance to access some of it's element pro
 
     const Misc = ScrollUtility.Scroll // from cdn
 
-<a id="orgc47295f"></a>
+<a id="orgecf9b2d"></a>
 
 ## getSize
 
@@ -435,7 +435,7 @@ Returns the size (width/height) of the element that match **element** selector
     Misc.getSize(window, true)
     Misc.getSize("#container") // horizontal: false by default
 
-<a id="org9b7301c"></a>
+<a id="orgc1e1303"></a>
 
 ## getSizeWithBorders
 
@@ -446,7 +446,7 @@ Returns the size (including borders) of the element that match **element** selec
     Misc.getSizeWithBorders(window, true)
     Misc.getSizeWithBorders("#container") // horizontal: false by default
 
-<a id="orgdd69ffa"></a>
+<a id="org1d322e6"></a>
 
 ## getScrollPosition
 
@@ -457,7 +457,7 @@ Returns the position of the scroll (top/left)
     Misc.getScrollPosition(window, true)
     Misc.getScrollPosition("#container") // horizontal: false by default
 
-<a id="orgf8a12da"></a>
+<a id="org6a5b2e3"></a>
 
 ## getScrollSize
 
@@ -468,7 +468,7 @@ Returns equivalent of scrollWidth/scrollHeight of elements
     Misc.getScrollSize(window, true)
     Misc.getScrollSize("#container") // horizontal: false by default
 
-<a id="orgece1d93"></a>
+<a id="org4fef708"></a>
 
 ## getRelativeElementPosition
 
@@ -486,7 +486,7 @@ Returns the degree in which the element is centered:
 
   Misc.getRelativeElementPosition(window, "#some-element")
 
-<a id="org6de8946"></a>
+<a id="org5448207"></a>
 
 ## getDistToCenterElement
 
@@ -498,11 +498,11 @@ Returns the distance (in pxs) to center some element
     Misc.getDistToCenterElement(window, "#some-element", .5) // centered
     Misc.getDistToCenterElement(window, "#some-element", 1) // bottom
 
-<a id="org2f84717"></a>
+<a id="orge03f6b0"></a>
 
 ## scrollTo
 
-<a id="org5ff5062"></a>
+<a id="org85680be"></a>
 
 # Browser Compatibility
 
@@ -511,8 +511,8 @@ Compatibility garanteed in all major browsers.
 
 ![img](https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg)
 
-<a id="orgcc18640"></a>
+<a id="org7f84f0f"></a>
 
 # Examples
 
-  <h1> hello world! </h1>
+See examples [here](./examples.md)

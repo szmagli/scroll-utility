@@ -1,10 +1,8 @@
-#+TITLE: scroll-utility
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="doc/index.css" />
-#+INFOJS_OPT: path:doc/org-info.js view:info
+#+TITLE: [[https://leddgroup.github.io/scroll-utility][scroll-utility]]
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css" />
+#+INFOJS_OPT: path:org-info.js view:info
 #+STARTUP: content
 #+OPTIONS: num:nil
-#+MACRO: html some
-#+MACRO: myname something
 
 * Features
   - Extremely powerful for scrolling to anywhere in the page, like centering
@@ -366,6 +364,4 @@
   #+ATTR_HTML: :align middle
   https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg
 * Examples
-  @@html:
-  <h1> hello world! </h1>
-  @@
+  See examples [[https://leddgroup.github.io/scroll-utility/examples][here]]
