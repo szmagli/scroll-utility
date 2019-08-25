@@ -47,7 +47,7 @@ for (const os in capabilities) {
                 await wait(duration + 1)
                 const scrollPosition = await browser.executeScript(
                   (wrapper: string, horizontal: boolean) =>
-                    window.ScrollUtility.getScrollPosition(wrapper, horizontal),
+                    window.ScrollUtility.Misc.getScrollPosition(wrapper, horizontal),
                   wrapper,
                   horizontal,
                 )
@@ -86,7 +86,7 @@ for (const os in capabilities) {
 
                 const placement = await browser.executeScript(
                   (wrapper: string, horizontal: boolean, element: HTMLElement) => {
-                    return window.ScrollUtility.getRelativeElementPosition(
+                    return window.ScrollUtility.Misc.getRelativeElementPosition(
                       wrapper,
                       element,
                       horizontal,

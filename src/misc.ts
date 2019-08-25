@@ -1,34 +1,39 @@
-const body = document.body
-const html = document.documentElement || {
-  clientWidth: 0,
-  clientHeight: 0,
-  scrollWidth: 0,
-  scrollHeight: 0,
-  offsetWidth: 0,
-  offsetHeight: 0,
+function body() {
+  return document.body
 }
-
+function html() {
+  return (
+    document.documentElement || {
+      clientWidth: 0,
+      clientHeight: 0,
+      scrollWidth: 0,
+      scrollHeight: 0,
+      offsetWidth: 0,
+      offsetHeight: 0,
+    }
+  )
+}
 // https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
 const windowSize = (horizontal = false) =>
   horizontal
-    ? html.clientWidth || body.clientWidth || window.innerWidth
-    : html.clientHeight || body.clientHeight || window.innerHeight
+    ? html().clientWidth || body().clientWidth || window.innerWidth
+    : html().clientHeight || body().clientHeight || window.innerHeight
 
 const windowScrollSize = (horizontal = false) =>
   horizontal
     ? Math.max(
-        body.scrollWidth,
-        body.offsetWidth,
-        html.clientWidth,
-        html.scrollWidth,
-        html.offsetWidth,
+        body().scrollWidth,
+        body().offsetWidth,
+        html().clientWidth,
+        html().scrollWidth,
+        html().offsetWidth,
       )
     : Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight,
+        body().scrollHeight,
+        body().offsetHeight,
+        html().clientHeight,
+        html().scrollHeight,
+        html().offsetHeight,
       )
 
 export type ElementOrQuery = Window | Element | string
@@ -41,7 +46,7 @@ export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | W
 }
 
 function isWindow(element: Element | Window): element is Window {
-  return element === window || element === html
+  return element === window || element === html()
 }
 
 function withWindow<T>(
@@ -81,7 +86,9 @@ export namespace Misc {
 
   export const getScrollSize = getWithWindow(
     horizontal => windowScrollSize(horizontal),
-    (element, horizontal) => (horizontal ? element.scrollWidth : element.scrollHeight),
+    (element, horizontal) => {
+      return horizontal ? element.scrollWidth : element.scrollHeight
+    },
   )
   export const getOffset = getWithWindow(
     () => 0,
