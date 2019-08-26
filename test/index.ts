@@ -1,8 +1,8 @@
 import * as webdriver from "selenium-webdriver"
 import expect from "expect"
 import capabilities from "./capabilities"
-import * as ScrollUtility from "../"
-declare const window: Window & { ScrollUtility: typeof ScrollUtility }
+import ScrollUtility from "../"
+import { Direction } from "../src/scroll"
 
 const local_testing_site_url = "http://localhost:8080/"
 
@@ -23,33 +23,32 @@ for (const os in capabilities) {
       })
       it("should have ScrollUtility", async function() {
         const scrollUtility = await browser.executeScript(() => {
-          return window.ScrollUtility
+          return ScrollUtility
         })
         expect(scrollUtility).toBeDefined()
       })
       ;[["html", "#scrollable"], ["#scrollable", "#element"]].forEach(([wrapper, element]) => {
-        ;[false, true].forEach(horizontal => {
+        ;["vertical", "horizontal"].forEach(direction => {
           describe("scrollTo", () => {
             ;[100, 53.3, 53.5, 53.7, 0].forEach(value => {
               it(`${value}`, async function() {
                 await browser.executeScript(
-                  (element: string, horizontal: boolean, value: number) => {
-                    const scroll = new window.ScrollUtility.Scroll({
-                      element,
-                      horizontal,
+                  (element: string, direction: Direction, value: number) => {
+                    const scroll = new ScrollUtility(element, {
+                      direction,
                     })
                     scroll.scroll(value)
                   },
                   wrapper,
-                  horizontal,
+                  direction,
                   value,
                 )
                 await wait(duration + 1)
                 const scrollPosition = await browser.executeScript(
                   (wrapper: string, horizontal: boolean) =>
-                    window.ScrollUtility.Misc.getScrollPosition(wrapper, horizontal),
+                    ScrollUtility.Misc.getScrollPosition(wrapper, horizontal),
                   wrapper,
-                  horizontal,
+                  direction === "horizontal",
                 )
                 expect(scrollPosition).toBe(Math.floor(value))
               })
@@ -59,25 +58,19 @@ for (const os in capabilities) {
             ;[0, 1, 0.5].forEach(value => {
               it(`should be centered at ${value}`, async function() {
                 await browser.executeScript(
-                  (wrapper: string, horizontal: boolean, element: HTMLElement) => {
-                    new window.ScrollUtility.Scroll({
-                      element: wrapper,
-                      horizontal: !horizontal,
-                    }).scroll(element, 0.5)
+                  (wrapper: string, direction: Direction, element: HTMLElement) => {
+                    new ScrollUtility(wrapper, { direction }).scroll(element, 0.5)
                   },
                   wrapper,
-                  horizontal,
+                  direction,
                   element,
                 )
                 await browser.executeScript(
-                  (wrapper: string, horizontal: boolean, element: HTMLElement, value: number) => {
-                    new window.ScrollUtility.Scroll({
-                      element: wrapper,
-                      horizontal,
-                    }).scroll(element, value)
+                  (wrapper: string, direction: Direction, element: HTMLElement, value: number) => {
+                    new ScrollUtility(wrapper, { direction }).scroll(element, value)
                   },
                   wrapper,
-                  horizontal,
+                  direction,
                   element,
                   value,
                 )
@@ -86,14 +79,14 @@ for (const os in capabilities) {
 
                 const placement = await browser.executeScript(
                   (wrapper: string, horizontal: boolean, element: HTMLElement) => {
-                    return window.ScrollUtility.Misc.getRelativeElementPosition(
+                    return ScrollUtility.Misc.getRelativeElementPosition(
                       wrapper,
                       element,
                       horizontal,
                     )
                   },
                   wrapper,
-                  horizontal,
+                  direction === "horizontal",
                   element,
                 )
                 expect(placement).toBeCloseTo(value, 1)

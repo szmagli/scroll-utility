@@ -1,5 +1,5 @@
 import { AnimationManager } from "./animation-manager"
-import { EasingOrFunction, Easings } from "./easings"
+import { EasingOrFunction } from "./easings"
 import { ElementOrQuery, Misc } from "./misc"
 
 const THRESHOLD = 1.5
@@ -11,128 +11,113 @@ function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   return elementOrQuery
 }
 
-class Scroll {
-  private animationManager: AnimationManager
-  private element: Element | Window = window
-  private horizontal: boolean
-  public duration: number
-  public onScroll: ((external?: boolean) => void) | null | undefined
-  public easing: EasingOrFunction
-  constructor(
-    element?: ElementOrQuery,
-    horizontal?: boolean,
-    duration?: number,
-    easing?: EasingOrFunction,
-    onScroll?: (external?: boolean) => void,
-  )
-  constructor(options: {
-    element?: ElementOrQuery
-    horizontal?: boolean
-    duration?: number
-    easing?: EasingOrFunction
-    onScroll?: (external?: boolean) => void
-  })
-  constructor(...args: any) {
-    const options = !!args
-      ? !!args[0] &&
-        (!!args[0].element ||
-          args[0].horizontal !== undefined ||
-          !!args[0].duration ||
-          !!args[0].easing ||
-          !!args[0].onScroll)
-        ? args[0]
-        : {
-            element: args[0],
-            horizontal: args[1],
-            duration: args[2],
-            easing: args[3],
-            onScroll: args[4],
-          }
-      : {}
-    const element = getElementFromQuery(options.element || window)
-    this.element = element === document.documentElement ? window : element
-    this.horizontal = !!options.horizontal
-    this.onScroll = options.onScroll
-    this.duration = options.duration || 1000
-    this.easing = options.easing || Easings.easeInOutQuad
-    this.element.addEventListener("scroll", () => {
-      const diff = Math.abs(this.scrollPosition - this.animationManager.position)
-      const changed = diff >= THRESHOLD
+export type Direction = "vertical" | "horizontal"
+
+function horizontal(direction: Direction): boolean {
+  return direction === "horizontal"
+}
+
+export interface IScrollOptions {
+  direction?: Direction
+  duration?: number
+  easing?: EasingOrFunction
+  onScroll?: ((external?: boolean) => void) | null
+  dontForce?: boolean
+}
+
+// type Required<T> = { [K in keyof T]-?: T[K] }
+
+export class ScrollUtility implements Required<IScrollOptions> {
+  private _animationManager: AnimationManager
+  private _element: Element | Window = window
+  direction: Direction = "vertical"
+  duration: number = 1000
+  onScroll: ((external?: boolean) => void) | null = null
+  easing: EasingOrFunction = "easeInOutQuad"
+  dontForce: boolean = false
+  constructor(container: ElementOrQuery = window, options: IScrollOptions = {}) {
+    const element = getElementFromQuery(container)
+    this._element = element === document.documentElement ? window : element
+    this.updateOptions(options)
+    let changed = false
+    this._element.addEventListener("scroll", () => {
+      const diff = Math.abs(this.scrollPosition - this._animationManager.position)
+      changed = diff >= THRESHOLD
       if (changed) {
-        this.animationManager.position = this.scrollPosition
+        // this.externalScroll = true
+        this._animationManager.position = this.scrollPosition
       }
       this.onScroll && this.onScroll(changed)
     })
-    this.animationManager = new AnimationManager(
+    this._animationManager = new AnimationManager(
       this.scrollPosition,
-      value => Misc.scrollTo(this.element, value, this.horizontal),
+      value => ScrollUtility.Misc.scrollTo(this._element, value, horizontal(this.direction)),
       () => this.scrollSize,
     )
   }
+  static Misc = Misc
+  updateOptions(options: IScrollOptions = {}) {
+    const realOptions = this.getOptions(options)
+    this.direction = realOptions.direction
+    this.onScroll = realOptions.onScroll
+    this.duration = realOptions.duration
+    this.easing = realOptions.easing
+    this.dontForce = realOptions.dontForce
+  }
+  getOptions(options: IScrollOptions = {}): Required<IScrollOptions> {
+    return {
+      direction: options.direction || this.direction,
+      easing: options.easing || this.easing,
+      onScroll: options.onScroll || this.onScroll,
+      dontForce: options.dontForce || this.dontForce,
+      duration: options.duration !== undefined ? options.duration : this.duration,
+    }
+  }
   get size() {
-    return Misc.getSize(this.element, this.horizontal)
+    return ScrollUtility.Misc.getSize(this._element, horizontal(this.direction))
   }
   get scrollSize() {
-    return Misc.getScrollSize(this.element, this.horizontal) - this.size
+    return ScrollUtility.Misc.getScrollSize(this._element, horizontal(this.direction)) - this.size
   }
   get scrollPosition() {
-    return Misc.getScrollPosition(this.element, this.horizontal)
+    return ScrollUtility.Misc.getScrollPosition(this._element, horizontal(this.direction))
   }
-  getRelativeElementPosition(elementOrQuery: ElementOrQuery): number {
-    return Misc.getRelativeElementPosition(this.element, elementOrQuery, this.horizontal)
+  relativePosition(elementOrQuery: ElementOrQuery): number {
+    return ScrollUtility.Misc.getRelativeElementPosition(
+      this._element,
+      elementOrQuery,
+      horizontal(this.direction),
+    )
   }
-  stopAllAnimations() {
-    this.animationManager.stopAllAnimations()
+  stop() {
+    this._animationManager.stopAllAnimations()
   }
-  scroll(value: number, duration?: number, easing?: EasingOrFunction): this
-  scroll(options: { value: number; duration?: number; easing?: EasingOrFunction }): this
-  scroll(element: ElementOrQuery, value: number, duration?: number, easing?: EasingOrFunction): this
-  scroll(options: {
-    element: ElementOrQuery
-    value?: number
-    duration?: number
-    easing?: EasingOrFunction
-  }): this
-  scroll(...args: any) {
-    const valueIndex = typeof args[0] !== "number" ? 1 : 0
-    const options = !!args
-      ? !!args[0].element || !!args[0].value
-        ? args[0]
-        : {
-            element: !!valueIndex ? args[0] : null,
-            value: args[valueIndex],
-            duration: args[valueIndex + 1],
-            easing: args[valueIndex + 2],
-          }
-      : {}
+  scroll(value: number, options?: IScrollOptions): this
+  scroll(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
+  scroll(...args: any[]) {
+    const element = typeof args[0] === "number" ? null : args[0]
+    const value = typeof args[0] === "number" ? args[0] : args[1]
+    const options = this.getOptions(typeof args[0] === "number" ? args[1] : args[2])
     this.offset(
-      !!options.element
-        ? Misc.getDistToCenterElement(this.element, options.element, this.horizontal, options.value)
-        : options.value - this.scrollPosition,
-      options.duration,
-      options.easing,
+      !!element
+        ? ScrollUtility.Misc.getDistToCenterElement(
+            this._element,
+            element,
+            horizontal(options.direction),
+            value,
+          )
+        : value - this.scrollPosition,
+      options,
     )
     return this
   }
-  offset(value: number, duration?: number, easing?: EasingOrFunction): this
-  offset(options: { value: number; duration?: number; easing?: EasingOrFunction }): this
-  offset(...args: any) {
-    const options = !!args
-      ? !!args[0].value
-        ? args[0]
-        : {
-            value: args[0],
-            duration: args[1] === undefined ? this.duration : args[1],
-            easing: args[2],
-          }
-      : {}
-    this.animationManager.createScrollAnimation({
-      distToScroll: options.value,
-      duration: options.duration,
-      easing: options.easing || this.easing,
+  offset(value: number, options: IScrollOptions = {}) {
+    const realOptions = this.getOptions(options)
+    this._animationManager.createScrollAnimation({
+      distToScroll: value,
+      duration: realOptions.duration,
+      easing: realOptions.easing,
     })
     return this
   }
 }
-
-export { Scroll }
