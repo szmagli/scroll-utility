@@ -10,6 +10,8 @@
     "start": "webpack-dev-server --config ./playground/webpack.config.ts --env.NODE_ENV=development",
     "build": "webpack --config webpack.config.ts --env.NODE_ENV=production",
     "prebuild": "rm -rf dist",
+    "doc": "npm run build && cp dist/scroll-utility.js doc && emacs doc/index.org -l ~/.emacs.d/init.el --batch -f org-html-export-to-html --kill",
+    "gh-pages": "npm run doc && gh-pages -d doc",
     "prepare": "npm run build",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
@@ -45,7 +47,7 @@
   "bugs": {
     "url": "https://github.com/LeDDGroup/scroll-utility/issues"
   },
-  "homepage": "https://github.com/LeDDGroup/scroll-utility#readme",
+  "homepage": "https://leddgroup.github.io/scroll-utility",
   "devDependencies": {
     "@commitlint/cli": "^7.2.0",
     "@commitlint/config-conventional": "^7.1.2",
