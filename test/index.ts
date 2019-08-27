@@ -1,8 +1,9 @@
 import * as webdriver from "selenium-webdriver"
-import expect from "expect"
 import capabilities from "./capabilities"
-import ScrollUtility from "../"
-import { Direction } from "../src/scroll"
+import expect from "expect"
+
+type Direction = import("../dist/scroll").Direction
+declare const ScrollUtility: typeof import("../")
 
 const local_testing_site_url = "http://localhost:8080/"
 

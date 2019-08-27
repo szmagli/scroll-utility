@@ -10,9 +10,7 @@
     "start": "webpack-dev-server --config ./playground/webpack.config.ts --env.NODE_ENV=development",
     "build": "webpack --config webpack.config.ts --env.NODE_ENV=production",
     "prebuild": "rm -rf dist",
-    "doc": "npm run build && cp dist/scroll-utility.js doc && emacs --iconic --no-splash -nw doc/index.org -f org-html-export-to-html --kill",
-
-    "gh-pages": "npm run doc && gh-pages -d doc",
+    "gh-pages": "gh-pages -d doc/dist",
     "prepare": "npm run build",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
@@ -33,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LeDDGroup/scroll-utility.git"
+    "url": "git+https://github.com/LeDDGroup/scroll-utility.git"
   },
   "keywords": [
     "scroll",

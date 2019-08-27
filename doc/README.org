@@ -9,8 +9,7 @@
 #+OPTIONS: num:nil
 
 * Features
-  - Extremely powerful for scrolling to anywhere in the page, like centering
-    elements to certain degree.
+  - Extremely powerful for scrolling to anywhere in the page, like centering elements to certain degree.
   - Custom easing animations for scrolling
   - Detect onScroll events and differentiate between user and utility scroll
   - High performance
@@ -24,12 +23,15 @@
   #+BEGIN_SRC sh
     $ npm install --save scroll-utility
   #+END_SRC
-
   From a cdn: [[https://www.jsdelivr.com/package/npm/scroll-utility][jsdelivr]]
   #+BEGIN_SRC html
     <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
   #+END_SRC
   when downloading from a cdn the package will be globally exported as _ScrollUtility_
+
+* How to scroll
+  #+INCLUDE: "examples/howto.ts" src typescript
+** scroll
 
 * *Scroll*
   The *Scroll* class is the one used to scroll
@@ -40,6 +42,7 @@
     const scrollManager = new Scroll()
     scrollManager.scroll("#some-element").offset(-50)
   #+END_SRC
+
 ** constructor
    The *Scroll* constructor accepts several options:
    #+BEGIN_SRC typescript
@@ -130,7 +133,7 @@
     <button class="scroll-button" onclick="scrollDuration(0)"> 0 </button>
     </div>
     <h1> Top </h1>
-    <hr class="spacer" /> <hr class="spacer" />
+    <hr class="spacer" />
     <h1> Bottom </h1>
     </div>
     @@
@@ -141,6 +144,7 @@
 
       scrollManager.duration = 999
     #+END_SRC
+
 *** easing
     #+BEGIN_SRC typescript
       new Scroll({ easing: "linear" })
@@ -245,6 +249,7 @@
      }) // or
      scrollManager.scroll(element, value?, duration?, easing?)
    #+END_SRC
+
 *** to "position"
     #+BEGIN_SRC typescript
       const scrollManager = new Scroll()
@@ -294,9 +299,9 @@
      const scrollManager = new Scroll()
 
      scrollManager.offset({value: 100,
-         duration: 1000,
-         easing: "some",
-     })
+                           duration: 1000,
+                           easing: "some",
+                          })
      //or
      scrollManager.offset(100, 1000, "some")
    #+END_SRC
@@ -308,6 +313,7 @@
       const scrollManager = new Scroll()
       scrollManager.stopAllAnimations()
     #+END_SRC
+
 *** size
     The size of the *Scroll* container
     #+BEGIN_SRC typescript
@@ -341,6 +347,7 @@
     The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
 *** getRelativeElementPosition
     The relative position of certain element
+
     #+BEGIN_SRC typescript
       (new Scroll()).getRelativeElementPosition("#some-element")
     #+END_SRC
@@ -348,6 +355,7 @@
     #+BEGIN_SRC typescript
       (new Scroll()).scroll("#some-element", 0.5)
     #+END_SRC
+
     the relative position will be *0.5*
 * *Misc*
   Here I export some other useful functions.
@@ -359,6 +367,7 @@
 
     const Misc = ScrollUtility.Scroll // from cdn
   #+END_SRC
+
 ** getSize
    Returns the size (width/height) of the element that match *element* selector
    #+BEGIN_SRC typescript
@@ -367,6 +376,7 @@
      Misc.getSize(window, true)
      Misc.getSize("#container") // horizontal: false by default
    #+END_SRC
+
 ** getSizeWithBorders
    Returns the size (including borders) of the element that match *element* selector
    #+BEGIN_SRC typescript
@@ -375,6 +385,7 @@
      Misc.getSizeWithBorders(window, true)
      Misc.getSizeWithBorders("#container") // horizontal: false by default
    #+END_SRC
+
 ** getScrollPosition
    Returns the position of the scroll (top/left)
    #+BEGIN_SRC typescript
@@ -383,6 +394,7 @@
      Misc.getScrollPosition(window, true)
      Misc.getScrollPosition("#container") // horizontal: false by default
    #+END_SRC
+
 ** getScrollSize
    Returns equivalent of scrollWidth/scrollHeight of elements
    #+BEGIN_SRC typescript
@@ -391,6 +403,7 @@
      Misc.getScrollSize(window, true)
      Misc.getScrollSize("#container") // horizontal: false by default
    #+END_SRC
+
 ** getRelativeElementPosition
    Returns the degree in which the element is centered:
    - < -1: above top
@@ -405,6 +418,7 @@
 
      Misc.getRelativeElementPosition(window, "#some-element")
    #+END_SRC
+
 ** getDistToCenterElement
    Returns the distance (in pxs) to center some element
    #+BEGIN_SRC typescript
@@ -414,11 +428,10 @@
      Misc.getDistToCenterElement(window, "#some-element", .5) // centered
      Misc.getDistToCenterElement(window, "#some-element", 1) // bottom
    #+END_SRC
+
 ** scrollTo
 * Browser Compatibility
   There are automated test for several browsers, thanks to [[https://www.browserstack.com][Browserstack]].\\
   Compatibility garanteed in all major browsers.\\
   #+ATTR_HTML: :align middle
   https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg
-* Examples
-  See examples [[https://leddgroup.github.io/scroll-utility/examples][here]]

@@ -1,0 +1,14 @@
+{
+    "scripts": {
+        "start": "npm run doc && xdg-open dist/index.html",
+        "orgmode": "emacs --iconic --no-splash -nw README.org -f org-html-export-to-html --kill && cp README.html dist/index.html",
+        "build": "rm -rf dist && tsc index.ts --outFile dist/index.js",
+        "doc": "npm run build && cp node_modules/scroll-utility/dist/scroll-utility.js dist && npm run orgmode && cp assets/* dist"
+    },
+    "dependencies": {
+        "scroll-utility": "file:../"
+    },
+    "devDependencies": {
+        "typescript": "^3.5.3"
+    }
+}

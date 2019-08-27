@@ -1,3 +1,11 @@
+declare const ScrollUtility: typeof import("scroll-utility")
+
+interface Window {
+  scrollEasing
+  scrollDuration
+  scrollOnScroll
+}
+
 function rp(element) {
   return ScrollUtility.relativePosition(element) < 0.5 ? 1 : 0
 }
@@ -15,7 +23,7 @@ window.scrollOnScroll = () => {
   ScrollUtility.scroll(element, rp(element), { duration: 2000 })
   ScrollUtility.onScroll = external => {
     if (external) {
-      ScrollUtility.stop
+      ScrollUtility.stop()
       ScrollUtility.onScroll = null
       alert("external scroll detected!")
     }

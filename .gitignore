@@ -5,5 +5,3 @@ makefile
 node_modules
 npm-debug.log
 .vscode
-doc/index.html
-doc/scroll-utility.js
