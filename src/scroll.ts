@@ -27,7 +27,7 @@ export interface IScrollOptions {
 
 // type Required<T> = { [K in keyof T]-?: T[K] }
 
-export class ScrollUtility implements Required<IScrollOptions> {
+export class Scroll implements Required<IScrollOptions> {
   private _animationManager: AnimationManager
   private _element: Element | Window = window
   direction: Direction = "vertical"
@@ -51,11 +51,10 @@ export class ScrollUtility implements Required<IScrollOptions> {
     })
     this._animationManager = new AnimationManager(
       this.scrollPosition,
-      value => ScrollUtility.Misc.scrollTo(this._element, value, horizontal(this.direction)),
+      value => Misc.scrollTo(this._element, value, horizontal(this.direction)),
       () => this.scrollSize,
     )
   }
-  static Misc = Misc
   updateOptions(options: IScrollOptions = {}) {
     const realOptions = this.getOptions(options)
     this.direction = realOptions.direction
@@ -74,16 +73,16 @@ export class ScrollUtility implements Required<IScrollOptions> {
     }
   }
   get size() {
-    return ScrollUtility.Misc.getSize(this._element, horizontal(this.direction))
+    return Misc.getSize(this._element, horizontal(this.direction))
   }
   get scrollSize() {
-    return ScrollUtility.Misc.getScrollSize(this._element, horizontal(this.direction)) - this.size
+    return Misc.getScrollSize(this._element, horizontal(this.direction)) - this.size
   }
   get scrollPosition() {
-    return ScrollUtility.Misc.getScrollPosition(this._element, horizontal(this.direction))
+    return Misc.getScrollPosition(this._element, horizontal(this.direction))
   }
   relativePosition(elementOrQuery: ElementOrQuery): number {
-    return ScrollUtility.Misc.getRelativeElementPosition(
+    return Misc.getRelativeElementPosition(
       this._element,
       elementOrQuery,
       horizontal(this.direction),
@@ -100,12 +99,7 @@ export class ScrollUtility implements Required<IScrollOptions> {
     const options = this.getOptions(typeof args[0] === "number" ? args[1] : args[2])
     this.offset(
       !!element
-        ? ScrollUtility.Misc.getDistToCenterElement(
-            this._element,
-            element,
-            horizontal(options.direction),
-            value,
-          )
+        ? Misc.getDistToCenterElement(this._element, element, horizontal(options.direction), value)
         : value - this.scrollPosition,
       options,
     )

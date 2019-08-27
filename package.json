@@ -10,7 +10,8 @@
     "start": "webpack-dev-server --config ./playground/webpack.config.ts --env.NODE_ENV=development",
     "build": "webpack --config webpack.config.ts --env.NODE_ENV=production",
     "prebuild": "rm -rf dist",
-    "doc": "npm run build && cp dist/scroll-utility.js doc && emacs doc/index.org -l ~/.emacs.d/init.el --batch -f org-html-export-to-html --kill",
+    "doc": "npm run build && cp dist/scroll-utility.js doc && emacs --iconic --no-splash -nw doc/index.org -f org-html-export-to-html --kill",
+
     "gh-pages": "npm run doc && gh-pages -d doc",
     "prepare": "npm run build",
     "semantic-release": "semantic-release",

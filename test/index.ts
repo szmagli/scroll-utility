@@ -34,7 +34,7 @@ for (const os in capabilities) {
               it(`${value}`, async function() {
                 await browser.executeScript(
                   (element: string, direction: Direction, value: number) => {
-                    const scroll = new ScrollUtility(element, {
+                    const scroll = new ScrollUtility.Scroll(element, {
                       direction,
                     })
                     scroll.scroll(value)
@@ -59,7 +59,7 @@ for (const os in capabilities) {
               it(`should be centered at ${value}`, async function() {
                 await browser.executeScript(
                   (wrapper: string, direction: Direction, element: HTMLElement) => {
-                    new ScrollUtility(wrapper, { direction }).scroll(element, 0.5)
+                    new ScrollUtility.Scroll(wrapper, { direction }).scroll(element, 0.5)
                   },
                   wrapper,
                   direction,
@@ -67,7 +67,7 @@ for (const os in capabilities) {
                 )
                 await browser.executeScript(
                   (wrapper: string, direction: Direction, element: HTMLElement, value: number) => {
-                    new ScrollUtility(wrapper, { direction }).scroll(element, value)
+                    new ScrollUtility.Scroll(wrapper, { direction }).scroll(element, value)
                   },
                   wrapper,
                   direction,

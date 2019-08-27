@@ -1,23 +1,22 @@
-window.scrollManager = ScrollUtility.scrollManager
+function rp(element) {
+  return ScrollUtility.relativePosition(element) < 0.5 ? 1 : 0
+}
+
 window.scrollEasing = easing => {
   const element = "#scroll-easings"
-  const top = scrollManager.getRelativeElementPosition(element) < 0.5
-  scrollManager.scroll(element, top ? 1 : 0, 1000, easing)
+  ScrollUtility.scroll(element, rp(element), { easing })
 }
 window.scrollDuration = duration => {
   const element = "#scroll-duration"
-  const top = scrollManager.getRelativeElementPosition(element) < 0.5
-  scrollManager.scroll(element, top ? 1 : 0, duration)
+  ScrollUtility.scroll(element, rp(element), { duration })
 }
 window.scrollOnScroll = () => {
-  const scrolled = false
   const element = "#scroll-onScroll"
-  const top = scrollManager.getRelativeElementPosition(element) < 0.5
-  scrollManager.scroll(element, top ? 1 : 0, 2000)
-  scrollManager.onScroll = external => {
+  ScrollUtility.scroll(element, rp(element), { duration: 2000 })
+  ScrollUtility.onScroll = external => {
     if (external) {
-      scrollManager.stop
-      scrollManager.onScroll = null
+      ScrollUtility.stop
+      ScrollUtility.onScroll = null
       alert("external scroll detected!")
     }
   }
