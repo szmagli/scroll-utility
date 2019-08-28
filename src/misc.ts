@@ -13,6 +13,7 @@ function html() {
     }
   )
 }
+
 // https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
 const windowSize = (horizontal = false) =>
   horizontal
@@ -96,19 +97,22 @@ export namespace Misc {
       horizontal ? element.getBoundingClientRect().left : element.getBoundingClientRect().top,
   )
 
-  export function scrollTo(
-    element: ElementOrQuery = window,
-    value = 0,
-    horizontal: boolean = false,
-  ) {
+  export function scrollTo(element: ElementOrQuery, x: number, y: number) {
     withWindow(
       element,
-      () =>
-        window.scroll(
-          horizontal ? value : getScrollPosition(window, !horizontal),
-          !horizontal ? value : getScrollPosition(window, !horizontal),
-        ),
-      element => (horizontal ? (element.scrollLeft = value) : (element.scrollTop = value)),
+      () => window.scroll(x, y),
+      element => {
+        element.scrollLeft = x
+        element.scrollTop = y
+      },
+    )
+  }
+
+  export function scroll(element: ElementOrQuery = window, value = 0, horizontal: boolean = false) {
+    Misc.scrollTo(
+      element,
+      horizontal ? value : getScrollPosition(element, !horizontal),
+      !horizontal ? value : getScrollPosition(element, !horizontal),
     )
   }
 

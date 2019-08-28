@@ -2,7 +2,6 @@ import * as webdriver from "selenium-webdriver"
 import capabilities from "./capabilities"
 import expect from "expect"
 
-type Direction = import("../dist/scroll").Direction
 declare const ScrollUtility: typeof import("../")
 
 const local_testing_site_url = "http://localhost:8080/"
@@ -29,19 +28,19 @@ for (const os in capabilities) {
         expect(scrollUtility).toBeDefined()
       })
       ;[["html", "#scrollable"], ["#scrollable", "#element"]].forEach(([wrapper, element]) => {
-        ;["vertical", "horizontal"].forEach(direction => {
+        ;[false, true].forEach(horizontal => {
           describe("scrollTo", () => {
             ;[100, 53.3, 53.5, 53.7, 0].forEach(value => {
               it(`${value}`, async function() {
                 await browser.executeScript(
-                  (element: string, direction: Direction, value: number) => {
+                  (element: string, horizontal: boolean, value: number) => {
                     const scroll = new ScrollUtility.Scroll(element, {
-                      direction,
+                      horizontal,
                     })
-                    scroll.scroll(value)
+                    scroll.scrollTo(value)
                   },
                   wrapper,
-                  direction,
+                  horizontal,
                   value,
                 )
                 await wait(duration + 1)
@@ -49,7 +48,7 @@ for (const os in capabilities) {
                   (wrapper: string, horizontal: boolean) =>
                     ScrollUtility.Misc.getScrollPosition(wrapper, horizontal),
                   wrapper,
-                  direction === "horizontal",
+                  horizontal,
                 )
                 expect(scrollPosition).toBe(Math.floor(value))
               })
@@ -59,19 +58,19 @@ for (const os in capabilities) {
             ;[0, 1, 0.5].forEach(value => {
               it(`should be centered at ${value}`, async function() {
                 await browser.executeScript(
-                  (wrapper: string, direction: Direction, element: HTMLElement) => {
-                    new ScrollUtility.Scroll(wrapper, { direction }).scroll(element, 0.5)
+                  (wrapper: string, horizontal: boolean, element: HTMLElement) => {
+                    new ScrollUtility.Scroll(wrapper, { horizontal }).scrollTo(element, 0.5)
                   },
                   wrapper,
-                  direction,
+                  horizontal,
                   element,
                 )
                 await browser.executeScript(
-                  (wrapper: string, direction: Direction, element: HTMLElement, value: number) => {
-                    new ScrollUtility.Scroll(wrapper, { direction }).scroll(element, value)
+                  (wrapper: string, horizontal: boolean, element: HTMLElement, value: number) => {
+                    new ScrollUtility.Scroll(wrapper, { horizontal }).scrollTo(element, value)
                   },
                   wrapper,
-                  direction,
+                  horizontal,
                   element,
                   value,
                 )
@@ -87,7 +86,7 @@ for (const os in capabilities) {
                     )
                   },
                   wrapper,
-                  direction === "horizontal",
+                  horizontal,
                   element,
                 )
                 expect(placement).toBeCloseTo(value, 1)
