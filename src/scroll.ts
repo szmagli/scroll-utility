@@ -1,15 +1,8 @@
-import { EasingOrFunction } from "./easings"
-import { ElementOrQuery, Misc, getElementFromQuery } from "./misc"
+import { Misc, getElementFromQuery } from "./misc"
 import { ScrollAnimation, ScrollAnimationPosition } from "./animation"
+import { ElementOrQuery, IScrollOptions, EasingOrFunction } from "./global"
 
 const THRESHOLD = 1.5
-
-export interface IScrollOptions {
-  horizontal?: boolean
-  duration?: number
-  easing?: EasingOrFunction
-  onScroll?: ((external?: boolean) => void) | null
-}
 
 export class Scroll implements Required<IScrollOptions> {
   private _scrollAnimations: ScrollAnimation[] = []

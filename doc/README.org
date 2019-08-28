@@ -27,81 +27,36 @@
   #+BEGIN_SRC html
     <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
   #+END_SRC
-  when downloading from a cdn the package will be globally exported as _ScrollUtility_
 
 * How to scroll
   #+INCLUDE: "examples/howto.ts" src typescript
   #+BEGIN_SRC pug :exports results :results html
-    #scroll-easings.scroll-container
-      h1 Top
-      .button-container
-        each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
-          button.scroll-button(onclick=`scrollEasing("${item}")`)=item
-      hr.spacer
-      hr.spacer
-      h1 Bottom
+    details
+      summary Demo:
+      .scroll-container
+        .button-container
+          each item in ["scrollTo(0)", "offset(-200)",  "scrollTo(\'#here\')","offset(200)",  "scrollTo(10000)"]
+            button.scroll-button(onclick=`ScrollUtility.${item}`)=item
+        hr.spacer
+        #here.some-element
+          h1 #here
+        hr.spacer
   #+END_SRC
 
-** scroll
+  =ScrollUtility= is an instance of the class [[Scroll]],
+  so you can use it without having to create a =Scroll= instance just to scroll.
 
-* *Scroll*
-  The *Scroll* class is the one used to scroll
-  #+BEGIN_SRC typescript
-    import { Scroll } from "scroll-utility"
-    // const Scroll = ScrollUtility.Scroll // from cdn
+  Still =Scroll= is exported so you can customize several options,
+  and/or specify a ~container~ in which scroll
 
-    const scrollManager = new Scroll()
-    scrollManager.scroll("#some-element").offset(-50)
-  #+END_SRC
+  You can access =Scroll= by =ScrollUtility.Scroll=.
+  Head over to [[Scroll]] to see how to customize it and other useful features
 
+* Scroll
+  #+INCLUDE: "examples/scroll.ts" src typescript
+  
 ** constructor
-   The *Scroll* constructor accepts several options:
-   #+BEGIN_SRC typescript
-     import Scroll from "scroll-utility";
-
-     new Scroll({
-         element?,
-         horizontal?,
-         duration?,
-         easing?,
-         onScroll?,
-     }) // or
-     new Scroll(element?, horizontal?, duration?, easing?, onScroll?)
-   #+END_SRC
-
-   Quick overview of each parameter:
-   |------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
-   | parameter  | default value   | type                               | notes                                                                    |
-   |------------+-----------------+------------------------------------+--------------------------------------------------------------------------|
-   | element    | window          | string; Window; Element            | element where the scroll will take place, a string means a querySelector |
-   | horizontal | false           | boolean                            | direction of the scroll animation                                        |
-   | duration   | 1000            | number                             | default duration of scroll animations, in miliseconds                    |
-   | easing     | "easeInOutQuad" | string; (t, b, c, d) => number     | easing function used for scroll animations                               |
-   | onScroll   | null            | null; (external?: boolean) => void | callback function onscroll                                               |
-
-   For example, to create a horizontal *scrollManager* within "#container", with a
-   duration of *500ms* for its '*linear*' scroll animation, that logs *"hi"* every time
-   it scrolls:
-
-   #+BEGIN_SRC typescript
-     new Scroll({
-         element: "#container",
-         horizontal: true,
-         duration: 500,
-         easing: "linear",
-         onScroll: () => console.log("hi"),
-     })
-   #+END_SRC
-   It's also posible to pass parameters without an object
-   #+BEGIN_SRC typescript
-     new Scroll(
-         "#container",
-         true,
-         500,
-         "linear",
-         () => console.log("hi")
-     )
-   #+END_SRC
+  #+INCLUDE: "examples/constructor.ts" src typescript
 
 *** element
     #+BEGIN_SRC typescript
@@ -161,25 +116,17 @@
       new Scroll({ easing: "linear" })
     #+END_SRC
     The *easing* option indicates the default animation of the scroll, by default *"inOutQuad"*
-    # Posible values are "linear" and some of the form: 'easeIn{*type*}' | "easeOut{*type*}" | "easeInOut{*type*}"; being *type*: "Quart",
-    # "Cubic", "Bounce"...
 
-    @@html:
-    <div id="scroll-easings" class="scroll-container">
-    top
-    <div class="button-container">
-    <button class="scroll-button" onclick="scrollEasing('linear')"> linear </button>
-    <button class="scroll-button" onclick="scrollEasing('easeInOutQuad')"> easeInOutQuad </button>
-    <button class="scroll-button" onclick="scrollEasing('easeInOutCubic')"> easeInOutCubic </button>
-    <button class="scroll-button" onclick="scrollEasing('easeInOutQuint')"> easeInOutQuint </button>
-    <button class="scroll-button" onclick="scrollEasing('easeOutBounce')"> easeOutBounce </button>
-    <button class="scroll-button" onclick="scrollEasing('easeInBack')"> easeInBack </button>
-    <button class="scroll-button" onclick="scrollEasing('easeInOutBack')"> easeInOutBack </button>
-    </div>
-    <hr class="spacer" /> <hr class="spacer" />
-    bottom
-    </div>
-    @@
+    #+BEGIN_SRC pug :exports results :results html
+      #scroll-easings.scroll-container
+        h1 Top
+        .button-container
+          each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
+            button.scroll-button(onclick=`scrollEasing("${item}")`)=item
+        hr.spacer
+        hr.spacer
+        h1 Bottom
+    #+END_SRC
 
     You can also create your own easing function:
     #+BEGIN_SRC typescript
@@ -368,7 +315,7 @@
     #+END_SRC
 
     the relative position will be *0.5*
-* *Misc*
+* Misc
   Here I export some other useful functions.
 
   They're meant for scroll-utility internal use, but I export them just in case someone

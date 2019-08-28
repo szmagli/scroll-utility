@@ -1,12 +1,13 @@
-declare const ScrollUtility: typeof import("scroll-utility")
+import ScrollUtility = require("scroll-utility")
+// import * as ScrollUtility from "scroll-utility"
 
-interface Window {
-  scrollEasing: (easing: any) => void
-  scrollDuration: (duration: any) => void
+declare const window: Window & {
+  scrollEasing: (easing: string) => void
+  scrollDuration: (duration: number) => void
   scrollOnScroll: () => void
 }
 
-function rp(element: import("../dist/misc").ElementOrQuery) {
+function rp(element: string) {
   return ScrollUtility.relativePosition(element) < 0.5 ? 1 : 0
 }
 

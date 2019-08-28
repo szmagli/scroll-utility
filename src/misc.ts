@@ -1,3 +1,5 @@
+import { ElementOrQuery } from "./global"
+
 function body() {
   return document.body
 }
@@ -36,8 +38,6 @@ const windowScrollSize = (horizontal = false) =>
         html().scrollHeight,
         html().offsetHeight,
       )
-
-export type ElementOrQuery = Window | Element | string
 
 export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (typeof elementOrQuery === "string") {

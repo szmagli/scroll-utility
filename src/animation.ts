@@ -1,5 +1,5 @@
 import { easingFromFunction } from "./easings"
-import { IScrollOptions } from "./scroll"
+import { IScrollOptions } from "./global"
 
 type DOMHighResTimeStamp = number
 

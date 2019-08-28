@@ -1,12 +1,30 @@
-.scroll-container {
-  border: solid 3px;
+.some-element {
+  border: solid 5px #a5573e;
+  border-left: 0;
+  border-right: 0;
   border-radius: 10px;
-  border-color: #141414;
+  height: 50vh;
+  /* background: #a5573e; */
 }
+
+.some-element h1 {
+  /* color: white; */
+}
+
+.scroll-container {
+  border: solid 3px #141414;
+  border-radius: 10px;
+}
+
+.scroll-container h1 {
+  text-align: center;
+}
+
 .spacer {
   margin: 50vh 0;
   background: #141414;
 }
+
 .button-container {
   display: flex;
   margin-top: 15px;
@@ -19,9 +37,17 @@
   padding-top: 15px;
   justify-content: space-around;
 }
+
 .scroll-button {
+  cursor: pointer;
+  padding: 10px;
   margin-bottom: 15px;
   display: inline-block;
+  border: solid 2px;
+  border-radius: 10px;
+  border-color: #222;
+  background: white;
+  color: #222;
 }
 
 html {
