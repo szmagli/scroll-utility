@@ -1,12 +1,12 @@
 #+TITLE: scroll-utility
 #+HTML_LINK_HOME: https://leddgroup.github.io/scroll-utility
 #+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="index.css">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/index.css">
 #+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
-#+INFOJS_OPT: path:org-info.js view:info
-#+STARTUP: content
+#+INFOJS_OPT: path:assets/org-info.js view:info
 #+OPTIONS: num:nil
+#+STARTUP: content
 
 * Features
   - Extremely powerful for scrolling to anywhere in the page, like centering elements to certain degree.
@@ -31,6 +31,17 @@
 
 * How to scroll
   #+INCLUDE: "examples/howto.ts" src typescript
+  #+BEGIN_SRC pug :exports results :results html
+    #scroll-easings.scroll-container
+      h1 Top
+      .button-container
+        each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
+          button.scroll-button(onclick=`scrollEasing("${item}")`)=item
+      hr.spacer
+      hr.spacer
+      h1 Bottom
+  #+END_SRC
+
 ** scroll
 
 * *Scroll*

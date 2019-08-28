@@ -1,26 +1,26 @@
 declare const ScrollUtility: typeof import("scroll-utility")
 
 interface Window {
-  scrollEasing
-  scrollDuration
-  scrollOnScroll
+  scrollEasing: (easing: any) => void
+  scrollDuration: (duration: any) => void
+  scrollOnScroll: () => void
 }
 
-function rp(element) {
+function rp(element: import("../dist/misc").ElementOrQuery) {
   return ScrollUtility.relativePosition(element) < 0.5 ? 1 : 0
 }
 
 window.scrollEasing = easing => {
   const element = "#scroll-easings"
-  ScrollUtility.scroll(element, rp(element), { easing })
+  ScrollUtility.scrollTo(element, rp(element), { easing })
 }
 window.scrollDuration = duration => {
   const element = "#scroll-duration"
-  ScrollUtility.scroll(element, rp(element), { duration })
+  ScrollUtility.scrollTo(element, rp(element), { duration })
 }
 window.scrollOnScroll = () => {
   const element = "#scroll-onScroll"
-  ScrollUtility.scroll(element, rp(element), { duration: 2000 })
+  ScrollUtility.scrollTo(element, rp(element), { duration: 2000 })
   ScrollUtility.onScroll = external => {
     if (external) {
       ScrollUtility.stop()
