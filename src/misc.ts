@@ -43,7 +43,7 @@ export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | W
   if (typeof elementOrQuery === "string") {
     return document.querySelector(elementOrQuery) as Element
   }
-  return elementOrQuery
+  return elementOrQuery === null ? window : elementOrQuery
 }
 
 function isWindow(element: Element | Window): element is Window {

@@ -5,6 +5,7 @@
   border-radius: 10px;
   height: 50vh;
   /* background: #a5573e; */
+  overflow: auto;
 }
 
 .some-element h1 {
@@ -34,8 +35,11 @@
   align-items: stretch;
   float: right;
   margin-right: 10px;
-  padding-top: 15px;
   justify-content: space-around;
+}
+
+.button-container.left {
+  float: left;
 }
 
 .scroll-button {

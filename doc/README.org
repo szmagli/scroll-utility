@@ -2,8 +2,8 @@
 #+HTML_LINK_HOME: https://leddgroup.github.io/scroll-utility
 #+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/index.css">
-#+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
+#+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
 #+INFOJS_OPT: path:assets/org-info.js view:info
 #+OPTIONS: num:nil
 #+STARTUP: content
@@ -53,139 +53,159 @@
   Head over to [[Scroll]] to see how to customize it and other useful features
 
 * Scroll
-  #+INCLUDE: "examples/scroll.ts" src typescript
-  
 ** constructor
-  #+INCLUDE: "examples/constructor.ts" src typescript
+   #+INCLUDE: "examples/constructor.ts" src typescript
 
-*** element
-    #+BEGIN_SRC typescript
-      new Scroll({ element: "#container" })
-    #+END_SRC
-    The *element* option when creating a 'scrollManager' indicates the element in which the scroll will take place.
-    By default it will scroll normally in the page, as in *window* or in *document.documentElement*
+   That will create a =Scroll= instance, which you can use to scroll. \\
+   [[How to scroll][ScrollUtility]] is an instace of =Scroll= with default values
 
-    It can be the result of *document.getElementById* or *document.querySelector*.
-
-    If it's a *string*, then it will use it as a *querySelector* with
-    *document.querySelector* for getting an *Element*.
-
-    You can call *document.querySelector* beforehand if you want to ensure
-    the element exists
-
-*** horizontal
-    #+BEGIN_SRC typescript
-      new Scroll({ horizontal: true })
-    #+END_SRC
-    The *horizontal* option indicates the direction when scrolling, by default
-    *false*, wich means vertical scroll
-
-*** duration
-    #+BEGIN_SRC typescript
-      new Scroll({ duration: 0 })
-    #+END_SRC
-    The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_
-    It will be used along with [[easing]] for creating the *smooth* animation when scrolling
-
-    If you want to disable the /smooth/ animation, set *duration* to 0.
-
-    @@html:
-    <div id="scroll-duration" class="scroll-container">
-    <div class="button-container">
-    <button class="scroll-button" onclick="scrollDuration()"> default: 1000 </button>
-    <button class="scroll-button" onclick="scrollDuration(750)"> 750 </button>
-    <button class="scroll-button" onclick="scrollDuration(500)"> 500 </button>
-    <button class="scroll-button" onclick="scrollDuration(250)"> 250 </button>
-    <button class="scroll-button" onclick="scrollDuration(0)"> 0 </button>
-    </div>
-    <h1> Top </h1>
-    <hr class="spacer" />
-    <h1> Bottom </h1>
-    </div>
-    @@
-
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new Scroll({ duration: 0 })
-
-      scrollManager.duration = 999
-    #+END_SRC
-
-*** easing
-    #+BEGIN_SRC typescript
-      new Scroll({ easing: "linear" })
-    #+END_SRC
-    The *easing* option indicates the default animation of the scroll, by default *"inOutQuad"*
-
+*** container
+    #+INCLUDE: "examples/constructor-container.ts" src typescript
     #+BEGIN_SRC pug :exports results :results html
-      #scroll-easings.scroll-container
-        h1 Top
-        .button-container
-          each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
-            button.scroll-button(onclick=`scrollEasing("${item}")`)=item
-        hr.spacer
-        hr.spacer
-        h1 Bottom
+      details
+        summary Demo:
+        .scroll-container
+          .button-container
+            button.scroll-button(onclick=`scrollConstructorContainer()`) scroll window
+          hr.spacer
+          #container.some-element.scroll-container(position="relative")
+            h1 #container
+            .button-container.left
+              button.scroll-button(onclick=`scrollConstructorContainer(true)`) scroll container
+            hr.spacer
+            hr.spacer
+          hr.spacer
     #+END_SRC
+    
+*** options
+**** element
+     #+BEGIN_SRC typescript
+       new Scroll({ element: "#container" })
+     #+END_SRC
+     The *element* option when creating a 'scrollManager' indicates the element in which the scroll will take place.
+     By default it will scroll normally in the page, as in *window* or in *document.documentElement*
 
-    You can also create your own easing function:
-    #+BEGIN_SRC typescript
-      new Scroll({ easing: (t, b, c, d) => (c * t) / d + b})
-    #+END_SRC
-    That's the one I use for "linear"
+     It can be the result of *document.getElementById* or *document.querySelector*.
 
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new Scroll({ easing: "linear" })
+     If it's a *string*, then it will use it as a *querySelector* with
+     *document.querySelector* for getting an *Element*.
 
-      scrollManager.easing = "easeOutBounce"
-    #+END_SRC
+     You can call *document.querySelector* beforehand if you want to ensure
+     the element exists
 
-    Learn more about easing functions [[https://easings.net/en][here]]:
+**** horizontal
+     #+BEGIN_SRC typescript
+       new Scroll({ horizontal: true })
+     #+END_SRC
+     The *horizontal* option indicates the direction when scrolling, by default
+     *false*, wich means vertical scroll
 
-*** onScroll
-    #+BEGIN_SRC typescript
-      new Scroll({
-          onScroll: (external) => {
-              if (external) {
-                  // external scroll
-              } else {
-                  // internal scroll
-              }
-          },
-      })
-    #+END_SRC
+**** duration
+     #+BEGIN_SRC typescript
+       new Scroll({ duration: 0 })
+     #+END_SRC
+     The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_
+     It will be used along with [[easing]] for creating the *smooth* animation when scrolling
 
-    What does it mean?, well, *external* is an attempt
+     If you want to disable the /smooth/ animation, set *duration* to 0.
 
-    @@html:
-    <div id="scroll-onScroll" class="scroll-container">
-    top
-    <div class="button-container">
-    <button class="scroll-button" onclick="scrollOnScroll()"> alert on scroll </button>
-    </div>
-    @@
-    #+BEGIN_SRC javascript
-      scrollManager.onScroll = (external) => {
-          if (external) {
-              alert("external scroll detected!");
-              scrollManager.onScroll = null;
-          }
-      };
-    #+END_SRC
-    @@html:
-    <hr class="spacer" /> <hr class="spacer" />
-    bottom
-    </div>
-    @@
+     @@html:
+     <div id="scroll-duration" class="scroll-container">
+     <div class="button-container">
+     <button class="scroll-button" onclick="scrollDuration()"> default: 1000 </button>
+     <button class="scroll-button" onclick="scrollDuration(750)"> 750 </button>
+     <button class="scroll-button" onclick="scrollDuration(500)"> 500 </button>
+     <button class="scroll-button" onclick="scrollDuration(250)"> 250 </button>
+     <button class="scroll-button" onclick="scrollDuration(0)"> 0 </button>
+     </div>
+     <h1> Top </h1>
+     <hr class="spacer" />
+     <h1> Bottom </h1>
+     </div>
+     @@
 
-    It can be changed any time:
-    ,#+BEGIN_SRC typescript
-    const scrollManager = new Scroll({ onScroll: null })
+     It can be changed any time:
+     #+BEGIN_SRC typescript
+       const scrollManager = new Scroll({ duration: 0 })
 
-    scrollManager.onScroll = () => alert("hi")
+       scrollManager.duration = 999
+     #+END_SRC
 
-    #+END_SRC
+**** easing
+     #+BEGIN_SRC typescript
+       new Scroll({ easing: "linear" })
+     #+END_SRC
+     The *easing* option indicates the default animation of the scroll, by default *"inOutQuad"*
+
+     #+BEGIN_SRC pug :exports results :results html
+       #scroll-easings.scroll-container
+         h1 Top
+         .button-container
+           each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
+             button.scroll-button(onclick=`scrollEasing("${item}")`)=item
+         hr.spacer
+         hr.spacer
+         h1 Bottom
+     #+END_SRC
+
+     You can also create your own easing function:
+     #+BEGIN_SRC typescript
+       new Scroll({ easing: (t, b, c, d) => (c * t) / d + b})
+     #+END_SRC
+     That's the one I use for "linear"
+
+     It can be changed any time:
+     #+BEGIN_SRC typescript
+       const scrollManager = new Scroll({ easing: "linear" })
+
+       scrollManager.easing = "easeOutBounce"
+     #+END_SRC
+
+     Learn more about easing functions [[https://easings.net/en][here]]:
+
+**** onScroll
+     #+BEGIN_SRC typescript
+       new Scroll({
+           onScroll: (external) => {
+               if (external) {
+                   // external scroll
+               } else {
+                   // internal scroll
+               }
+           },
+       })
+     #+END_SRC
+
+     What does it mean?, well, *external* is an attempt
+
+     @@html:
+     <div id="scroll-onScroll" class="scroll-container">
+     top
+     <div class="button-container">
+     <button class="scroll-button" onclick="scrollOnScroll()"> alert on scroll </button>
+     </div>
+     @@
+     #+BEGIN_SRC javascript
+       scrollManager.onScroll = (external) => {
+           if (external) {
+               alert("external scroll detected!");
+               scrollManager.onScroll = null;
+           }
+       };
+     #+END_SRC
+     @@html:
+     <hr class="spacer" /> <hr class="spacer" />
+     bottom
+     </div>
+     @@
+
+     It can be changed any time:
+     ,#+BEGIN_SRC typescript
+     const scrollManager = new Scroll({ onScroll: null })
+
+     scrollManager.onScroll = () => alert("hi")
+
+     #+END_SRC
 ** scroll
    #+BEGIN_SRC typescript
      const scrollManager = new Scroll()

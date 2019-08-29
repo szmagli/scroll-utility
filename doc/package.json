@@ -1,8 +1,9 @@
 {
     "scripts": {
         "assets": "cp -r assets dist",
+        "module": "amd",
         "orgmode": "emacs --iconic --no-splash -nw README.org -f org-html-export-to-html --kill && mv README.html dist/index.html",
-        "build": "rm -rf dist && tsc index.ts --outFile dist/index.js",
+        "build": "rm -rf dist && tsc",
         "doc": "npm run build && cp node_modules/scroll-utility/dist/scroll-utility.js dist && npm run orgmode && npm run assets"
     },
     "dependencies": {

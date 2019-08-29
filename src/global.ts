@@ -9,7 +9,7 @@ export type EasingFunction = (
   totalSteps: number,
 ) => number
 
-export type ElementOrQuery = Window | Element | string
+export type ElementOrQuery = Window | Element | string | null
 
 export interface IScrollOptions {
   horizontal?: boolean

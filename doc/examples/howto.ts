@@ -1,4 +1,4 @@
-import ScrollUtility from "scroll-utility"
+import ScrollUtility = require("scroll-utility")
 // const ScrollUtility = require("scroll-utility")
 
 ScrollUtility.scrollTo("#some-element")
