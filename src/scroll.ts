@@ -1,6 +1,6 @@
 import { Misc, getElementFromQuery } from "./misc"
 import { ScrollAnimation, ScrollAnimationPosition } from "./animation"
-import { ElementOrQuery, IScrollOptions, EasingOrFunction } from "./global"
+import { ElementOrQuery, IScrollOptions, EasingOrFunction } from "./types"
 
 const THRESHOLD = 1.5
 

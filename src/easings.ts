@@ -1,4 +1,4 @@
-import { EasingOrFunction } from "./global"
+import { EasingOrFunction } from "./types"
 
 // tslint:disable
 export function easingFromFunction(easing: EasingOrFunction) {

@@ -1,4 +1,4 @@
-import { ElementOrQuery } from "./global"
+import { ElementOrQuery } from "./types"
 
 function body() {
   return document.body
