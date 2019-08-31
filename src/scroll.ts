@@ -1,38 +1,84 @@
 import { Misc, getElementFromQuery } from "./misc"
 import { ScrollAnimation, ScrollAnimationPosition } from "./animation"
-import { ElementOrQuery, IScrollOptions, EasingOrFunction } from "./types"
+import { ElementOrQuery, IScrollOptions, IScrollPropertyOptions } from "./types"
 
-const THRESHOLD = 1.5
+function maxMin(value: number, max: number) {
+  return Math.max(Math.min(value, max), 0)
+}
 
-export class Scroll implements Required<IScrollOptions> {
+export class ScrollUtility implements Required<IScrollOptions> {
+  private _scrollElements: (Element | Window)[] = [window]
+  private _scrollElementsX = [0]
+  private _scrollElementsY = [0]
   private _scrollAnimations: ScrollAnimation[] = []
-  private _element: Element | Window = window
-  private _external = false
-  private _virtualX: number = 0
-  private _virtualY: number = 0
 
+  container: Required<IScrollOptions>["container"] = window
   horizontal = false
   duration = 1000
   onScroll: ((external?: boolean) => void) | null = null
-  easing: EasingOrFunction = "easeInOutQuad"
-
-  constructor(container: ElementOrQuery = window, options: IScrollOptions = {}) {
-    const element = getElementFromQuery(container)
-    this._element = element === document.documentElement ? window : element
+  easing: Required<IScrollOptions>["easing"] = "easeInOutQuad"
+  force = false
+  constructor(options: IScrollOptions = {}) {
     this.updateOptions(options)
-    this._element.addEventListener("scroll", () => {
-      const scrollX = Misc.getScrollPosition(this._element, true)
-      const scrollY = Misc.getScrollPosition(this._element, false)
-      this._external =
-        (!(this._virtualX < 0 && scrollX === 0) &&
-          Math.abs(scrollX - this._virtualX) >= THRESHOLD) ||
-        (!(this._virtualY < 0 && scrollY === 0) && Math.abs(scrollY - this._virtualY) >= THRESHOLD)
-      if (this._external) {
-        this._virtualX = scrollX
-        this._virtualY = scrollY
-      }
-      this.onScroll && this.onScroll(this._external)
-    })
+  }
+  getSize(options: IScrollPropertyOptions = {}) {
+    const realOptions = this._getOptions(options)
+    return Math.floor(Misc.getSize(realOptions.container, realOptions.horizontal))
+  }
+  getScrollSize(options: IScrollPropertyOptions = {}) {
+    const realOptions = this._getOptions(options)
+    return (
+      Math.floor(Misc.getScrollSize(realOptions.container, realOptions.horizontal)) -
+      this.getSize(realOptions)
+    )
+  }
+  getScrollPosition(options: IScrollPropertyOptions = {}) {
+    const realOptions = this._getOptions(options)
+    return Math.floor(Misc.getScrollPosition(realOptions.container, realOptions.horizontal))
+  }
+  updateOptions(options: IScrollOptions = {}) {
+    const realOptions = this._getOptions(options)
+    this.container = realOptions.container
+    this.horizontal = realOptions.horizontal
+    this.onScroll = realOptions.onScroll
+    this.duration = realOptions.duration
+    this.easing = realOptions.easing
+  }
+  relativePosition(options: { element: ElementOrQuery } & IScrollPropertyOptions): number {
+    const realOptions = this._getOptions(options)
+    const element = getElementFromQuery(options.element)
+    return Misc.getRelativeElementPosition(realOptions.container, element, realOptions.horizontal)
+  }
+  stop() {
+    this._scrollAnimations = []
+    this._scrollElements = []
+    this._scrollElementsX = []
+    this._scrollElementsY = []
+  }
+  scrollTo(value: number, options?: IScrollOptions): this
+  scrollTo(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
+  scrollTo(...args: any[]) {
+    const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
+    const value: number = typeof args[0] === "number" ? args[0] : args[1]
+    const options = this._getOptions(typeof args[0] === "number" ? args[1] : args[2])
+    const from = this.getScrollPosition(options)
+    const to = !!element
+      ? Misc.getDistToCenterElement(
+          options.container,
+          getElementFromQuery(element),
+          options.horizontal,
+          value,
+        ) + from
+      : maxMin(value, this.getScrollSize(options))
+    this._createScrollAnimation(from, to, options)
+    return this
+  }
+  offset(value: number, options?: IScrollOptions) {
+    const realOptions = this._getOptions(options)
+    const from = this.getScrollPosition(realOptions)
+    const to = from + value
+    this._createScrollAnimation(from, to, realOptions)
+    return this
   }
 
   private _createScrollAnimation(
@@ -43,79 +89,67 @@ export class Scroll implements Required<IScrollOptions> {
     this._scrollAnimations.push(new ScrollAnimation(from, to, options))
     this._update()
   }
-  private _checkBorder() {
-    const scrollX = Misc.getScrollSize(this._element, true)
-    const scrollY = Misc.getScrollSize(this._element, false)
-    this._virtualX = Math.max(0, Math.min(this._virtualX, scrollX))
-    this._virtualY = Math.max(0, Math.min(this._virtualY, scrollY))
-  }
   private _update() {
-    this._scrollAnimations = this._scrollAnimations.filter(animation => {
-      const value = -animation.distance + animation.updateDistance()
-      if (animation.options.horizontal) {
-        this._virtualX += value
-      } else {
-        this._virtualY += value
+    const modified: boolean[] = []
+    const external: boolean[] = []
+
+    this._scrollElements.forEach((element, index) => {
+      const scrollX = Math.floor(Misc.getScrollPosition(element, true))
+      const scrollY = Math.floor(Misc.getScrollPosition(element, false))
+      const width = Math.floor(Misc.getScrollSize(element, true))
+      const height = Math.floor(Misc.getScrollSize(element, false))
+      const externalX = scrollX !== maxMin(Math.floor(this._scrollElementsX[index]), width)
+      const externalY = scrollY !== maxMin(Math.floor(this._scrollElementsY[index]), height)
+      if (externalX) {
+        this._scrollElementsX[index] = scrollX
       }
+      if (externalY) {
+        this._scrollElementsY[index] = scrollY
+      }
+      external[index] = externalY || externalX
+    })
+
+    this._scrollAnimations = this._scrollAnimations.filter(animation => {
+      const element = getElementFromQuery(animation.options.container)
+      let index = this._scrollElements.findIndex(el => el === element)
+      if (index === -1) {
+        index = this._scrollElements.length
+        this._scrollElements[index] = element
+        this._scrollElementsX[index] = this.getScrollPosition({
+          ...animation.options,
+          horizontal: true,
+        })
+        this._scrollElementsY[index] = this.getScrollPosition({
+          ...animation.options,
+          horizontal: false,
+        })
+      }
+      modified[index] = true
+      const value = -animation.distance + animation.updateDistance()
+      this._scrollElementsX[index] += animation.options.horizontal ? value : 0
+      this._scrollElementsY[index] += !animation.options.horizontal ? value : 0
       return !animation.isPastAnimation()
     })
 
-    Misc.scrollTo(this._element, this._virtualX, this._virtualY)
-    if (this._scrollAnimations.length > 0) {
-      requestAnimationFrame(() => this._update())
-    } else {
-      this._checkBorder()
-    }
-  }
+    this._scrollElements.filter((element, index) => {
+      Misc.scrollTo(
+        element,
+        Math.floor(this._scrollElementsX[index]),
+        Math.floor(this._scrollElementsY[index]),
+      )
+      return modified[index]
+    })
 
-  updateOptions(options: IScrollOptions = {}) {
-    const realOptions = this.getOptions(options)
-    this.horizontal = realOptions.horizontal
-    this.onScroll = realOptions.onScroll
-    this.duration = realOptions.duration
-    this.easing = realOptions.easing
+    this._scrollAnimations.length > 0 ? requestAnimationFrame(() => this._update()) : this.stop()
   }
-  getOptions(options: IScrollOptions = {}): Required<IScrollOptions> {
+  private _getOptions(options: IScrollOptions = {}) {
     return {
-      horizontal: options.horizontal || this.horizontal,
+      container: getElementFromQuery(options.container || this.container),
+      horizontal: options.horizontal === undefined ? this.horizontal : options.horizontal,
       easing: options.easing || this.easing,
       onScroll: options.onScroll || this.onScroll,
-      duration: options.duration !== undefined ? options.duration : this.duration,
+      duration: options.duration === undefined ? this.duration : options.duration,
+      force: options.force === undefined ? this.force : options.force,
     }
-  }
-  get size() {
-    return Misc.getSize(this._element, this.horizontal)
-  }
-  get scrollSize() {
-    return Misc.getScrollSize(this._element, this.horizontal) - this.size
-  }
-  get scrollPosition() {
-    return Misc.getScrollPosition(this._element, this.horizontal)
-  }
-  relativePosition(elementOrQuery: ElementOrQuery): number {
-    return Misc.getRelativeElementPosition(this._element, elementOrQuery, this.horizontal)
-  }
-  stop() {
-    this._scrollAnimations = []
-  }
-  scrollTo(value: number, options?: IScrollOptions): this
-  scrollTo(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
-  scrollTo(...args: any[]) {
-    const element = typeof args[0] === "number" ? null : args[0]
-    const value = typeof args[0] === "number" ? args[0] : args[1]
-    const options = this.getOptions(typeof args[0] === "number" ? args[1] : args[2])
-    const from = Misc.getScrollPosition(this._element, options.horizontal)
-    const to = !!element
-      ? Misc.getDistToCenterElement(this._element, element, options.horizontal, value) + from
-      : value
-    this._createScrollAnimation(from, to, options)
-    return this
-  }
-  offset(value: number, options?: IScrollOptions) {
-    const realOptions = this.getOptions(options)
-    const from = Misc.getScrollPosition(this._element, realOptions.horizontal)
-    const to = from + value
-    this._createScrollAnimation(from, to, realOptions)
-    return this
   }
 }

@@ -1,12 +1,11 @@
-import { Scroll } from "scroll-utility"
-
-const container: Window | Element | HTMLElement = window
+import ScrollUtility = require("scroll-utility")
 
 const options: {
+  container?: Window | Element | HTMLElement | string
   horizontal?: boolean
   duration?: number
   easing?: string
   onScroll?: ((external?: boolean) => void) | null
 } = {}
 
-new Scroll(container, options)
+new ScrollUtility(options)

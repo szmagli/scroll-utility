@@ -1,4 +1,4 @@
-import { ElementOrQuery } from "./types"
+import { ElementOrQuery, ScrollElement } from "./types"
 
 function body() {
   return document.body
@@ -40,10 +40,19 @@ const windowScrollSize = (horizontal = false) =>
       )
 
 export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
-  if (typeof elementOrQuery === "string") {
-    return document.querySelector(elementOrQuery) as Element
+  if (!elementOrQuery) {
+    // TODO launch warning
+    // console.warn("parameter *elementOrQuery*  null or undefined, window will be used instead")
+    return window
   }
-  return elementOrQuery === null ? window : elementOrQuery
+  const element =
+    typeof elementOrQuery === "string" ? document.querySelector(elementOrQuery) : elementOrQuery
+  if (!element) {
+    // TODO launch warning
+    // console.warn(`no element matched querySelector ${elementOrQuery}, window will be used instead`)
+    return window
+  }
+  return element === document.documentElement ? window : element
 }
 
 function isWindow(element: Element | Window): element is Window {
@@ -51,11 +60,10 @@ function isWindow(element: Element | Window): element is Window {
 }
 
 function withWindow<T>(
-  elementOrQuery: ElementOrQuery,
+  element: ScrollElement,
   windowFunction: () => T,
   elementFunction: (element: HTMLElement) => T,
 ): T {
-  const element = getElementFromQuery(elementOrQuery)
   return isWindow(element) ? windowFunction() : elementFunction(element as HTMLElement)
 }
 
@@ -63,8 +71,7 @@ function getWithWindow<T>(
   windowFunction: (horizontal: boolean) => T,
   elementFunction: (element: HTMLElement, horizontal: boolean) => T,
 ) {
-  return (elementOrQuery: ElementOrQuery, horizontal: boolean = false) => {
-    const element = getElementFromQuery(elementOrQuery)
+  return (element: ScrollElement, horizontal: boolean = false) => {
     return isWindow(element)
       ? windowFunction(horizontal)
       : elementFunction(element as HTMLElement, horizontal)
@@ -97,7 +104,7 @@ export namespace Misc {
       horizontal ? element.getBoundingClientRect().left : element.getBoundingClientRect().top,
   )
 
-  export function scrollTo(element: ElementOrQuery, x: number, y: number) {
+  export function scrollTo(element: ScrollElement, x: number, y: number) {
     withWindow(
       element,
       () => window.scroll(x, y),
@@ -108,7 +115,7 @@ export namespace Misc {
     )
   }
 
-  export function scroll(element: ElementOrQuery = window, value = 0, horizontal: boolean = false) {
+  export function scroll(element: ScrollElement, value: number, horizontal: boolean = false) {
     Misc.scrollTo(
       element,
       horizontal ? value : getScrollPosition(element, !horizontal),
@@ -117,12 +124,12 @@ export namespace Misc {
   }
 
   export function getRelativeElementPosition(
-    wrapper: ElementOrQuery,
-    elementOrQuery: ElementOrQuery,
+    wrapper: ScrollElement,
+    element: ScrollElement,
     horizontal = false,
   ) {
-    const elementPosition = getOffset(elementOrQuery, horizontal) - getOffset(wrapper, horizontal)
-    const elementSize = getSizeWithBorders(elementOrQuery, horizontal)
+    const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
+    const elementSize = getSizeWithBorders(element, horizontal)
     const ratio = elementPosition / (getSize(wrapper, horizontal) - elementSize)
     return ratio <= 1 && ratio >= 0
       ? ratio
@@ -132,13 +139,13 @@ export namespace Misc {
   }
 
   export function getDistToCenterElement(
-    wrapper: ElementOrQuery,
-    elementOrQuery: ElementOrQuery,
+    wrapper: ScrollElement,
+    element: ScrollElement,
     horizontal = false,
     value = 0,
   ) {
-    const elementPosition = getOffset(elementOrQuery, horizontal) - getOffset(wrapper, horizontal)
-    const elementSize = getSizeWithBorders(elementOrQuery, horizontal)
+    const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
+    const elementSize = getSizeWithBorders(element, horizontal)
     return value <= 1 && value >= 0
       ? elementPosition - (getSize(wrapper, horizontal) - elementSize) * value
       : (value < 0

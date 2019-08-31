@@ -1,35 +1,31 @@
 declare const ScrollUtility: typeof import("scroll-utility")
-type Scroll = import("scroll-utility/dist/scroll").Scroll
 
 interface Window {
   scrollEasing: (easing: string) => void
   scrollDuration: (duration: number) => void
   scrollOnScroll: (external: boolean) => void
-  scrollConstructorContainer: (container?: boolean) => void
+  scrollContainer: (container?: boolean) => void
 }
 
 window.onload = () => {
   function rp(element: string) {
-    return ScrollUtility.relativePosition(element) < 0.5 ? 1 : 0
+    console.log(ScrollUtility.relativePosition({ element }))
+    return ScrollUtility.relativePosition({ element }) < 0.5 ? 1 : 0
   }
 
-  let scrollContainer = new ScrollUtility.Scroll("#container")
+  const scrollContainerOptions = { container: "#container" }
 
-  window.scrollConstructorContainer = container => {
+  window.scrollContainer = container => {
     if (!!container) {
-      scrollContainer.scrollTo(
-        scrollContainer.scrollPosition < scrollContainer.scrollSize / 2
-          ? scrollContainer.scrollSize
-          : 0,
-      )
+      const scrollContainer = ScrollUtility.new(scrollContainerOptions)
+      const where =
+        scrollContainer.getScrollPosition() < scrollContainer.getScrollSize() / 2
+          ? scrollContainer.getScrollSize()
+          : 0
+      scrollContainer.scrollTo(where)
     } else {
-      const relPos = ScrollUtility.relativePosition("#container")
-      const centered = relPos > -0.3 && relPos < 0.3
-      if (centered) {
-        ScrollUtility.scrollTo(0)
-      } else {
-        ScrollUtility.scrollTo("#container")
-      }
+      const element = "#scroll-container"
+      ScrollUtility.scrollTo(element, rp(element))
     }
   }
   window.scrollEasing = easing => {

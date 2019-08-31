@@ -28,10 +28,10 @@
     <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
   #+END_SRC
 
-* How to scroll
+* Quick overview
   #+INCLUDE: "examples/howto.ts" src typescript
   #+BEGIN_SRC pug :exports results :results html
-    details
+    details(open)
       summary Demo:
       .scroll-container
         .button-container
@@ -43,169 +43,128 @@
         hr.spacer
   #+END_SRC
 
-  =ScrollUtility= is an instance of the class [[Scroll]],
-  so you can use it without having to create a =Scroll= instance just to scroll.
-
-  Still =Scroll= is exported so you can customize several options,
-  and/or specify a ~container~ in which scroll
-
-  You can access =Scroll= by =ScrollUtility.Scroll=.
-  Head over to [[Scroll]] to see how to customize it and other useful features
-
-* Scroll
+* API
 ** constructor
    #+INCLUDE: "examples/constructor.ts" src typescript
 
-   That will create a =Scroll= instance, which you can use to scroll. \\
-   [[How to scroll][ScrollUtility]] is an instace of =Scroll= with default values
+   That will create a new =ScrollUtility= instance, which you can use to scroll. \\
+   Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
 
+   You can change those options using [[updateOptions]] method
 *** container
-    #+INCLUDE: "examples/constructor-container.ts" src typescript
+    #+INCLUDE: "examples/constructor.container.ts" src typescript
     #+BEGIN_SRC pug :exports results :results html
       details
-        summary Demo:
-        .scroll-container
+        summary 
+          b Demo:
+        #scroll-container.scroll-container
           .button-container
-            button.scroll-button(onclick=`scrollConstructorContainer()`) scroll window
+            button.scroll-button(onclick=`scrollContainer()`) scroll window
           hr.spacer
           #container.some-element.scroll-container(position="relative")
             h1 #container
             .button-container.left
-              button.scroll-button(onclick=`scrollConstructorContainer(true)`) scroll container
+              button.scroll-button(onclick=`scrollContainer(true)`) scroll container
             hr.spacer
             hr.spacer
+    #+END_SRC
+
+    The =container= option indicates the element in which the scroll takes place; ~window~ by default
+
+    If it's a ~string~, then it will use it as a *querySelector* with
+    ~document.querySelector~ for getting an ~Element~. \\
+    If the *querySelector* doesn't match an element, it will send a warning to the console and use window to scroll
+
+*** horizontal
+    #+BEGIN_SRC typescript
+      new Scroll({ horizontal: true })
+    #+END_SRC
+    The *horizontal* option indicates the direction when scrolling, by default
+    *false*, wich means vertical scroll
+
+*** duration
+    #+INCLUDE: "examples/constructor.duration.ts" src typescript
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary 
+          b Demo:
+        #scroll-duration.scroll-container
+          .button-container
+            each duration in ["1000", "750", "500", "0"]
+              button.scroll-button(onclick=`scrollDuration(${duration})`)= duration
+          h1 Top
           hr.spacer
+          hr.spacer
+          h1 Bottom
     #+END_SRC
     
-*** options
-**** element
-     #+BEGIN_SRC typescript
-       new Scroll({ element: "#container" })
-     #+END_SRC
-     The *element* option when creating a 'scrollManager' indicates the element in which the scroll will take place.
-     By default it will scroll normally in the page, as in *window* or in *document.documentElement*
+    The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_\\
+    It will be used along with [[easing]] for creating the *smooth* animation when scrolling
+    
+    If you want to disable the /smooth/ animation, set *duration* to 0.
+    
+*** easing
+    #+INCLUDE: "examples/constructor.easing.ts" src typescript
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary 
+          b Demo:
+        #scroll-easings.scroll-container
+          .button-container
+            each easing in [ "linear", "easeInOutQuad", "easeOutBounce", "easeInOutBack"]
+              button.scroll-button(onclick=`scrollEasing("${easing}")`)= easing
+          h1 Top
+          hr.spacer
+          hr.spacer
+          h1 Bottom
+    #+END_SRC
 
-     It can be the result of *document.getElementById* or *document.querySelector*.
+    Learn more about easing functions [[https://easings.net/en][here]]:
 
-     If it's a *string*, then it will use it as a *querySelector* with
-     *document.querySelector* for getting an *Element*.
+*** onScroll
+    #+BEGIN_SRC typescript
+      new Scroll({
+          onScroll: (external) => {
+              if (external) {
+                  // external scroll
+              } else {
+                  // internal scroll
+              }
+          },
+      })
+    #+END_SRC
 
-     You can call *document.querySelector* beforehand if you want to ensure
-     the element exists
+    What does it mean?, well, *external* is an attempt
 
-**** horizontal
-     #+BEGIN_SRC typescript
-       new Scroll({ horizontal: true })
-     #+END_SRC
-     The *horizontal* option indicates the direction when scrolling, by default
-     *false*, wich means vertical scroll
+    @@html:
+    <div id="scroll-onScroll" class="scroll-container">
+    top
+    <div class="button-container">
+    <button class="scroll-button" onclick="scrollOnScroll()"> alert on scroll </button>
+    </div>
+    @@
+    #+BEGIN_SRC javascript
+      scrollManager.onScroll = (external) => {
+          if (external) {
+              alert("external scroll detected!");
+              scrollManager.onScroll = null;
+          }
+      };
+    #+END_SRC
+    @@html:
+    <hr class="spacer" /> <hr class="spacer" />
+    bottom
+    </div>
+    @@
 
-**** duration
-     #+BEGIN_SRC typescript
-       new Scroll({ duration: 0 })
-     #+END_SRC
-     The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_
-     It will be used along with [[easing]] for creating the *smooth* animation when scrolling
+    It can be changed any time:
+    ,#+BEGIN_SRC typescript
+    const scrollManager = new Scroll({ onScroll: null })
 
-     If you want to disable the /smooth/ animation, set *duration* to 0.
+    scrollManager.onScroll = () => alert("hi")
 
-     @@html:
-     <div id="scroll-duration" class="scroll-container">
-     <div class="button-container">
-     <button class="scroll-button" onclick="scrollDuration()"> default: 1000 </button>
-     <button class="scroll-button" onclick="scrollDuration(750)"> 750 </button>
-     <button class="scroll-button" onclick="scrollDuration(500)"> 500 </button>
-     <button class="scroll-button" onclick="scrollDuration(250)"> 250 </button>
-     <button class="scroll-button" onclick="scrollDuration(0)"> 0 </button>
-     </div>
-     <h1> Top </h1>
-     <hr class="spacer" />
-     <h1> Bottom </h1>
-     </div>
-     @@
-
-     It can be changed any time:
-     #+BEGIN_SRC typescript
-       const scrollManager = new Scroll({ duration: 0 })
-
-       scrollManager.duration = 999
-     #+END_SRC
-
-**** easing
-     #+BEGIN_SRC typescript
-       new Scroll({ easing: "linear" })
-     #+END_SRC
-     The *easing* option indicates the default animation of the scroll, by default *"inOutQuad"*
-
-     #+BEGIN_SRC pug :exports results :results html
-       #scroll-easings.scroll-container
-         h1 Top
-         .button-container
-           each item in [ "linear", "easeInOutQuad", "easeInOutQuint", "easeOutBounce", "easeInOutBack"]
-             button.scroll-button(onclick=`scrollEasing("${item}")`)=item
-         hr.spacer
-         hr.spacer
-         h1 Bottom
-     #+END_SRC
-
-     You can also create your own easing function:
-     #+BEGIN_SRC typescript
-       new Scroll({ easing: (t, b, c, d) => (c * t) / d + b})
-     #+END_SRC
-     That's the one I use for "linear"
-
-     It can be changed any time:
-     #+BEGIN_SRC typescript
-       const scrollManager = new Scroll({ easing: "linear" })
-
-       scrollManager.easing = "easeOutBounce"
-     #+END_SRC
-
-     Learn more about easing functions [[https://easings.net/en][here]]:
-
-**** onScroll
-     #+BEGIN_SRC typescript
-       new Scroll({
-           onScroll: (external) => {
-               if (external) {
-                   // external scroll
-               } else {
-                   // internal scroll
-               }
-           },
-       })
-     #+END_SRC
-
-     What does it mean?, well, *external* is an attempt
-
-     @@html:
-     <div id="scroll-onScroll" class="scroll-container">
-     top
-     <div class="button-container">
-     <button class="scroll-button" onclick="scrollOnScroll()"> alert on scroll </button>
-     </div>
-     @@
-     #+BEGIN_SRC javascript
-       scrollManager.onScroll = (external) => {
-           if (external) {
-               alert("external scroll detected!");
-               scrollManager.onScroll = null;
-           }
-       };
-     #+END_SRC
-     @@html:
-     <hr class="spacer" /> <hr class="spacer" />
-     bottom
-     </div>
-     @@
-
-     It can be changed any time:
-     ,#+BEGIN_SRC typescript
-     const scrollManager = new Scroll({ onScroll: null })
-
-     scrollManager.onScroll = () => alert("hi")
-
-     #+END_SRC
+    #+END_SRC
+    
 ** scroll
    #+BEGIN_SRC typescript
      const scrollManager = new Scroll()
@@ -283,58 +242,59 @@
      //or
      scrollManager.offset(100, 1000, "some")
    #+END_SRC
-** other
-*** stopAllAnimations
-    To stop all scroll animations:
+   
+** updateOptions
+** stop
+   To stop all scroll animations:
 
-    #+BEGIN_SRC typescript
-      const scrollManager = new Scroll()
-      scrollManager.stopAllAnimations()
-    #+END_SRC
+   #+BEGIN_SRC typescript
+     const scrollManager = new Scroll()
+     scrollManager.stopAllAnimations()
+   #+END_SRC
 
-*** size
-    The size of the *Scroll* container
-    #+BEGIN_SRC typescript
-      (new Scroll()).size // size of the window
-      (new Scroll("#container")).size // size of the element #container
-    #+END_SRC
-    The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
-*** scrollSize
-    The total scroll you can do within the *Scroll* container
-    #+BEGIN_SRC typescript
-      (new Scroll()).scrollSize // scrollSize of the windows
-      (new Scroll("#container")).scrollSize // scrollSize of the element #container
-    #+END_SRC
-    It's related to *scrollWidth/scrollHeight* properties of /HTMLElements/.
+** size
+   The size of the *Scroll* container
+   #+BEGIN_SRC typescript
+     (new Scroll()).size // size of the window
+     (new Scroll("#container")).size // size of the element #container
+   #+END_SRC
+   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
+** scrollSize
+   The total scroll you can do within the *Scroll* container
+   #+BEGIN_SRC typescript
+     (new Scroll()).scrollSize // scrollSize of the windows
+     (new Scroll("#container")).scrollSize // scrollSize of the element #container
+   #+END_SRC
+   It's related to *scrollWidth/scrollHeight* properties of /HTMLElements/.
 
-    The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
-*** scrollPosition
-    The current position of the scroll
-    #+BEGIN_SRC typescript
-      (new Scroll()).scrollPosition // scrollPosition of the windows
-      (new Scroll("#container")).scrollPosition // scrollPosition of the element #container
-    #+END_SRC
+   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
+** scrollPosition
+   The current position of the scroll
+   #+BEGIN_SRC typescript
+     (new Scroll()).scrollPosition // scrollPosition of the windows
+     (new Scroll("#container")).scrollPosition // scrollPosition of the element #container
+   #+END_SRC
 
-    For example, if you
-    #+BEGIN_SRC typescript
-      (new Scroll()).scroll(100)
-    #+END_SRC
-    the *scrollPosition* will be 100
+   For example, if you
+   #+BEGIN_SRC typescript
+     (new Scroll()).scroll(100)
+   #+END_SRC
+   the *scrollPosition* will be 100
 
 
-    The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
-*** getRelativeElementPosition
-    The relative position of certain element
+   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
+** getRelativeElementPosition
+   The relative position of certain element
 
-    #+BEGIN_SRC typescript
-      (new Scroll()).getRelativeElementPosition("#some-element")
-    #+END_SRC
-    It relates to [[to "element"][scroll]] (to "element"), so for example, if you
-    #+BEGIN_SRC typescript
-      (new Scroll()).scroll("#some-element", 0.5)
-    #+END_SRC
+   #+BEGIN_SRC typescript
+     (new Scroll()).getRelativeElementPosition("#some-element")
+   #+END_SRC
+   It relates to [[to "element"][scroll]] (to "element"), so for example, if you
+   #+BEGIN_SRC typescript
+     (new Scroll()).scroll("#some-element", 0.5)
+   #+END_SRC
 
-    the relative position will be *0.5*
+   the relative position will be *0.5*
 * Misc
   Here I export some other useful functions.
 

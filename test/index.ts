@@ -27,27 +27,28 @@ for (const os in capabilities) {
         })
         expect(scrollUtility).toBeDefined()
       })
-      ;[["html", "#scrollable"], ["#scrollable", "#element"]].forEach(([wrapper, element]) => {
+      ;[["html", "#scrollable"], ["#scrollable", "#element"]].forEach(([container, element]) => {
         ;[false, true].forEach(horizontal => {
           describe("scrollTo", () => {
             ;[100, 53.3, 53.5, 53.7, 0].forEach(value => {
               it(`${value}`, async function() {
                 await browser.executeScript(
                   (element: string, horizontal: boolean, value: number) => {
-                    const scroll = new ScrollUtility.Scroll(element, {
+                    const scroll = ScrollUtility.new({
+                      container: element,
                       horizontal,
                     })
                     scroll.scrollTo(value)
                   },
-                  wrapper,
+                  container,
                   horizontal,
                   value,
                 )
                 await wait(duration + 1)
                 const scrollPosition = await browser.executeScript(
-                  (wrapper: string, horizontal: boolean) =>
-                    ScrollUtility.Misc.getScrollPosition(wrapper, horizontal),
-                  wrapper,
+                  (container: string, horizontal: boolean) =>
+                    ScrollUtility.getScrollPosition({ container, horizontal }),
+                  container,
                   horizontal,
                 )
                 expect(scrollPosition).toBe(Math.floor(value))
@@ -58,18 +59,18 @@ for (const os in capabilities) {
             ;[0, 1, 0.5].forEach(value => {
               it(`should be centered at ${value}`, async function() {
                 await browser.executeScript(
-                  (wrapper: string, horizontal: boolean, element: HTMLElement) => {
-                    new ScrollUtility.Scroll(wrapper, { horizontal }).scrollTo(element, 0.5)
+                  (container: string, horizontal: boolean, element: HTMLElement) => {
+                    ScrollUtility.new({ container, horizontal }).scrollTo(element, 0.5)
                   },
-                  wrapper,
+                  container,
                   horizontal,
                   element,
                 )
                 await browser.executeScript(
                   (wrapper: string, horizontal: boolean, element: HTMLElement, value: number) => {
-                    new ScrollUtility.Scroll(wrapper, { horizontal }).scrollTo(element, value)
+                    ScrollUtility.new({ container: wrapper, horizontal }).scrollTo(element, value)
                   },
-                  wrapper,
+                  container,
                   horizontal,
                   element,
                   value,
@@ -78,14 +79,14 @@ for (const os in capabilities) {
                 await wait(duration + 1)
 
                 const placement = await browser.executeScript(
-                  (wrapper: string, horizontal: boolean, element: HTMLElement) => {
-                    return ScrollUtility.Misc.getRelativeElementPosition(
-                      wrapper,
+                  (container: string, horizontal: boolean, element: HTMLElement) => {
+                    return ScrollUtility.relativePosition({
+                      container,
                       element,
                       horizontal,
-                    )
+                    })
                   },
-                  wrapper,
+                  container,
                   horizontal,
                   element,
                 )
