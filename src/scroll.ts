@@ -7,10 +7,11 @@ function maxMin(value: number, max: number) {
 }
 
 export class ScrollUtility implements Required<IScrollOptions> {
-  private _scrollElements: (Element | Window)[] = [window]
-  private _scrollElementsX = [0]
-  private _scrollElementsY = [0]
+  private _scrollElements: (Element | Window)[] = []
+  private _scrollElementsX: number[] = []
+  private _scrollElementsY: number[] = []
   private _scrollAnimations: ScrollAnimation[] = []
+  private _to: number[] = []
 
   container: Required<IScrollOptions>["container"] = window
   horizontal = false
@@ -54,6 +55,7 @@ export class ScrollUtility implements Required<IScrollOptions> {
     this._scrollElements = []
     this._scrollElementsX = []
     this._scrollElementsY = []
+    this._to = []
   }
   scrollTo(value: number, options?: IScrollOptions): this
   scrollTo(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
@@ -61,22 +63,32 @@ export class ScrollUtility implements Required<IScrollOptions> {
     const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
     const value: number = typeof args[0] === "number" ? args[0] : args[1]
     const options = this._getOptions(typeof args[0] === "number" ? args[1] : args[2])
-    const from = this.getScrollPosition(options)
+    const index = this._scrollElements.findIndex(
+      scrollElement => scrollElement === options.container,
+    )
+    const currentPosition = this.getScrollPosition(options)
+    const from = options.force || index === -1 ? currentPosition : this._to[index]
     const to = !!element
       ? Misc.getDistToCenterElement(
           options.container,
           getElementFromQuery(element),
           options.horizontal,
           value,
-        ) + from
+        ) + currentPosition
       : maxMin(value, this.getScrollSize(options))
+    this._to[index === -1 ? 0 : index] = to
     this._createScrollAnimation(from, to, options)
     return this
   }
   offset(value: number, options?: IScrollOptions) {
     const realOptions = this._getOptions(options)
-    const from = this.getScrollPosition(realOptions)
+    const index = this._scrollElements.findIndex(
+      scrollElement => scrollElement === realOptions.container,
+    )
+    const from =
+      realOptions.force || index === -1 ? this.getScrollPosition(realOptions) : this._to[index]
     const to = from + value
+    this._to[index === -1 ? 0 : index] = to
     this._createScrollAnimation(from, to, realOptions)
     return this
   }
@@ -98,8 +110,8 @@ export class ScrollUtility implements Required<IScrollOptions> {
       const scrollY = Math.floor(Misc.getScrollPosition(element, false))
       const width = Math.floor(Misc.getScrollSize(element, true))
       const height = Math.floor(Misc.getScrollSize(element, false))
-      const externalX = scrollX !== maxMin(Math.floor(this._scrollElementsX[index]), width)
-      const externalY = scrollY !== maxMin(Math.floor(this._scrollElementsY[index]), height)
+      const externalX = scrollX !== Math.floor(maxMin(this._scrollElementsX[index], width))
+      const externalY = scrollY !== Math.floor(maxMin(this._scrollElementsY[index], height))
       if (externalX) {
         this._scrollElementsX[index] = scrollX
       }

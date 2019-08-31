@@ -1,19 +1,51 @@
+details {
+  background: #141414;
+  color: white;
+  border: solid #141414 3px;
+  border-radius: 6px;
+}
+
+details .scroll-container {
+  background: white;
+  color: #141414;
+}
+
 summary {
   cursor: pointer;
 }
 
-.some-element {
+details .some-element {
   border: solid 5px #a5573e;
   border-left: 0;
   border-right: 0;
   border-radius: 10px;
   height: 50vh;
-  /* background: #a5573e; */
   overflow: auto;
 }
 
-.some-element h1 {
-  /* color: white; */
+.scroll-container.horizontal {
+  position: relative;
+  height: 50vh;
+  overflow: auto;
+}
+
+.scroll-container.horizontal .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 200vh;
+  background: rgb(129, 129, 129);
+  background: linear-gradient(135deg, #141414 0%, white 50%, #141414 100%);
+}
+
+.horizontal .button-container {
+  z-index: 1;
+  margin-top: 15px;
+  top: 15px;
+  margin-left: 15px;
+  left: 15px;
+  float: left;
 }
 
 .scroll-container {

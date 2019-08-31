@@ -32,7 +32,8 @@
   #+INCLUDE: "examples/howto.ts" src typescript
   #+BEGIN_SRC pug :exports results :results html
     details(open)
-      summary Demo:
+      summary
+        b Demo:
       .scroll-container
         .button-container
           each item in ["scrollTo(0)", "offset(-200)",  "scrollTo(\'#here\')","offset(200)",  "scrollTo(10000)"]
@@ -44,7 +45,7 @@
   #+END_SRC
 
 * API
-** constructor
+** new
    #+INCLUDE: "examples/constructor.ts" src typescript
 
    That will create a new =ScrollUtility= instance, which you can use to scroll. \\
@@ -76,9 +77,20 @@
     If the *querySelector* doesn't match an element, it will send a warning to the console and use window to scroll
 
 *** horizontal
-    #+BEGIN_SRC typescript
-      new Scroll({ horizontal: true })
-    #+END_SRC
+  #+INCLUDE: "examples/new.horizontal.ts" src typescript
+  #+BEGIN_SRC pug :exports results :results html
+    details
+      summary
+        b Demo:
+      #scroll-horizontal.scroll-container.horizontal
+        .background
+        .button-container
+          each item in ["horizontal", "vertical"]
+            button.scroll-button(onclick=`scrollHorizontal("${item}")`)= item
+        hr.spacer
+        hr.spacer
+  #+END_SRC
+  
     The *horizontal* option indicates the direction when scrolling, by default
     *false*, wich means vertical scroll
 
@@ -164,6 +176,9 @@
     scrollManager.onScroll = () => alert("hi")
 
     #+END_SRC
+    
+*** force  
+    :TODO:
     
 ** scroll
    #+BEGIN_SRC typescript
@@ -295,79 +310,6 @@
    #+END_SRC
 
    the relative position will be *0.5*
-* Misc
-  Here I export some other useful functions.
-
-  They're meant for scroll-utility internal use, but I export them just in case someone
-  wouldn't want to create a *Scroll* instance to access some of it's element properties.
-  #+BEGIN_SRC typescript
-    import { Misc } from "scroll-utility"
-
-    const Misc = ScrollUtility.Scroll // from cdn
-  #+END_SRC
-
-** getSize
-   Returns the size (width/height) of the element that match *element* selector
-   #+BEGIN_SRC typescript
-     Misc.getSize(element: string, horizontal)
-
-     Misc.getSize(window, true)
-     Misc.getSize("#container") // horizontal: false by default
-   #+END_SRC
-
-** getSizeWithBorders
-   Returns the size (including borders) of the element that match *element* selector
-   #+BEGIN_SRC typescript
-     Misc.getSizeWithBorders(element: string, horizontal)
-
-     Misc.getSizeWithBorders(window, true)
-     Misc.getSizeWithBorders("#container") // horizontal: false by default
-   #+END_SRC
-
-** getScrollPosition
-   Returns the position of the scroll (top/left)
-   #+BEGIN_SRC typescript
-     Misc.getScrollPosition(element: string, horizontal)
-
-     Misc.getScrollPosition(window, true)
-     Misc.getScrollPosition("#container") // horizontal: false by default
-   #+END_SRC
-
-** getScrollSize
-   Returns equivalent of scrollWidth/scrollHeight of elements
-   #+BEGIN_SRC typescript
-     Misc.getScrollSize(element: string, horizontal)
-
-     Misc.getScrollSize(window, true)
-     Misc.getScrollSize("#container") // horizontal: false by default
-   #+END_SRC
-
-** getRelativeElementPosition
-   Returns the degree in which the element is centered:
-   - < -1: above top
-   - -1 < x < 0: leaving top
-   - 0: top
-   - .5: centered
-   - 1: bottom
-   - 2 > x > 1: leaving bottom
-   - > 2: bellow bottom
-   #+BEGIN_SRC typescript
-     Misc.getRelativeElementPosition(container: string, element: string, horizontal: boolean)
-
-     Misc.getRelativeElementPosition(window, "#some-element")
-   #+END_SRC
-
-** getDistToCenterElement
-   Returns the distance (in pxs) to center some element
-   #+BEGIN_SRC typescript
-     Misc.getDistToCenterElement(container: string, element: string, value: number, horizontal: boolean)
-
-     Misc.getDistToCenterElement(window, "#some-element", 0) // top
-     Misc.getDistToCenterElement(window, "#some-element", .5) // centered
-     Misc.getDistToCenterElement(window, "#some-element", 1) // bottom
-   #+END_SRC
-
-** scrollTo
 * Browser Compatibility
   There are automated test for several browsers, thanks to [[https://www.browserstack.com][Browserstack]].\\
   Compatibility garanteed in all major browsers.\\
