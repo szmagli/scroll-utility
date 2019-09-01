@@ -1,5 +1,5 @@
 import { easingFromFunction } from "./easings"
-import { IScrollOptions } from "./types"
+import { EasingFunction } from "./types"
 
 type DOMHighResTimeStamp = number
 
@@ -24,7 +24,7 @@ class Animation {
   constructor(
     private _from: ScrollAnimationPosition,
     private _to: ScrollAnimationPosition,
-    public options: Required<IScrollOptions>,
+    public options: { duration: number; easing: EasingFunction; force: boolean },
   ) {
     this.initialTime = performance.now()
   }

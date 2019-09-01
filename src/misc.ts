@@ -115,6 +115,10 @@ export namespace Misc {
     )
   }
 
+  export function scrollBy(element: ScrollElement, horizontal: boolean, value: number) {
+    element.scrollBy(horizontal ? value : 0, !horizontal ? value : 0)
+  }
+
   export function scroll(element: ScrollElement, value: number, horizontal: boolean = false) {
     Misc.scrollTo(
       element,
@@ -131,11 +135,7 @@ export namespace Misc {
     const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
     const elementSize = getSizeWithBorders(element, horizontal)
     const ratio = elementPosition / (getSize(wrapper, horizontal) - elementSize)
-    return ratio <= 1 && ratio >= 0
-      ? ratio
-      : (ratio < 0
-          ? elementPosition
-          : elementPosition - getSize(wrapper, horizontal) + elementSize * 2) / elementSize
+    return ratio
   }
 
   export function getDistToCenterElement(
@@ -146,11 +146,6 @@ export namespace Misc {
   ) {
     const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
     const elementSize = getSizeWithBorders(element, horizontal)
-    return value <= 1 && value >= 0
-      ? elementPosition - (getSize(wrapper, horizontal) - elementSize) * value
-      : (value < 0
-          ? elementPosition
-          : elementPosition - getSize(wrapper, horizontal) + elementSize * 2) -
-          elementSize * value
+    return elementPosition - (getSize(wrapper, horizontal) - elementSize) * value
   }
 }
