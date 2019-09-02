@@ -1,26 +1,22 @@
-declare const IScrollUtility: typeof import("scroll-utility")
-declare class ScrollUtility extends IScrollUtility {}
+type IScrollUtility = import("scroll-utility")
+declare const ScrollUtility: typeof import("scroll-utility")
 
 // https://www.cssscript.com/minimal-notification-popup-pure-javascript/
+declare const createNotification: any
 
-declare let createNotification: any
 function notify(message: string) {
-  createNotification({ message })
+  createNotification({
+    showDuration: 2500,
+    theme: "info",
+  })({ message })
 }
 
-interface Window {
-  scrollOnStop: () => void
-  createNotification: (arg0: {}) => any
-  scrollContainer: (container?: boolean) => void
-  scrollHorizontal: (direction: any) => void
-  scrollEasing: (easing: string) => void
-  scrollDuration: (duration: number) => void
-  scrollOnScroll: (type: string) => void
-  scrollForce: (force: string) => void
+window.onload = () => {
+  scrollManager = new ScrollUtility()
 }
 
 function rp(
-  scrollManager: ScrollUtility,
+  scrollManager: IScrollUtility,
   element: string,
   options?:
     | {
@@ -37,79 +33,85 @@ function rp(
   )
 }
 
-function rp1(scrollManager: ScrollUtility) {
+function rp1(scrollManager: IScrollUtility) {
   return scrollManager.scrollTo(
     scrollManager.scrollPosition < scrollManager.scrollSize / 2 ? scrollManager.scrollSize : 0,
   )
 }
 
-let scrollManager: ScrollUtility
+let scrollManager: IScrollUtility
 
-window.onload = () => {
-  createNotification = window.createNotification({
-    showDuration: 2500,
-    theme: "info",
-  })
-  scrollManager = new ScrollUtility()
+let scrollV: IScrollUtility,
+  scrollH: IScrollUtility | undefined,
+  scrollC: IScrollUtility | undefined
+
+const examples = {
+  constructor: {
+    horizontal: (direction: string) => {
+      const container = "#scroll-horizontal"
+      scrollV = scrollV || new ScrollUtility({ container })
+      scrollH = scrollH || new ScrollUtility({ container, horizontal: true })
+      rp1(direction === "horizontal" ? scrollH : scrollV)
+    },
+    container: (wrapper: string) => {
+      if (!!wrapper) {
+        const container = "#container"
+        scrollC = scrollC || new ScrollUtility({ container })
+        rp1(scrollC)
+      } else {
+        const element = "#scroll-container"
+        rp(scrollManager, element)
+      }
+    },
+    easing: (easing: string) => {
+      const element = "#scroll-easings"
+      rp(scrollManager, element, { easing })
+    },
+    duration: (duration: number) => {
+      const element = "#scroll-duration"
+      rp(scrollManager, element, { duration })
+    },
+    onScroll: () => {
+      const element = "#scroll-onScrollUtility"
+      rp(scrollManager, element, { duration: 2000 })
+      scrollManager.onScroll = external => {
+        if (external) {
+          notify("external scroll detected!")
+        }
+      }
+      scrollManager.onStop = () => {
+        scrollManager.onScroll = null
+        scrollManager.onStop = null
+      }
+    },
+    onStop: () => {
+      const element = "#scroll-onStop"
+      rp(scrollManager, element)
+      scrollManager.onStop = () => {
+        notify("scroll ended!")
+        scrollManager.onStop = null
+      }
+    },
+    force: (type: string) => {
+      const element = "#scroll-force"
+      scrollManager.force = type === "force"
+      rp(scrollManager, element, { duration: 2000 })
+      scrollManager.onStop = () => {
+        scrollManager.force = false
+        scrollManager.onStop = null
+      }
+    },
+  },
+  scrollTo: Object.assign(() => {}, {
+    element: (value: number) => {
+      const element = "#scrollTo-value"
+      ScrollUtility.global.scrollTo(element, value)
+    },
+  }),
 }
 
-let scrollV: ScrollUtility | undefined,
-  scrollH: ScrollUtility | undefined,
-  scrollC: ScrollUtility | undefined
-
-window.scrollHorizontal = direction => {
-  const container = "#scroll-horizontal"
-  scrollV = scrollV || new ScrollUtility({ container })
-  scrollH = scrollH || new ScrollUtility({ container, horizontal: true })
-  rp1(direction === "horizontal" ? scrollH : scrollV)
-}
-window.scrollContainer = wrapper => {
-  if (!!wrapper) {
-    const container = "#container"
-    scrollC = scrollC || new ScrollUtility({ container })
-    rp1(scrollC)
-  } else {
-    const element = "#scroll-container"
-    rp(scrollManager, element)
-  }
-}
-window.scrollEasing = easing => {
-  const element = "#scroll-easings"
-  rp(scrollManager, element, { easing })
-}
-window.scrollDuration = duration => {
-  const element = "#scroll-duration"
-  rp(scrollManager, element, { duration })
-}
-window.scrollOnScroll = () => {
-  const element = "#scroll-onScroll"
-  rp(scrollManager, element, { duration: 2000 })
-  scrollManager.onScroll = external => {
-    if (external) {
-      notify("external scroll detected!")
-    }
-  }
-  scrollManager.onStop = () => {
-    scrollManager.onScroll = null
-    scrollManager.onStop = null
-  }
+interface Window {
+  example: typeof examples
 }
 
-window.scrollOnStop = () => {
-  const element = "#scroll-onStop"
-  rp(scrollManager, element)
-  scrollManager.onStop = () => {
-    notify("scroll ended!")
-    scrollManager.onStop = null
-  }
-}
-
-window.scrollForce = (type: string) => {
-  const element = "#scroll-force"
-  scrollManager.force = type === "force"
-  rp(scrollManager, element, { duration: 2000 })
-  scrollManager.onStop = () => {
-    scrollManager.force = false
-    scrollManager.onStop = null
-  }
-}
+window.example = examples

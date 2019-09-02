@@ -1,7 +1,8 @@
 import ScrollUtility = require("scroll-utility")
 
 // page scroll
-new ScrollUtility()
+ScrollUtility.global
+new ScrollUtility() // same as above
 new ScrollUtility({ container: window }) // same as above
 new ScrollUtility({ container: "html" }) // same as above
 

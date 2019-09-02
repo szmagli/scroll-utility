@@ -9,3 +9,6 @@ new ScrollUtility({} as {
   onStop?: (() => void) | null
   force?: boolean
 })
+
+ScrollUtility.global // default scroll
+new ScrollUtility() // default scroll

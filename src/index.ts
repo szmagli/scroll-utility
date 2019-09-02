@@ -1,3 +1,3 @@
-import { ScrollUtility } from "./scroll"
+import { Scroll } from "./scroll"
 
-export = ScrollUtility
+export = Scroll

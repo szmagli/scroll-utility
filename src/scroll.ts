@@ -11,7 +11,8 @@ function maxMin(value: number, max: number) {
   return Math.max(Math.min(value, max), 0)
 }
 
-export class ScrollUtility {
+export class Scroll {
+  static global = new Scroll()
   private _scrollAnimations: ScrollAnimation[] = []
   private _to: number | (() => number)
   private _virtualPosition: number

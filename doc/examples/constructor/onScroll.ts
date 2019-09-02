@@ -1,6 +1,7 @@
 import ScrollUtility = require("scroll-utility")
 
-new ScrollUtility() // no action on scroll
+ScrollUtility.global // no action on scroll
+new ScrollUtility() // same as above
 new ScrollUtility({ onScroll: null }) // same as above
 
 new ScrollUtility({

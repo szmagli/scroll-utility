@@ -1,7 +1,8 @@
 import ScrollUtility = require("scroll-utility")
 
 // page scroll
-new ScrollUtility()
+ScrollUtility.global
+new ScrollUtility() // same as above
 new ScrollUtility({ easing: "easeInOutQuad" }) // same as above
 
 new ScrollUtility({ easing: "linear" }) // linear animation
