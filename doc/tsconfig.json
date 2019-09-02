@@ -3,7 +3,8 @@
     "compilerOptions": {
         "outDir": "./dist",
         "declaration": false,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "noUnusedParameters": false
     },
     "exclude": ["dist", "examples"]
 }

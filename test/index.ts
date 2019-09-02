@@ -34,7 +34,7 @@ for (const os in capabilities) {
               it(`${value}`, async function() {
                 await browser.executeScript(
                   (element: string, horizontal: boolean, value: number) => {
-                    const scroll = ScrollUtility.new({
+                    const scroll = new ScrollUtility({
                       container: element,
                       horizontal,
                     })
@@ -47,7 +47,7 @@ for (const os in capabilities) {
                 await wait(duration + 1)
                 const scrollPosition = await browser.executeScript(
                   (container: string, horizontal: boolean) =>
-                    ScrollUtility.new({ container, horizontal }).size,
+                    new ScrollUtility({ container, horizontal }).size,
                   container,
                   horizontal,
                 )
@@ -60,7 +60,7 @@ for (const os in capabilities) {
               it(`should be centered at ${value}`, async function() {
                 await browser.executeScript(
                   (container: string, horizontal: boolean, element: HTMLElement) => {
-                    ScrollUtility.new({ container, horizontal }).scrollTo(element, 0.5)
+                    new ScrollUtility({ container, horizontal }).scrollTo(element, 0.5)
                   },
                   container,
                   horizontal,
@@ -68,7 +68,7 @@ for (const os in capabilities) {
                 )
                 await browser.executeScript(
                   (wrapper: string, horizontal: boolean, element: HTMLElement, value: number) => {
-                    ScrollUtility.new({ container: wrapper, horizontal }).scrollTo(element, value)
+                    new ScrollUtility({ container: wrapper, horizontal }).scrollTo(element, value)
                   },
                   container,
                   horizontal,
@@ -80,7 +80,7 @@ for (const os in capabilities) {
 
                 const placement = await browser.executeScript(
                   (container: string, horizontal: boolean, element: HTMLElement) => {
-                    return ScrollUtility.new({
+                    return new ScrollUtility({
                       container,
                       horizontal,
                     }).relativePosition(element)

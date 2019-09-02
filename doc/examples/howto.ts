@@ -1,5 +1,6 @@
 import ScrollUtility = require("scroll-utility")
 
-ScrollUtility.scrollTo("#some-element")
-ScrollUtility.scrollTo(100)
-ScrollUtility.offset(500)
+const scrollManager = new ScrollUtility()
+scrollManager.scrollTo("#some-element")
+scrollManager.scrollTo(100)
+scrollManager.offset(500)

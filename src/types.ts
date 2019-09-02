@@ -17,7 +17,3 @@ export interface IScrollOptions {
   easing: EasingFunction
   force: boolean
 }
-
-export interface IScroll extends Required<IScrollOptions> {
-  container: ScrollElement
-}

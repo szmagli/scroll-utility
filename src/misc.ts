@@ -41,15 +41,13 @@ const windowScrollSize = (horizontal = false) =>
 
 export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (!elementOrQuery) {
-    // TODO launch warning
-    // console.warn("parameter *elementOrQuery*  null or undefined, window will be used instead")
+    throw new Error(`elementOrQuery should not be a ${typeof elementOrQuery}`)
     return window
   }
   const element =
     typeof elementOrQuery === "string" ? document.querySelector(elementOrQuery) : elementOrQuery
   if (!element) {
-    // TODO launch warning
-    // console.warn(`no element matched querySelector ${elementOrQuery}, window will be used instead`)
+    throw new Error(`no element matched querySelector`)
     return window
   }
   return element === document.documentElement ? window : element

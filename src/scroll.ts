@@ -13,15 +13,15 @@ function maxMin(value: number, max: number) {
 
 export class ScrollUtility {
   private _scrollAnimations: ScrollAnimation[] = []
-  private _to: number | (() => number) = 0
-  private _virtualPosition = 0
+  private _to: number | (() => number)
+  private _virtualPosition: number
   private _container: ScrollElement
-
   private _horizontal: boolean
 
   duration: number
+  onStop: (() => void) | null
   onScroll: ((external?: boolean) => void) | null
-  easing: Required<IScrollOptions>["easing"] | string
+  easing: EasingFunction | string
   force: boolean
   get size() {
     return Math.floor(Misc.getSize(this._container, this._horizontal))
@@ -37,8 +37,9 @@ export class ScrollUtility {
       container?: ElementOrQuery
       horizontal?: boolean
       onScroll?: ((external?: boolean) => void) | null
+      onStop?: (() => void) | null
       duration?: number
-      easing?: string | (() => number)
+      easing?: string | ((t: number, b: number, c: number, d: number) => number)
       force?: boolean
     } = {},
   ) {
@@ -46,10 +47,13 @@ export class ScrollUtility {
     this._horizontal = !!options.horizontal
     this.duration = options.duration === undefined ? 1000 : options.duration
     this.onScroll = options.onScroll === undefined ? null : options.onScroll
+    this.onStop = options.onStop === undefined ? null : options.onStop
     this.easing = options.easing === undefined ? "easeInOutQuad" : options.easing
     this.force = !!options.force
     const onscroll = () => this._onScroll()
     this._container.addEventListener("scroll", onscroll)
+    this._to = this.scrollPosition
+    this._virtualPosition = this.scrollPosition
   }
   relativePosition(element: ElementOrQuery): number {
     return Misc.getRelativeElementPosition(
@@ -72,10 +76,21 @@ export class ScrollUtility {
   stop() {
     this._scrollAnimations = []
     this._to = this.scrollPosition
+    this._virtualPosition = this.scrollPosition
+    this.onStop && this.onStop()
   }
-  scrollTo(value: number, options?: IScrollOptions): this
-  scrollTo(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
+
+  scrollTo(
+    value: number,
+    options?: { duration?: number; easing?: EasingFunction | string; force?: boolean },
+  ): this
+  scrollTo(
+    element: ElementOrQuery,
+    value?: number,
+    options?: { duration?: number; easing?: EasingFunction | string; force?: boolean },
+  ): this
   scrollTo(...args: any[]) {
+    this._beforeScroll()
     const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
     const value = typeof args[0] === "number" ? args[0] : args[1]
     const options = this._getOptions(typeof args[0] === "number" ? args[1] : args[2])
@@ -84,9 +99,17 @@ export class ScrollUtility {
       : this._scrollToElement(element, value, options)
     return this
   }
-  offset(value: number, options?: IScrollOptions): this
-  offset(element: ElementOrQuery, value?: number, options?: IScrollOptions): this
+  offset(
+    value: number,
+    options?: { duration?: number; easing?: EasingFunction | string; force?: boolean },
+  ): this
+  offset(
+    element: ElementOrQuery,
+    value?: number,
+    options?: { duration?: number; easing?: EasingFunction | string; force?: boolean },
+  ): this
   offset(...args: any[]) {
+    this._beforeScroll()
     const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
     const value = typeof args[0] === "number" ? args[0] : args[1]
     const options = this._getOptions(typeof args[0] === "number" ? args[1] : args[2])
@@ -94,6 +117,9 @@ export class ScrollUtility {
       ? this._offsetValue(value, options)
       : this._offsetElement(element, value, options)
     return this
+  }
+  private _beforeScroll() {
+    !this._scrollAnimations.length && this.stop()
   }
   private _createScrollAnimation(
     from: ScrollAnimationPosition,
@@ -110,11 +136,12 @@ export class ScrollUtility {
     }
   }
   private _onScroll() {
-    const external =
-      this.scrollPosition !== Math.floor(maxMin(this._virtualPosition, this.scrollSize))
+    const diff = this.scrollPosition - Math.floor(maxMin(this._virtualPosition, this.scrollSize))
+    const external = !!diff
     if (external) {
       this._virtualPosition = this.scrollPosition
-      this._to = this.scrollPosition
+      const from = this._to
+      this._to = () => getValue(from) + diff
     }
     this.onScroll && this.onScroll(external)
   }
@@ -126,11 +153,8 @@ export class ScrollUtility {
         animation.updateDistance()
       return !animation.isPastAnimation()
     })
-    Misc.scrollBy(
-      this._container,
-      this._horizontal,
-      Math.floor(this._virtualPosition) - previousPosition,
-    )
+    const value = Math.floor(this._virtualPosition) - previousPosition
+    !!value && Misc.scrollBy(this._container, this._horizontal, value)
     this._scrollAnimations.length > 0 ? requestAnimationFrame(() => this._update()) : this.stop()
   }
   private _getOptions(options: Partial<IScrollOptions> = {}) {
@@ -142,13 +166,13 @@ export class ScrollUtility {
     }
   }
   private _offsetElement(element: ElementOrQuery, value: number = 1, options: IScrollOptions) {
-    const from = getValue(this._to)
-    const to = () => this.elementSize(getElementFromQuery(element), value) + getValue(from)
+    const from = options.force ? this.scrollPosition : getValue(this._to)
+    const to = () => this.elementSize(getElementFromQuery(element), value) + from
     this._offsetValue(to, options)
   }
   private _offsetValue(value: number | (() => number), options: IScrollOptions) {
-    const from = getValue(this._to)
-    const to = () => getValue(value) + getValue(from)
+    const from = options.force ? this.scrollPosition : getValue(this._to)
+    const to = () => getValue(value) + from
     this._to = options.force ? to : getValue(to)
     this._createScrollAnimation(from, this._to, options)
   }

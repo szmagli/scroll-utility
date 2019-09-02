@@ -1,13 +1,13 @@
 details {
-  background: #141414;
+  background: #222;
   color: white;
-  border: solid #141414 3px;
+  border: solid #222 3px;
   border-radius: 6px;
 }
 
 details .scroll-container {
   background: white;
-  color: #141414;
+  color: #222;
 }
 
 summary {
@@ -36,7 +36,7 @@ details .some-element {
   width: 200vw;
   height: 200vh;
   background: rgb(129, 129, 129);
-  background: linear-gradient(135deg, #141414 0%, white 50%, #141414 100%);
+  background: linear-gradient(135deg, #222 0%, white 50%, #222 100%);
 }
 
 .horizontal .button-container {
@@ -49,7 +49,7 @@ details .some-element {
 }
 
 .scroll-container {
-  border: solid 3px #141414;
+  border: solid 3px #222;
   border-radius: 10px;
 }
 
@@ -59,7 +59,7 @@ details .some-element {
 
 .spacer {
   margin: 50vh 0;
-  background: #141414;
+  background: #222;
 }
 
 .button-container {
@@ -809,7 +809,7 @@ body {
 }
 
 .org-header-line {
-  color: #333;
+  color: #222;
   background-color: #e5e5e5;
 }
 
@@ -985,7 +985,7 @@ body {
 }
 
 .org-helm-header {
-  color: #333;
+  color: #222;
   background-color: #e5e5e5;
 }
 
@@ -995,7 +995,7 @@ body {
 }
 
 .org-helm-helper {
-  color: #333;
+  color: #222;
   background-color: #e5e5e5;
 }
 
@@ -1361,7 +1361,7 @@ body {
 }
 
 .org-mode-line-inactive {
-  color: #333;
+  color: #222;
   background-color: #e5e5e5;
 }
 
@@ -2012,18 +2012,18 @@ body {
 }
 
 .org-powerline-inactive0 {
-  color: #333;
+  color: #222;
   background-color: #e5e5e5;
 }
 
 .org-powerline-inactive1 {
-  color: #333;
+  color: #222;
   background-color: #1c1c1c;
 }
 
 .org-powerline-inactive2 {
-  color: #333;
-  background-color: #333;
+  color: #222;
+  background-color: #222;
 }
 
 .org-preprocessor {
@@ -2180,17 +2180,17 @@ body {
 
 .org-spaceline-flycheck-error {
   color: #fc5c94;
-  background-color: #333;
+  background-color: #222;
 }
 
 .org-spaceline-flycheck-info {
   color: #8de6f7;
-  background-color: #333;
+  background-color: #222;
 }
 
 .org-spaceline-flycheck-warning {
   color: #f3ea98;
-  background-color: #333;
+  background-color: #222;
 }
 
 .org-spaceline-python-venv {
@@ -2403,7 +2403,7 @@ body {
 
 .org-whitespace-line {
   color: violet;
-  background-color: #333;
+  background-color: #222;
 }
 
 .org-whitespace-newline {
@@ -2489,7 +2489,7 @@ body {
   font-size: 14px;
   line-height: 1.4em;
   font-family: Georgia, serif;
-  color: #333;
+  color: #222;
 }
 
 @media screen and (min-width: 600px) {
@@ -2790,7 +2790,7 @@ kbd {
   border: 1px solid #bbb;
   border-radius: 3px;
   background-clip: padding-box;
-  color: #333;
+  color: #222;
   background-color: #eee;
   line-height: 1;
 }
@@ -2842,13 +2842,13 @@ p.verse {
   border: 1px solid #ddd;
   border-radius: 3px;
   background-clip: padding-box;
-  /* color: #333; */
+  /* color: #222; */
   font-size: 80%;
 }
 
 .org-src-container > pre {
   overflow: auto;
-  background: #141414;
+  background: #222;
   color: white;
 }
 
