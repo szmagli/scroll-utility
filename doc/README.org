@@ -1,10 +1,12 @@
 #+TITLE: scroll-utility
 #+HTML_LINK_HOME: https://leddgroup.github.io/scroll-utility
 #+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
+#+HTML_HEAD: <meta name="viewport" content="width=device-width, initial-scale=1.0">
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/index.css">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/awsm.css"> 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/notifications.css">
 #+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/notifications.css">
 #+HTML_HEAD: <script type="text/javascript" src="assets/notifications.js"> </script>
 #+INFOJS_OPT: path:assets/org-info.js view:info
 #+OPTIONS: num:nil
@@ -42,13 +44,13 @@
       details
         summary
           b Demo:
-        #scroll-container.scroll-container
+        #scroll-container.scroll-container.normal
           .button-container
             button.scroll-button(onclick=`example.constructor.container()`) scroll window
           hr.spacer
           #container.some-element.scroll-container(position="relative")
             h1 #container
-            .button-container.left
+            .button-container
               button.scroll-button(onclick=`example.constructor.container(true)`) scroll container
             hr.spacer
             hr.spacer
@@ -59,7 +61,7 @@
     If it's a ~string~, then it will use it as a *querySelector* with
     ~document.querySelector~ for getting an ~Element~. \\
     If the *querySelector* doesn't match an element, it will send a warning to the console and use window to scroll
-    
+
 *** horizontal
     #+INCLUDE: "examples/constructor/horizontal.ts" src typescript
     #+BEGIN_SRC pug :exports results :results html
@@ -107,7 +109,7 @@
           b Demo:
         #scroll-easings.scroll-container
           .button-container
-            each easing in [ "linear", "easeInOutQuad", "easeOutBounce", "easeInOutBack"]
+            each easing in [ "linear", "easeInOutQuad", "easeOutBounce" ]
               button.scroll-button(onclick=`example.constructor.easing("${easing}")`)= easing
           h1 Top
           hr.spacer
@@ -204,10 +206,10 @@
          hr.spacer
    #+END_SRC
 
-  See [[duration]] for info on option duration\\
-  See [[easing]] for info on option easing\\
-  See [[force]] for info on option force\\
-   
+   See [[duration]] for info of option duration\\
+   See [[easing]] for info of option easing\\
+   See [[force]] for info of option force\\
+
 *** element
     #+INCLUDE: "examples/scrollTo.element.ts" src typescript
     Center element at some degree
@@ -215,7 +217,7 @@
       details
         summary
           b Demo:
-        .scroll-container
+        #scrollToValue.scroll-container
           .button-container
             each item in ["0", "0.25", "0.5", "0.75", "1"]
               button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
@@ -226,6 +228,24 @@
     #+END_SRC
 
 *** value
+    #+INCLUDE: "examples/scrollTo.element.ts" src typescript
+    Scroll to certain value
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary
+          b Demo:
+        .scroll-container
+          .button-container
+            each item in ["0", "50", "200", "Infinity"]
+              button.scroll-button(onclick=`ScrollUtility.global.scrollTo(${item})`)=item
+          hr.spacer
+          hr.spacer
+    #+END_SRC
+
+    See [[duration]] for info of option duration\\
+    See [[easing]] for info of option easing\\
+    See [[force]] for info of option force\\
+
 ** offset
    #+BEGIN_SRC typescript
      const scrollManager = new ScrollUtility()
@@ -290,5 +310,3 @@
    #+END_SRC
 
    the relative position will be *0.5*
-
-   

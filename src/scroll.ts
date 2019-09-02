@@ -16,7 +16,7 @@ export class Scroll {
   private _scrollAnimations: ScrollAnimation[] = []
   private _to: number | (() => number)
   private _virtualPosition: number
-  private _container: ScrollElement
+  private _container: ScrollElement = window
   private _horizontal: boolean
 
   duration: number
@@ -24,6 +24,14 @@ export class Scroll {
   onScroll: ((external?: boolean) => void) | null
   easing: EasingFunction | string
   force: boolean
+  get container() {
+    return this._container
+  }
+  set container(container: Window | Element | string) {
+    this._container.removeEventListener("scroll", this._onscroll)
+    this._container = getElementFromQuery(container)
+    this._container.addEventListener("scroll", this._onscroll)
+  }
   get size() {
     return Math.floor(Misc.getSize(this._container, this._horizontal))
   }
@@ -35,7 +43,7 @@ export class Scroll {
   }
   constructor(
     options: {
-      container?: ElementOrQuery
+      container?: Window | Element | string
       horizontal?: boolean
       onScroll?: ((external?: boolean) => void) | null
       onStop?: (() => void) | null
@@ -44,24 +52,21 @@ export class Scroll {
       force?: boolean
     } = {},
   ) {
-    this._container = getElementFromQuery(options.container || window)
+    this.container = options.container || window
     this._horizontal = !!options.horizontal
     this.duration = options.duration === undefined ? 1000 : options.duration
     this.onScroll = options.onScroll === undefined ? null : options.onScroll
     this.onStop = options.onStop === undefined ? null : options.onStop
     this.easing = options.easing === undefined ? "easeInOutQuad" : options.easing
     this.force = !!options.force
-    const onscroll = () => this._onScroll()
-    this._container.addEventListener("scroll", onscroll)
     this._to = this.scrollPosition
     this._virtualPosition = this.scrollPosition
   }
   relativePosition(element: ElementOrQuery): number {
-    return Misc.getRelativeElementPosition(
-      this._container,
-      getElementFromQuery(element),
-      this._horizontal,
-    )
+    const _element = getElementFromQuery(element)
+    return _element === this._container
+      ? this.scrollPosition / this.scrollSize
+      : Misc.getRelativeElementPosition(this._container, _element, this._horizontal)
   }
   distToElement(element: ElementOrQuery, value = 0): number {
     return Misc.getDistToCenterElement(
@@ -75,10 +80,8 @@ export class Scroll {
     return Misc.getSize(getElementFromQuery(element), this._horizontal) * value
   }
   stop() {
-    this._scrollAnimations = []
-    this._to = this.scrollPosition
-    this._virtualPosition = this.scrollPosition
     this.onStop && this.onStop()
+    this._beforeScroll()
   }
 
   scrollTo(
@@ -120,7 +123,11 @@ export class Scroll {
     return this
   }
   private _beforeScroll() {
-    !this._scrollAnimations.length && this.stop()
+    if (!this._scrollAnimations.length) {
+      this._scrollAnimations = []
+      this._to = this.scrollPosition
+      this._virtualPosition = this.scrollPosition
+    }
   }
   private _createScrollAnimation(
     from: ScrollAnimationPosition,
@@ -136,6 +143,7 @@ export class Scroll {
       this._update()
     }
   }
+  private _onscroll = () => this._onScroll
   private _onScroll() {
     const diff = this.scrollPosition - Math.floor(maxMin(this._virtualPosition, this.scrollSize))
     const external = !!diff
@@ -184,7 +192,11 @@ export class Scroll {
     this._createScrollAnimation(from, this._to, options)
   }
   private _scrollToElement(element: ElementOrQuery, value: number = 0, options: IScrollOptions) {
-    const to = () => this.distToElement(getElementFromQuery(element), value) + this.scrollPosition
+    const _element = getElementFromQuery(element)
+    const to =
+      _element === this._container
+        ? () => this.scrollSize * value
+        : () => this.distToElement(_element, value) + this.scrollPosition
     this._scrollToValue(to, options)
   }
 }

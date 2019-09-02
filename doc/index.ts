@@ -6,26 +6,12 @@ declare const createNotification: any
 
 function notify(message: string) {
   createNotification({
-    showDuration: 2500,
+    showDuration: 1500,
     theme: "info",
   })({ message })
 }
 
-window.onload = () => {
-  scrollManager = new ScrollUtility()
-}
-
-function rp(
-  scrollManager: IScrollUtility,
-  element: string,
-  options?:
-    | {
-        duration?: number | undefined
-        easing?: string | import("../dist/types").EasingFunction | undefined
-        force?: boolean | undefined
-      }
-    | undefined,
-) {
+function rp(scrollManager: IScrollUtility, element: string, options?) {
   return scrollManager.scrollTo(
     element,
     scrollManager.relativePosition(element) < 0.5 ? 1 : 0,
@@ -33,85 +19,88 @@ function rp(
   )
 }
 
-function rp1(scrollManager: IScrollUtility) {
-  return scrollManager.scrollTo(
-    scrollManager.scrollPosition < scrollManager.scrollSize / 2 ? scrollManager.scrollSize : 0,
-  )
-}
-
-let scrollManager: IScrollUtility
-
-let scrollV: IScrollUtility,
-  scrollH: IScrollUtility | undefined,
-  scrollC: IScrollUtility | undefined
-
-const examples = {
-  constructor: {
-    horizontal: (direction: string) => {
-      const container = "#scroll-horizontal"
-      scrollV = scrollV || new ScrollUtility({ container })
-      scrollH = scrollH || new ScrollUtility({ container, horizontal: true })
-      rp1(direction === "horizontal" ? scrollH : scrollV)
+window.onload = () => {
+  const examples = {
+    Scroll: {
+      container: new ScrollUtility(),
+      vertical: new ScrollUtility(),
+      horizontal: new ScrollUtility({ horizontal: true }),
+      duration: new ScrollUtility(),
+      easing: new ScrollUtility(),
+      onScroll: new ScrollUtility({
+        container: "#scroll-onScroll",
+        onScroll: external => external && notify("external scroll detected!"),
+      }),
+      onStop: new ScrollUtility({
+        container: "#scroll-onStop",
+        onStop: () => notify("scroll ended!"),
+      }),
+      force: new ScrollUtility(),
+      scrollToValue: new ScrollUtility(),
     },
-    container: (wrapper: string) => {
-      if (!!wrapper) {
-        const container = "#container"
-        scrollC = scrollC || new ScrollUtility({ container })
-        rp1(scrollC)
-      } else {
-        const element = "#scroll-container"
-        rp(scrollManager, element)
-      }
-    },
-    easing: (easing: string) => {
-      const element = "#scroll-easings"
-      rp(scrollManager, element, { easing })
-    },
-    duration: (duration: number) => {
-      const element = "#scroll-duration"
-      rp(scrollManager, element, { duration })
-    },
-    onScroll: () => {
-      const element = "#scroll-onScrollUtility"
-      rp(scrollManager, element, { duration: 2000 })
-      scrollManager.onScroll = external => {
-        if (external) {
-          notify("external scroll detected!")
+    constructor: {
+      container: (wrapper: boolean) => {
+        if (!!wrapper) {
+          const container = "#container"
+          const scrollManager = examples.Scroll.container
+          scrollManager.container = container
+          rp(scrollManager, container)
+        } else {
+          const element = "#scroll-container"
+          const scrollManager = ScrollUtility.global
+          rp(scrollManager, element)
         }
-      }
-      scrollManager.onStop = () => {
-        scrollManager.onScroll = null
-        scrollManager.onStop = null
-      }
+      },
+      horizontal: (direction: string) => {
+        const container = "#scroll-horizontal"
+        const scrollManager =
+          direction === "horizontal" ? examples.Scroll.horizontal : examples.Scroll.vertical
+        scrollManager.container = container
+        rp(scrollManager, container)
+      },
+      easing: (easing: string) => {
+        const container = "#scroll-easings"
+        const scrollManager = examples.Scroll.easing
+        scrollManager.container = container
+        rp(scrollManager, container, { easing })
+      },
+      duration: (duration: number) => {
+        const container = "#scroll-duration"
+        const scrollManager = examples.Scroll.duration
+        scrollManager.container = container
+        rp(scrollManager, container, { duration })
+      },
+      onScroll: () => {
+        const container = "#scroll-onScroll"
+        const scrollManager = examples.Scroll.onScroll
+        scrollManager.container = container
+        rp(scrollManager, container)
+      },
+      onStop: () => {
+        const container = "#scroll-onStop"
+        const scrollManager = examples.Scroll.onStop
+        scrollManager.container = container
+        rp(scrollManager, container)
+      },
+      force: (type: string) => {
+        const container = "#scroll-force"
+        const scrollManager = examples.Scroll.force
+        scrollManager.container = container
+        rp(scrollManager, container, {
+          duration: 2000,
+          force: type === "force",
+        })
+      },
     },
-    onStop: () => {
-      const element = "#scroll-onStop"
-      rp(scrollManager, element)
-      scrollManager.onStop = () => {
-        notify("scroll ended!")
-        scrollManager.onStop = null
-      }
-    },
-    force: (type: string) => {
-      const element = "#scroll-force"
-      scrollManager.force = type === "force"
-      rp(scrollManager, element, { duration: 2000 })
-      scrollManager.onStop = () => {
-        scrollManager.force = false
-        scrollManager.onStop = null
-      }
-    },
-  },
-  scrollTo: Object.assign(() => {}, {
-    element: (value: number) => {
-      const element = "#scrollTo-value"
-      ScrollUtility.global.scrollTo(element, value)
-    },
-  }),
+    scrollTo: Object.assign(() => {}, {
+      element: (value: number) => {
+        const container = "#scrollToValue"
+        const element = "#scrollTo-value"
+        const scrollManager = examples.Scroll.scrollToValue
+        scrollManager.container = container
+        scrollManager.scrollTo(element, value)
+      },
+    }),
+  }
+  ;(window as any).example = examples
 }
-
-interface Window {
-  example: typeof examples
-}
-
-window.example = examples
