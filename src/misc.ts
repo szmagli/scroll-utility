@@ -42,13 +42,11 @@ const windowScrollSize = (horizontal = false) =>
 export function getElementFromQuery(elementOrQuery: ElementOrQuery): Element | Window {
   if (!elementOrQuery) {
     throw new Error(`elementOrQuery should not be a ${typeof elementOrQuery}`)
-    return window
   }
   const element =
     typeof elementOrQuery === "string" ? document.querySelector(elementOrQuery) : elementOrQuery
   if (!element) {
     throw new Error(`no element matched querySelector`)
-    return window
   }
   return element === document.documentElement ? window : element
 }
@@ -96,6 +94,16 @@ export namespace Misc {
       return horizontal ? element.scrollWidth : element.scrollHeight
     },
   )
+  const getBorderSize = getWithWindow(
+    () => 0,
+    (element, horizontal) =>
+      parseInt(
+        getComputedStyle(element, null).getPropertyValue(
+          horizontal ? "border-left-width" : "border-top-width",
+        ),
+        10,
+      ) || 0,
+  )
   export const getOffset = getWithWindow(
     () => 0,
     (element, horizontal) =>
@@ -125,19 +133,17 @@ export namespace Misc {
     )
   }
 
-  function elementProportion(wrapper, element, horizontal) {
-    const containerSize = getSize(wrapper, horizontal)
-    const elementSize = getSizeWithBorders(element, horizontal)
-    return containerSize - elementSize
-  }
   export function getRelativeElementPosition(
     wrapper: ScrollElement,
     element: ScrollElement,
     horizontal = false,
   ) {
-    const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
-    const ratio = elementPosition / elementProportion(wrapper, element, horizontal)
-    return ratio
+    return withElementPosition(
+      (elementPosition, elementProportion) => elementPosition / elementProportion,
+      wrapper,
+      element,
+      horizontal,
+    )
   }
 
   export function getDistToCenterElement(
@@ -146,7 +152,24 @@ export namespace Misc {
     horizontal = false,
     value = 0,
   ) {
-    const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
-    return elementPosition - elementProportion(wrapper, element, horizontal) * value
+    return withElementPosition(
+      (elementPosition, elementProportion) => elementPosition - elementProportion * value,
+      wrapper,
+      element,
+      horizontal,
+    )
+  }
+  function withElementPosition(
+    funct: (elementPosition: number, elementProportion: number) => number,
+    wrapper: ScrollElement,
+    element: ScrollElement,
+    horizontal: boolean,
+  ) {
+    return funct(
+      getOffset(element, horizontal) -
+        getOffset(wrapper, horizontal) -
+        getBorderSize(wrapper, horizontal),
+      getSize(wrapper, horizontal) - getSizeWithBorders(element, horizontal),
+    )
   }
 }
