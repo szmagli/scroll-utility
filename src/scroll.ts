@@ -13,6 +13,7 @@ function maxMin(value: number, max: number) {
 
 export class Scroll {
   static global = new Scroll()
+  private _onscroll = () => this._onScroll()
   private _scrollAnimations: ScrollAnimation[] = []
   private _to: number | (() => number)
   private _virtualPosition: number
@@ -28,18 +29,19 @@ export class Scroll {
     return this._container
   }
   set container(container: Window | Element | string) {
+    const _container = getElementFromQuery(container)
     this._container.removeEventListener("scroll", this._onscroll)
-    this._container = getElementFromQuery(container)
+    this._container = _container
     this._container.addEventListener("scroll", this._onscroll)
   }
   get size() {
-    return Math.floor(Misc.getSize(this._container, this._horizontal))
+    return Misc.getSize(this._container, this._horizontal)
   }
   get scrollSize() {
-    return Math.floor(Misc.getScrollSize(this._container, this._horizontal)) - this.size
+    return Misc.getScrollSize(this._container, this._horizontal) - this.size
   }
   get scrollPosition() {
-    return Math.floor(Misc.getScrollPosition(this._container, this._horizontal))
+    return Misc.getScrollPosition(this._container, this._horizontal)
   }
   constructor(
     options: {
@@ -81,6 +83,7 @@ export class Scroll {
   }
   stop() {
     this.onStop && this.onStop()
+    this._scrollAnimations = []
     this._beforeScroll()
   }
 
@@ -124,9 +127,11 @@ export class Scroll {
   }
   private _beforeScroll() {
     if (!this._scrollAnimations.length) {
-      this._scrollAnimations = []
-      this._to = this.scrollPosition
-      this._virtualPosition = this.scrollPosition
+      const position = this.scrollPosition
+      if (!!Math.round(this._virtualPosition - position)) {
+        this._virtualPosition = position
+      }
+      this._to = this._virtualPosition
     }
   }
   private _createScrollAnimation(
@@ -143,12 +148,12 @@ export class Scroll {
       this._update()
     }
   }
-  private _onscroll = () => this._onScroll
   private _onScroll() {
-    const diff = this.scrollPosition - Math.floor(maxMin(this._virtualPosition, this.scrollSize))
+    const diff =
+      Math.round(this.scrollPosition) - Math.round(maxMin(this._virtualPosition, this.scrollSize))
     const external = !!diff
     if (external) {
-      this._virtualPosition = this.scrollPosition
+      this._virtualPosition = Math.round(this.scrollPosition)
       const from = this._to
       this._to = () => getValue(from) + diff
     }
@@ -162,7 +167,7 @@ export class Scroll {
         animation.updateDistance()
       return !animation.isPastAnimation()
     })
-    const value = Math.floor(this._virtualPosition) - previousPosition
+    const value = Math.round(this._virtualPosition) - previousPosition
     !!value && Misc.scrollBy(this._container, this._horizontal, value)
     this._scrollAnimations.length > 0 ? requestAnimationFrame(() => this._update()) : this.stop()
   }
@@ -175,13 +180,12 @@ export class Scroll {
     }
   }
   private _offsetElement(element: ElementOrQuery, value: number = 1, options: IScrollOptions) {
-    const from = options.force ? this.scrollPosition : getValue(this._to)
-    const to = () => this.elementSize(getElementFromQuery(element), value) + from
+    const to = this.elementSize(element, value)
     this._offsetValue(to, options)
   }
   private _offsetValue(value: number | (() => number), options: IScrollOptions) {
     const from = options.force ? this.scrollPosition : getValue(this._to)
-    const to = () => getValue(value) + from
+    const to = () => maxMin(getValue(value) + from, this.scrollSize)
     this._to = options.force ? to : getValue(to)
     this._createScrollAnimation(from, this._to, options)
   }

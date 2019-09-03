@@ -3,7 +3,7 @@
 #+HTML_DESCRIPTION: A simple to use scroll utility package for centering elements, and smooth animations
 #+HTML_HEAD: <meta name="viewport" content="width=device-width, initial-scale=1.0">
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/index.css">
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/awsm.css"> 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/awsm.css">
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="assets/notifications.css">
 #+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
@@ -33,6 +33,10 @@
   #+END_SRC
 
 * API
+** global
+   #+INCLUDE: "examples/global.ts" src typescript
+   A default =ScrollUtility= in case you don't need any customization
+
 ** constructor
    #+INCLUDE: "examples/constructor/index.ts" src typescript
    That will create a new =ScrollUtility= instance, which you can use to scroll. \\
@@ -69,13 +73,15 @@
         summary
           b Demo:
         #scroll-horizontal.scroll-container.horizontal
-          .background
           .button-container
             each item in ["horizontal", "vertical"]
               button.scroll-button(onclick=`example.constructor.horizontal("${item}")`)= item
-          hr.spacer
-          hr.spacer
+          - const to = 300
+          - for (let i = 50; i < to; i += 50)
+            .pspacer(style=`top: ${i}%; width: ${to}%;`)
+            .horizontal.pspacer(style=`left: ${i}%; height: ${to}%;`)
     #+END_SRC
+
 
     The *horizontal* option indicates the direction when scrolling, by default
     *false*, wich means vertical scroll
@@ -88,7 +94,7 @@
           b Demo:
         #scroll-duration.scroll-container
           .button-container
-            each duration in ["1000", "750", "500", "0"]
+            each duration in ["1000", "750", "500", "250", "0"]
               button.scroll-button(onclick=`example.constructor.duration(${duration})`)= duration
           h1 Top
           hr.spacer
@@ -196,10 +202,10 @@
      details
        summary
          b Demo:
-       .scroll-container
+       #scrollTo.scroll-container
          .button-container
-           each item in ["scrollTo(0)", "scrollTo(\'#here\')", "scrollTo(Infinity)"]
-             button.scroll-button(onclick=`ScrollUtility.global.${item}`)=item
+           each item in ["0", "\'#here\'", "Infinity"]
+             button.scroll-button(onclick=`example.scrollTo(${item})`)=item
          hr.spacer
          #here.some-element
            h1 #here
@@ -211,102 +217,188 @@
    See [[force]] for info of option force\\
 
 *** element
+    :PROPERTIES:
+    :CUSTOM_ID: scrollTo-element
+    :END:
     #+INCLUDE: "examples/scrollTo.element.ts" src typescript
     Center element at some degree
     #+BEGIN_SRC pug :exports results :results html
       details
         summary
           b Demo:
-        #scrollToValue.scroll-container
+        #scrollToElement.scroll-container
           .button-container
             each item in ["0", "0.25", "0.5", "0.75", "1"]
               button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
           hr.spacer
-          #scrollTo-value.some-element
+          #scrollTo-element.some-element
             h1 element to center
           hr.spacer
     #+END_SRC
 
 *** value
-    #+INCLUDE: "examples/scrollTo.element.ts" src typescript
+    #+INCLUDE: "examples/scrollTo.value.ts" src typescript
     Scroll to certain value
     #+BEGIN_SRC pug :exports results :results html
       details
         summary
           b Demo:
-        .scroll-container
+        #scrollToValue.scroll-container
           .button-container
             each item in ["0", "50", "200", "Infinity"]
-              button.scroll-button(onclick=`ScrollUtility.global.scrollTo(${item})`)=item
+              button.scroll-button(onclick=`example.scrollTo.value(${item})`)=item
           hr.spacer
           hr.spacer
     #+END_SRC
 
-    See [[duration]] for info of option duration\\
-    See [[easing]] for info of option easing\\
-    See [[force]] for info of option force\\
-
 ** offset
-   #+BEGIN_SRC typescript
-     const scrollManager = new ScrollUtility()
-
-     scrollManager.offset({value: 100,
-                           duration: 1000,
-                           easing: "some",
-                          })
-     //or
-     scrollManager.offset(100, 1000, "some")
+   #+INCLUDE: "examples/offset.ts" src typescript
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #offset.scroll-container
+         .button-container
+           each item in ["-100", "100"]
+             button.scroll-button(onclick=`example.offset(${item})`)=item
+         hr.spacer
+         hr.spacer
+         hr.spacer
    #+END_SRC
 
-** updateOptions
-** stop
-   To stop all scroll animations:
+   See [[duration]] for info of option duration\\
+   See [[easing]] for info of option easing\\
+   See [[force]] for info of option force\\
 
-   #+BEGIN_SRC typescript
-     const scrollManager = new ScrollUtility()
-     scrollManager.stopAllAnimations()
+*** value
+    #+INCLUDE: "examples/offset.value.ts" src typescript
+    Offset scroll position by certain value
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary
+          b Demo:
+        #offsetValue.scroll-container
+          .button-container
+            each item in ["-100", "100"]
+              button.scroll-button(onclick=`example.offset.value(${item})`)=item
+          hr.spacer
+          hr.spacer
+    #+END_SRC
+
+*** element
+    Offset scroll position by a percent of the size of some element
+    #+INCLUDE: "examples/offset.element.ts" src typescript
+    Offset scroll by its container size:
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary
+          b Demo:
+        #offsetElement.scroll-container
+          .button-container
+            each item in ["-1", "-0.5", "0", "0.5", "1"]
+              button.scroll-button(onclick=`example.offset.element(${item})`)=item
+          - const to = 600
+          - for (let i = 50; i < to; i += 50)
+            .pspacer(style=`top: ${i}%;`)
+    #+END_SRC
+
+** stop
+   #+INCLUDE: "examples/stop.ts" src typescript
+   Stop all scroll animations
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #stop.scroll-container
+         .button-container
+           each item in ["scroll", "stop"]
+             button.scroll-button(onclick=`example.stop(${item === "stop"})`)=item
+         hr.spacer
+         hr.spacer
+   #+END_SRC
+   
+** scrollPosition
+   #+INCLUDE: "examples/scrollPosition.ts" src typescript
+   The position of the scroll of some element. \\
+   Somewhat equivalent of ~scrollLeft/scrollTop~; depending on the direction [[horizontal][specified]]
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #scrollPosition.scroll-container
+         .button-container
+            button.scroll-button(onclick=`example.scrollPosition()`) scrollPosition
+         hr.spacer
+         hr.spacer
    #+END_SRC
 
 ** size
-   The size of the *Scroll* container
-   #+BEGIN_SRC typescript
-     (new Scroll()).size // size of the window
-     (new Scroll("#container")).size // size of the element #container
+   #+INCLUDE: "examples/size.ts" src typescript
+   The size of some element. \\
+   Somewhat equivalent of ~clientWidth/clientHeight~; depending on the direction [[horizontal][specified]]
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #size.scroll-container
+         .button-container
+            button.scroll-button(onclick=`example.size()`) size
+         hr.spacer
    #+END_SRC
-   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
+
 ** scrollSize
-   The total scroll you can do within the *Scroll* container
-   #+BEGIN_SRC typescript
-     (new Scroll()).scrollSize // scrollSize of the windows
-     (new Scroll("#container")).scrollSize // scrollSize of the element #container
-   #+END_SRC
-   It's related to *scrollWidth/scrollHeight* properties of /HTMLElements/.
-
-   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
-** scrollPosition
-   The current position of the scroll
-   #+BEGIN_SRC typescript
-     (new Scroll()).scrollPosition // scrollPosition of the windows
-     (new Scroll("#container")).scrollPosition // scrollPosition of the element #container
-   #+END_SRC
-
-   For example, if you
-   #+BEGIN_SRC typescript
-     (new Scroll()).scroll(100)
-   #+END_SRC
-   the *scrollPosition* will be 100
-
-
-   The orientation of the value returned depends on the direction specified in the [[horizontal][contructor]]
-** getRelativeElementPosition
-   The relative position of certain element
-
-   #+BEGIN_SRC typescript
-     (new Scroll()).getRelativeElementPosition("#some-element")
-   #+END_SRC
-   It relates to (to "element"), so for example, if you
-   #+BEGIN_SRC typescript
-     (new Scroll()).scroll("#some-element", 0.5)
+   #+INCLUDE: "examples/scrollSize.ts" src typescript
+   The size of the scroll of some element. \\
+   Somewhat equivalent of ~scrollWidth(or scrollHeight) - clientWidth(or clientHeight)~; depending on the direction [[horizontal][specified]]
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #scrollSize.scroll-container
+         .button-container
+            button.scroll-button(onclick=`example.scrollSize()`) scrollSize
+         hr.spacer
+         hr.spacer
    #+END_SRC
 
-   the relative position will be *0.5*
+** relativePosition
+   #+INCLUDE: "examples/relativePosition.ts" src typescript
+   The ~relativePosition~ of some element. \\
+   It correlates to [[#scrollTo-element][scrollTo element]]
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #relativePosition.scroll-container
+         .button-container
+          each item in ["0", "0.5", "1"]
+            button.scroll-button(onclick=`example.relativePosition(${item})`)=`${item}`
+          button.scroll-button(onclick=`example.relativePosition()`) relativePosition
+         hr.spacer
+         #relativePosition-element.some-element
+           h1 some-element
+         hr.spacer
+   #+END_SRC
+
+** distToElement
+   #+INCLUDE: "examples/distToElement.ts" src typescript
+   The distance to center some element \\
+   It correlates to [[#scrollTo-element][scrollTo element]]
+   #+BEGIN_SRC pug :exports results :results html
+     details
+       summary
+         b Demo:
+       #distToElement.scroll-container
+         .button-container
+          each item in ["0", "0.5", "1"]
+            button.scroll-button(onclick=`example.distToElement(${item})`)=`${item}`
+         hr.spacer
+         #distToElement-element.some-element
+           h1 some-element
+         hr.spacer
+   #+END_SRC
+   
+** elementSize
+   #+INCLUDE: "examples/elementSize.ts" src typescript
+   The size of some element \\
+   It correlates to [[size]]

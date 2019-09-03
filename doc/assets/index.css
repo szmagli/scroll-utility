@@ -17,31 +17,15 @@ summary {
 }
 
 .scroll-container:not(.normal) {
+  position: relative;
   height: 75vh;
   overflow: auto;
 }
 
-.scroll-container.horizontal {
-  position: relative;
-}
-
 .scroll-container.horizontal .button-container {
-  z-index: 1;
-  /* margin-top: 15px; */
   top: 15px;
-  /* margin-left: 15px; */
   left: 15px;
   float: left;
-}
-
-.scroll-container.horizontal .background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200vw;
-  height: 200vh;
-  background: rgb(129, 129, 129);
-  background: linear-gradient(135deg, #222 0%, white 50%, #222 100%);
 }
 
 .scroll-container h1 {
@@ -49,6 +33,7 @@ summary {
 }
 
 .some-element {
+  position: relative;
   border: solid 5px #a5573e;
   border-left: 0;
   border-right: 0;
@@ -58,11 +43,25 @@ summary {
 }
 
 .spacer {
-  margin: 50% 0;
+  margin: 25% 0;
   background: #222;
 }
 
+.pspacer {
+  position: absolute;
+  margin: 0;
+  background: #222;
+  width: 100%;
+  height: 1px;
+}
+
+.horizontal.pspacer {
+  width: 1px;
+  height: 100%;
+}
+
 .button-container {
+  z-index: 1;
   display: flex;
   margin-top: 15px;
   top: 15px;
@@ -154,8 +153,10 @@ body {
 }
 
 .org-info-js_search-highlight {
-  background-color: #adefef; /* emacs default */
+  background-color: #adefef;
+  /* emacs default */
   color: #000000;
   font-weight: bold;
 }
+
 /* END STYLES FOR org-info.js */

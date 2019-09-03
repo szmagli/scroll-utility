@@ -8,5 +8,5 @@ const options: {
   force?: boolean
 } = {}
 
-scrollManager.scrollTo(0, options) // scroll to some position
-scrollManager.scrollTo("#some-element", 0, options) // scroll to some element and center it
+scrollManager.offset(500, options) // scroll by some position
+scrollManager.offset("#some-element", 1, options) // scroll by some element size

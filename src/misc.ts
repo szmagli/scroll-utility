@@ -125,14 +125,18 @@ export namespace Misc {
     )
   }
 
+  function elementProportion(wrapper, element, horizontal) {
+    const containerSize = getSize(wrapper, horizontal)
+    const elementSize = getSizeWithBorders(element, horizontal)
+    return containerSize - elementSize
+  }
   export function getRelativeElementPosition(
     wrapper: ScrollElement,
     element: ScrollElement,
     horizontal = false,
   ) {
     const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
-    const elementSize = getSizeWithBorders(element, horizontal)
-    const ratio = elementPosition / (getSize(wrapper, horizontal) - elementSize)
+    const ratio = elementPosition / elementProportion(wrapper, element, horizontal)
     return ratio
   }
 
@@ -143,7 +147,6 @@ export namespace Misc {
     value = 0,
   ) {
     const elementPosition = getOffset(element, horizontal) - getOffset(wrapper, horizontal)
-    const elementSize = getSizeWithBorders(element, horizontal)
-    return elementPosition - (getSize(wrapper, horizontal) - elementSize) * value
+    return elementPosition - elementProportion(wrapper, element, horizontal) * value
   }
 }
