@@ -78,7 +78,6 @@ window.onload = () => {
       force: (type: string) => {
         const container = "#scroll-force"
         scrollManager.container = container
-        console.log(type === "force")
         rp(scrollManager, container, {
           duration: 2000,
           force: type === "force",
@@ -93,7 +92,7 @@ window.onload = () => {
       },
       {
         element: (value: number) => {
-          const container = "#scrollToElement"
+          const container = "#example-scrollToElement"
           const element = "#scrollTo-element"
           scrollManager.container = container
           scrollManager.scrollTo(element, value)

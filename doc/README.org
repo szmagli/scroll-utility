@@ -8,10 +8,10 @@
 #+HTML_HEAD: <script type="text/javascript" src="index.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="scroll-utility.js"> </script>
 #+HTML_HEAD: <script type="text/javascript" src="assets/notifications.js"> </script>
-#+INFOJS_OPT: path:assets/org-info.js view:info
-#+OPTIONS: num:nil
+#+INFOJS_OPT: path:assets/org-info.js view:info ltoc:nil
+#+KEYWORDS: scroll smooth simple center scrolling centering
+#+OPTIONS: num:nil toc:1
 #+STARTUP: content
-
 
 * Features
   - Extremely powerful for scrolling to anywhere in the page, like centering elements to certain degree.
@@ -19,7 +19,7 @@
   - Detect onScroll events and differentiate between user and utility scroll
   - High performance
   - Dependency free
-  - Small footprint 9.32KiB
+  - Small footprint 10KiB
   - Typescript friendly
   - Handle multiple scroll animation at the same time
 * Installation
@@ -32,7 +32,43 @@
     <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
   #+END_SRC
 
+* How to
+ #+TOC: headlines local
+** scroll to an element and/or center it
+   #+INCLUDE: "examples/howto/scrollToElement.ts" src typescript
+   see [[#scrollToElement][scrollTo element]]
+** scroll to certain position
+   #+INCLUDE: "examples/howto/scrollToValue.ts" src typescript
+   see [[#scrollToValue][scrollTo value]]
+** scroll by certain amount of pixels
+   #+INCLUDE: "examples/howto/offsetValue.ts" src typescript
+   see [[#offsetValue][offset value]]
+** scroll by a screen
+   #+INCLUDE: "examples/howto/offsetElement.ts" src typescript
+   see [[#offsetElement][offset element]]
+** specify easing animation for scroll
+   #+INCLUDE: "examples/howto/easing.ts" src typescript
+   see [[easing]]
+** specify duration for scroll
+   #+INCLUDE: "examples/howto/duration.ts" src typescript
+   see [[duration]]
+** ignore "user" scroll while scrolling
+   #+INCLUDE: "examples/howto/ignore.ts" src typescript
+   see [[force]]
+** do something "onscroll"
+   #+INCLUDE: "examples/howto/onScroll.ts" src typescript
+   see [[onScroll]]
+** do something when "user" scrolls
+   #+INCLUDE: "examples/howto/onUserScroll.ts" src typescript
+   see [[onScroll]]
+** Stop scroll when user scrolls
+   #+INCLUDE: "examples/howto/stopOnUserScroll.ts" src typescript
+   see [[onScroll]]
+** do something when scroll ends
+   #+INCLUDE: "examples/howto/onStop.ts" src typescript
+   see [[onStop]]
 * API
+ #+TOC: headlines local
 ** global
    #+INCLUDE: "examples/global.ts" src typescript
    A default =ScrollUtility= in case you don't need any customization
@@ -41,7 +77,7 @@
    #+INCLUDE: "examples/constructor/index.ts" src typescript
    That will create a new =ScrollUtility= instance, which you can use to scroll. \\
    Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
-
+   #+TOC: headlines local
 *** container
     #+INCLUDE: "examples/constructor/container.ts" src typescript
     #+BEGIN_SRC pug :exports results :results html
@@ -196,6 +232,7 @@
       scrollManager.force = false
     #+END_SRC
 
+    
 ** scrollTo
    #+INCLUDE: "examples/scrollTo.ts" src typescript
    #+BEGIN_SRC pug :exports results :results html
@@ -215,28 +252,11 @@
    See [[duration]] for info of option duration\\
    See [[easing]] for info of option easing\\
    See [[force]] for info of option force\\
-
-*** element
-    :PROPERTIES:
-    :CUSTOM_ID: scrollTo-element
-    :END:
-    #+INCLUDE: "examples/scrollTo.element.ts" src typescript
-    Center element at some degree
-    #+BEGIN_SRC pug :exports results :results html
-      details
-        summary
-          b Demo:
-        #scrollToElement.scroll-container
-          .button-container
-            each item in ["0", "0.25", "0.5", "0.75", "1"]
-              button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
-          hr.spacer
-          #scrollTo-element.some-element
-            h1 element to center
-          hr.spacer
-    #+END_SRC
-
+   #+TOC: headlines local
 *** value
+    :PROPERTIES:
+    :CUSTOM_ID: scrollToValue
+    :END:
     #+INCLUDE: "examples/scrollTo.value.ts" src typescript
     Scroll to certain value
     #+BEGIN_SRC pug :exports results :results html
@@ -248,6 +268,26 @@
             each item in ["0", "50", "200", "Infinity"]
               button.scroll-button(onclick=`example.scrollTo.value(${item})`)=item
           hr.spacer
+          hr.spacer
+    #+END_SRC
+
+*** element
+    :PROPERTIES:
+    :CUSTOM_ID: scrollToElement
+    :END:
+    #+INCLUDE: "examples/scrollTo.element.ts" src typescript
+    Center element at some degree
+    #+BEGIN_SRC pug :exports results :results html
+      details
+        summary
+          b Demo:
+        #example-scrollToElement.scroll-container
+          .button-container
+            each item in ["0", "0.25", "0.5", "0.75", "1"]
+              button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
+          hr.spacer
+          #scrollTo-element.some-element
+            h1 element to center
           hr.spacer
     #+END_SRC
 
@@ -269,8 +309,11 @@
    See [[duration]] for info of option duration\\
    See [[easing]] for info of option easing\\
    See [[force]] for info of option force\\
-
+   #+TOC: headlines local
 *** value
+    :PROPERTIES:
+    :CUSTOM_ID: offsetValue
+    :END:
     #+INCLUDE: "examples/offset.value.ts" src typescript
     Offset scroll position by certain value
     #+BEGIN_SRC pug :exports results :results html
@@ -286,6 +329,9 @@
     #+END_SRC
 
 *** element
+    :PROPERTIES:
+    :CUSTOM_ID: offsetElement
+    :END:
     Offset scroll position by a percent of the size of some element
     #+INCLUDE: "examples/offset.element.ts" src typescript
     Offset scroll by its container size:
@@ -295,7 +341,7 @@
           b Demo:
         #offsetElement.scroll-container
           .button-container
-            each item in ["-1", "-0.5", "0", "0.5", "1"]
+            each item in ["-1", "-0.5", "0.5", "1"]
               button.scroll-button(onclick=`example.offset.element(${item})`)=item
           - const to = 600
           - for (let i = 50; i < to; i += 50)
@@ -316,7 +362,7 @@
          hr.spacer
          hr.spacer
    #+END_SRC
-   
+
 ** scrollPosition
    #+INCLUDE: "examples/scrollPosition.ts" src typescript
    The position of the scroll of some element. \\
@@ -343,7 +389,6 @@
        #size.scroll-container
          .button-container
             button.scroll-button(onclick=`example.size()`) size
-         hr.spacer
    #+END_SRC
 
 ** scrollSize
@@ -364,7 +409,7 @@
 ** relativePosition
    #+INCLUDE: "examples/relativePosition.ts" src typescript
    The ~relativePosition~ of some element. \\
-   It correlates to [[#scrollTo-element][scrollTo element]]
+   It correlates to  [[#scrollToElement][scrollTo element]]
    #+BEGIN_SRC pug :exports results :results html
      details
        summary
@@ -383,7 +428,7 @@
 ** distToElement
    #+INCLUDE: "examples/distToElement.ts" src typescript
    The distance to center some element \\
-   It correlates to [[#scrollTo-element][scrollTo element]]
+   It correlates to [[#scrollToElement][scrollTo element]]
    #+BEGIN_SRC pug :exports results :results html
      details
        summary
@@ -397,7 +442,7 @@
            h1 some-element
          hr.spacer
    #+END_SRC
-   
+
 ** elementSize
    #+INCLUDE: "examples/elementSize.ts" src typescript
    The size of some element \\
