@@ -29,18 +29,13 @@ From npm:
 npm install --save scroll-utility
 ```
 
-# **Scroll**
+# How to Scroll
 
-```ts
-import { Scroll } from "scroll-utility"
-
-const scrollManager = new Scroll()
-scrollManager.scroll("#some-element").offset(-50)
-```
+see documentation [here](https://leddgroup.github.io/scroll-utility)
 
 # Browser Compatibility
 
-There are automated test for several browsers, thanks to [Browserstack](https://www.browserstack.com).  
+There are automated test for several browsers, thanks to [Browserstack](https://www.browserstack.com).
 Compatibility garanteed in all major browsers.
 
 ![img](https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/header-logo.svg)
