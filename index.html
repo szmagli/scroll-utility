@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-09-03 Tue 15:46 -->
+<!-- 2019-09-04 Wed 15:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>scroll-utility</title>
@@ -195,84 +195,12 @@
   /*]]>*/-->
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="assets/index.css">
 <link rel="stylesheet" type="text/css" href="assets/awsm.css">
+<link rel="stylesheet" type="text/css" href="assets/index.css">
 <link rel="stylesheet" type="text/css" href="assets/notifications.css">
 <script type="text/javascript" src="index.js"> </script>
 <script type="text/javascript" src="scroll-utility.js"> </script>
 <script type="text/javascript" src="assets/notifications.js"> </script>
-
-<script type="text/javascript" src="assets/org-info.js">
-/**
- *
- * @source: assets/org-info.js
- *
- * @licstart  The following is the entire license notice for the
- *  JavaScript code in assets/org-info.js.
- *
- * Copyright (C) 2012-2019 Free Software Foundation, Inc.
- *
- *
- * The JavaScript code in this tag is free software: you can
- * redistribute it and/or modify it under the terms of the GNU
- * General Public License (GNU GPL) as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version.  The code is distributed WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
- *
- * As additional permission under GNU GPL version 3 section 7, you
- * may distribute non-source (e.g., minimized or compacted) forms of
- * that code without the copy of the GNU GPL normally required by
- * section 4, provided you include this license notice and a URL
- * through which recipients can access the Corresponding Source.
- *
- * @licend  The above is the entire license notice
- * for the JavaScript code in assets/org-info.js.
- *
- */
-</script>
-
-<script type="text/javascript">
-
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "1");
-org_html_manager.set("LINK_HOME", "https://github.com/LeDDGroup/scroll-utility");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "0");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "underline");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "1");
-org_html_manager.set("VIEW", "info");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -331,80 +259,77 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org14a337d">Features</a></li>
-<li><a href="#orgcb3611d">Installation</a></li>
-<li><a href="#org948e93d">How to</a>
+<li><a href="#org8506454">Features</a></li>
+<li><a href="#org59e7180">Installation</a></li>
+<li><a href="#orgbce1d36">API</a>
 <ul>
-<li><a href="#orgbab137a">scroll to an element and/or center it</a></li>
-<li><a href="#org503f484">scroll to certain position</a></li>
-<li><a href="#orgd12aabf">scroll by certain amount of pixels</a></li>
-<li><a href="#orge2e57e1">scroll by a screen</a></li>
-<li><a href="#orgf7bef43">specify easing animation for scroll</a></li>
-<li><a href="#org11098bd">specify duration for scroll</a></li>
-<li><a href="#org0af604a">ignore "user" scroll while scrolling</a></li>
-<li><a href="#org2215193">do something "onscroll"</a></li>
-<li><a href="#orgaf9a3b7">do something when "user" scrolls</a></li>
-<li><a href="#org833fd72">Stop scroll when user scrolls</a></li>
-<li><a href="#orgdf0b947">do something when scroll ends</a></li>
+<li><a href="#org01d1068">global</a></li>
+<li><a href="#org889377d">constructor</a>
+<ul>
+<li><a href="#org9bea2fb">container</a></li>
+<li><a href="#org7c2fc20">horizontal</a></li>
+<li><a href="#orgf9002a2">duration</a></li>
+<li><a href="#orgdd25578">easing</a></li>
+<li><a href="#orgeb25e0e">onScroll</a></li>
+<li><a href="#org27fd820">onStop</a></li>
+<li><a href="#org5397e35">force</a></li>
 </ul>
 </li>
-<li><a href="#orgda6d59e">API</a>
-<ul>
-<li><a href="#orgf666af0">global</a></li>
-<li><a href="#orgcc67fe4">constructor</a>
-<ul>
-<li><a href="#orgeb84972">container</a></li>
-<li><a href="#orga64694e">horizontal</a></li>
-<li><a href="#org888bb5a">duration</a></li>
-<li><a href="#orgd2f7f60">easing</a></li>
-<li><a href="#org64a4cc5">onScroll</a></li>
-<li><a href="#org34ea212">onStop</a></li>
-<li><a href="#orgd5c0e54">force</a></li>
-</ul>
-</li>
-<li><a href="#orged604f0">scrollTo</a>
+<li><a href="#org6ef1c77">scrollTo</a>
 <ul>
 <li><a href="#scrollToValue">value</a></li>
 <li><a href="#scrollToElement">element</a></li>
 </ul>
 </li>
-<li><a href="#orgdddbda6">offset</a>
+<li><a href="#org415cbcc">offset</a>
 <ul>
 <li><a href="#offsetValue">value</a></li>
 <li><a href="#offsetElement">element</a></li>
 </ul>
 </li>
-<li><a href="#org7fa6241">stop</a></li>
-<li><a href="#org43c0629">scrollPosition</a></li>
-<li><a href="#org371b78c">size</a></li>
-<li><a href="#org5ecfaca">scrollSize</a></li>
-<li><a href="#org63b774e">relativePosition</a></li>
-<li><a href="#org5388735">distToElement</a></li>
-<li><a href="#orgca37186">elementSize</a></li>
+<li><a href="#org87ff53b">stop</a></li>
+<li><a href="#orga18d758">scrollPosition</a></li>
+<li><a href="#org36532bb">size</a></li>
+<li><a href="#org97172d0">scrollSize</a></li>
+<li><a href="#org07b6eb8">relativePosition</a></li>
+<li><a href="#orgbdda409">distToElement</a></li>
+<li><a href="#org51b2d7c">elementSize</a></li>
+</ul>
+</li>
+<li><a href="#orgd34e972">How to</a>
+<ul>
+<li><a href="#org3246f18">scroll to an element and/or center it</a></li>
+<li><a href="#orgce3f404">scroll to certain position</a></li>
+<li><a href="#orgd440820">scroll by certain amount of pixels</a></li>
+<li><a href="#orge508eed">scroll by a screen</a></li>
+<li><a href="#org1a08b75">specify easing animation for scroll</a></li>
+<li><a href="#org8001b58">specify duration for scroll</a></li>
+<li><a href="#orga184c93">ignore "user" scroll while scrolling</a></li>
+<li><a href="#org8165068">do something "onscroll"</a></li>
+<li><a href="#orge50a8e2">do something when "user" scrolls</a></li>
+<li><a href="#org259d311">Stop scroll when user scrolls</a></li>
+<li><a href="#orgc936862">do something when scroll ends</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org14a337d" class="outline-2">
-<h2 id="org14a337d">Features</h2>
-<div class="outline-text-2" id="text-org14a337d">
+<div id="outline-container-org8506454" class="outline-2">
+<h2 id="org8506454">Features</h2>
+<div class="outline-text-2" id="text-org8506454">
 <ul class="org-ul">
-<li>Extremely powerful for scrolling to anywhere in the page, like centering elements to certain degree.</li>
-<li>Custom easing animations for scrolling</li>
-<li>Detect onScroll events and differentiate between user and utility scroll</li>
-<li>High performance</li>
-<li>Dependency free</li>
-<li>Small footprint 10KiB</li>
-<li>Typescript friendly</li>
-<li>Handle multiple scroll animation at the same time</li>
+<li>Simple, fast and small footprint ~10KiB.</li>
+<li>Allows specifying the element offset, easing animations.</li>
+<li>Scroll events.</li>
+<li>Scroll inside an element.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcb3611d" class="outline-2">
-<h2 id="orgcb3611d">Installation</h2>
-<div class="outline-text-2" id="text-orgcb3611d">
+
+<div id="outline-container-org59e7180" class="outline-2">
+<h2 id="org59e7180">Installation</h2>
+<div class="outline-text-2" id="text-org59e7180">
 <p>
 From npm:
 </p>
@@ -422,266 +347,13 @@ From a cdn: <a href="https://www.jsdelivr.com/package/npm/scroll-utility">jsdeli
 </div>
 </div>
 
-<div id="outline-container-org948e93d" class="outline-2">
-<h2 id="org948e93d">How to</h2>
-<div class="outline-text-2" id="text-org948e93d">
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgbab137a">scroll to an element and/or center it</a></li>
-<li><a href="#org503f484">scroll to certain position</a></li>
-<li><a href="#orgd12aabf">scroll by certain amount of pixels</a></li>
-<li><a href="#orge2e57e1">scroll by a screen</a></li>
-<li><a href="#orgf7bef43">specify easing animation for scroll</a></li>
-<li><a href="#org11098bd">specify duration for scroll</a></li>
-<li><a href="#org0af604a">ignore "user" scroll while scrolling</a></li>
-<li><a href="#org2215193">do something "onscroll"</a></li>
-<li><a href="#orgaf9a3b7">do something when "user" scrolls</a></li>
-<li><a href="#org833fd72">Stop scroll when user scrolls</a></li>
-<li><a href="#orgdf0b947">do something when scroll ends</a></li>
-</ul>
+<div id="outline-container-orgbce1d36" class="outline-2">
+<h2 id="orgbce1d36">API</h2>
+<div class="outline-text-2" id="text-orgbce1d36">
 </div>
-</div>
-<div id="outline-container-orgbab137a" class="outline-3">
-<h3 id="orgbab137a">scroll to an element and/or center it</h3>
-<div class="outline-text-3" id="text-orgbab137a">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to element #some-element</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">center element</span>
-</pre>
-</div>
-<p>
-see <a href="#scrollToElement">scrollTo element</a>
-</p>
-</div>
-</div>
-<div id="outline-container-org503f484" class="outline-3">
-<h3 id="org503f484">scroll to certain position</h3>
-<div class="outline-text-3" id="text-org503f484">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to top</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to 500px</span>
-</pre>
-</div>
-<p>
-see <a href="#scrollToValue">scrollTo value</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orgd12aabf" class="outline-3">
-<h3 id="orgd12aabf">scroll by certain amount of pixels</h3>
-<div class="outline-text-3" id="text-orgd12aabf">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll 500px down</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>-<span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll 500px up</span>
-</pre>
-</div>
-<p>
-see <a href="#offsetValue">offset value</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orge2e57e1" class="outline-3">
-<h3 id="orge2e57e1">scroll by a screen</h3>
-<div class="outline-text-3" id="text-orge2e57e1">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll a screen down</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll half a screen down</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, -<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll half a screen up</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, -<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll a screen up</span>
-</pre>
-</div>
-<p>
-see <a href="#offsetElement">offset element</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orgf7bef43" class="outline-3">
-<h3 id="orgf7bef43">specify easing animation for scroll</h3>
-<div class="outline-text-3" id="text-orgf7bef43">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.easing = <span style="color: #2d9574;">"linear"</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-<p>
-see <a href="#orgd2f7f60">easing</a>
-</p>
-</div>
-</div>
-<div id="outline-container-org11098bd" class="outline-3">
-<h3 id="org11098bd">specify duration for scroll</h3>
-<div class="outline-text-3" id="text-org11098bd">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.duration = <span style="color: #a45bad;">750</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-<p>
-see <a href="#org888bb5a">duration</a>
-</p>
-</div>
-</div>
-<div id="outline-container-org0af604a" class="outline-3">
-<h3 id="org0af604a">ignore "user" scroll while scrolling</h3>
-<div class="outline-text-3" id="text-org0af604a">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-ScrollUtility.global.force = <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-<p>
-see <a href="#orgd5c0e54">force</a>
-</p>
-</div>
-</div>
-<div id="outline-container-org2215193" class="outline-3">
-<h3 id="org2215193">do something "onscroll"</h3>
-<div class="outline-text-3" id="text-org2215193">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onScroll</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-  console.log<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"scrolled"</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
-
-ScrollUtility.global.onScroll = onScroll
-</pre>
-</div>
-<p>
-see <a href="#org64a4cc5">onScroll</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orgaf9a3b7" class="outline-3">
-<h3 id="orgaf9a3b7">do something when "user" scrolls</h3>
-<div class="outline-text-3" id="text-orgaf9a3b7">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onUserScroll</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">external</span>: <span style="color: #4f97d7; font-weight: bold;">boolean</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>external<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    console.log<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"user scrolled!"</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
-
-ScrollUtility.global.onScroll = onUserScroll
-</pre>
-</div>
-<p>
-see <a href="#org64a4cc5">onScroll</a>
-</p>
-</div>
-</div>
-<div id="outline-container-org833fd72" class="outline-3">
-<h3 id="org833fd72">Stop scroll when user scrolls</h3>
-<div class="outline-text-3" id="text-org833fd72">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">stop</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">external</span>: <span style="color: #4f97d7; font-weight: bold;">boolean</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>external<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    ScrollUtility.global.stop<span style="color: #2d9574;">()</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
-
-ScrollUtility.global.onScroll = stop
-</pre>
-</div>
-<p>
-see <a href="#org64a4cc5">onScroll</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orgdf0b947" class="outline-3">
-<h3 id="orgdf0b947">do something when scroll ends</h3>
-<div class="outline-text-3" id="text-orgdf0b947">
-<div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
-
-<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onStop</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-  console.log<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"scroll animations ended"</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
-
-ScrollUtility.global.onStop = onStop
-</pre>
-</div>
-<p>
-see <a href="#org34ea212">onStop</a>
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgda6d59e" class="outline-2">
-<h2 id="orgda6d59e">API</h2>
-<div class="outline-text-2" id="text-orgda6d59e">
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgf666af0">global</a></li>
-<li><a href="#orgcc67fe4">constructor</a>
-<ul>
-<li><a href="#orgeb84972">container</a></li>
-<li><a href="#orga64694e">horizontal</a></li>
-<li><a href="#org888bb5a">duration</a></li>
-<li><a href="#orgd2f7f60">easing</a></li>
-<li><a href="#org64a4cc5">onScroll</a></li>
-<li><a href="#org34ea212">onStop</a></li>
-<li><a href="#orgd5c0e54">force</a></li>
-</ul>
-</li>
-<li><a href="#orged604f0">scrollTo</a>
-<ul>
-<li><a href="#scrollToValue">value</a></li>
-<li><a href="#scrollToElement">element</a></li>
-</ul>
-</li>
-<li><a href="#orgdddbda6">offset</a>
-<ul>
-<li><a href="#offsetValue">value</a></li>
-<li><a href="#offsetElement">element</a></li>
-</ul>
-</li>
-<li><a href="#org7fa6241">stop</a></li>
-<li><a href="#org43c0629">scrollPosition</a></li>
-<li><a href="#org371b78c">size</a></li>
-<li><a href="#org5ecfaca">scrollSize</a></li>
-<li><a href="#org63b774e">relativePosition</a></li>
-<li><a href="#org5388735">distToElement</a></li>
-<li><a href="#orgca37186">elementSize</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orgf666af0" class="outline-3">
-<h3 id="orgf666af0">global</h3>
-<div class="outline-text-3" id="text-orgf666af0">
+<div id="outline-container-org01d1068" class="outline-3">
+<h3 id="org01d1068">global</h3>
+<div class="outline-text-3" id="text-org01d1068">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -696,9 +368,9 @@ A default <code>ScrollUtility</code> in case you don't need any customization
 </div>
 </div>
 
-<div id="outline-container-orgcc67fe4" class="outline-3">
-<h3 id="orgcc67fe4">constructor</h3>
-<div class="outline-text-3" id="text-orgcc67fe4">
+<div id="outline-container-org889377d" class="outline-3">
+<h3 id="org889377d">constructor</h3>
+<div class="outline-text-3" id="text-org889377d">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -720,21 +392,10 @@ ScrollUtility.global <span style="color: #2aa1ae; background-color: #292e34;">//
 That will create a new <code>ScrollUtility</code> instance, which you can use to scroll. <br />
 Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
 </p>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgeb84972">container</a></li>
-<li><a href="#orga64694e">horizontal</a></li>
-<li><a href="#org888bb5a">duration</a></li>
-<li><a href="#orgd2f7f60">easing</a></li>
-<li><a href="#org64a4cc5">onScroll</a></li>
-<li><a href="#org34ea212">onStop</a></li>
-<li><a href="#orgd5c0e54">force</a></li>
-</ul>
 </div>
-</div>
-<div id="outline-container-orgeb84972" class="outline-4">
-<h4 id="orgeb84972">container</h4>
-<div class="outline-text-4" id="text-orgeb84972">
+<div id="outline-container-org9bea2fb" class="outline-4">
+<h4 id="org9bea2fb">container</h4>
+<div class="outline-text-4" id="text-org9bea2fb">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -749,7 +410,7 @@ ScrollUtility.global
 <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">ScrollUtility</span><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span> container: document.querySelector<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"#some-element"</span><span style="color: #2d9574;">)</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">same as above</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container normal" id="scroll-container"><div class="button-container"><button class="scroll-button" onclick="example.constructor.container()">scroll window</button></div><hr class="spacer"/><div class="some-element scroll-container" id="container" position="relative"><h1>#container</h1><div class="button-container"><button class="scroll-button" onclick="example.constructor.container(true)">scroll container</button></div><hr class="spacer"/><hr class="spacer"/></div></div></details>
+<div class="scroll-container normal" id="scroll-container"><div class="button-container"><button class="scroll-button" onclick="example.constructor.container()">scroll window</button></div><hr class="spacer"/><div class="some-element scroll-container" id="container" position="relative"><h1>#container</h1><div class="button-container"><button class="scroll-button" onclick="example.constructor.container(true)">scroll container</button></div><hr class="spacer"/><hr class="spacer"/></div></div>
 
 <p>
 The <code>container</code> option indicates the element in which the scroll takes place; <code>window</code> by default
@@ -763,9 +424,9 @@ If the <b>querySelector</b> doesn't match an element, it will send a warning to 
 </div>
 </div>
 
-<div id="outline-container-orga64694e" class="outline-4">
-<h4 id="orga64694e">horizontal</h4>
-<div class="outline-text-4" id="text-orga64694e">
+<div id="outline-container-org7c2fc20" class="outline-4">
+<h4 id="org7c2fc20">horizontal</h4>
+<div class="outline-text-4" id="text-org7c2fc20">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -775,7 +436,7 @@ ScrollUtility.global <span style="color: #2aa1ae; background-color: #292e34;">//
 <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">ScrollUtility</span><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span> horizontal: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">horizontal scroll</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container horizontal" id="scroll-horizontal"><div class="button-container"><button class="scroll-button" onclick="example.constructor.horizontal(&quot;horizontal&quot;)">horizontal</button><button class="scroll-button" onclick="example.constructor.horizontal(&quot;vertical&quot;)">vertical</button></div><div class="pspacer" style="top: 50%; width: 300%;"></div><div class="horizontal pspacer" style="left: 50%; height: 300%;"></div><div class="pspacer" style="top: 100%; width: 300%;"></div><div class="horizontal pspacer" style="left: 100%; height: 300%;"></div><div class="pspacer" style="top: 150%; width: 300%;"></div><div class="horizontal pspacer" style="left: 150%; height: 300%;"></div><div class="pspacer" style="top: 200%; width: 300%;"></div><div class="horizontal pspacer" style="left: 200%; height: 300%;"></div><div class="pspacer" style="top: 250%; width: 300%;"></div><div class="horizontal pspacer" style="left: 250%; height: 300%;"></div></div></details>
+<div class="scroll-container horizontal" id="scroll-horizontal"><div class="button-container"><button class="scroll-button" onclick="example.constructor.horizontal(&quot;horizontal&quot;)">horizontal</button><button class="scroll-button" onclick="example.constructor.horizontal(&quot;vertical&quot;)">vertical</button></div><div class="pspacer" style="top: 50%; width: 300%;"></div><div class="horizontal pspacer" style="left: 50%; height: 300%;"></div><div class="pspacer" style="top: 100%; width: 300%;"></div><div class="horizontal pspacer" style="left: 100%; height: 300%;"></div><div class="pspacer" style="top: 150%; width: 300%;"></div><div class="horizontal pspacer" style="left: 150%; height: 300%;"></div><div class="pspacer" style="top: 200%; width: 300%;"></div><div class="horizontal pspacer" style="left: 200%; height: 300%;"></div><div class="pspacer" style="top: 250%; width: 300%;"></div><div class="horizontal pspacer" style="left: 250%; height: 300%;"></div></div>
 
 
 <p>
@@ -785,9 +446,9 @@ The <b>horizontal</b> option indicates the direction when scrolling, by default
 </div>
 </div>
 
-<div id="outline-container-org888bb5a" class="outline-4">
-<h4 id="org888bb5a">duration</h4>
-<div class="outline-text-4" id="text-org888bb5a">
+<div id="outline-container-orgf9002a2" class="outline-4">
+<h4 id="orgf9002a2">duration</h4>
+<div class="outline-text-4" id="text-orgf9002a2">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -800,11 +461,11 @@ ScrollUtility.global <span style="color: #2aa1ae; background-color: #292e34;">//
 <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">ScrollUtility</span><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">0</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">"instant" scroll</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scroll-duration"><div class="button-container"><button class="scroll-button" onclick="example.constructor.duration(1000)">1000</button><button class="scroll-button" onclick="example.constructor.duration(750)">750</button><button class="scroll-button" onclick="example.constructor.duration(500)">500</button><button class="scroll-button" onclick="example.constructor.duration(250)">250</button><button class="scroll-button" onclick="example.constructor.duration(0)">0</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div></details>
+<div class="scroll-container" id="scroll-duration"><div class="button-container"><button class="scroll-button" onclick="example.constructor.duration(1000)">1000</button><button class="scroll-button" onclick="example.constructor.duration(750)">750</button><button class="scroll-button" onclick="example.constructor.duration(500)">500</button><button class="scroll-button" onclick="example.constructor.duration(250)">250</button><button class="scroll-button" onclick="example.constructor.duration(0)">0</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div>
 
 <p>
 The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span><br />
-It will be used along with <a href="#orgd2f7f60">easing</a> for creating the <b>smooth</b> animation when scrolling
+It will be used along with <a href="#orgdd25578">easing</a> for creating the <b>smooth</b> animation when scrolling
 </p>
 
 <p>
@@ -813,9 +474,9 @@ If you want to disable the <i>smooth</i> animation, set <b>duration</b> to 0.
 </div>
 </div>
 
-<div id="outline-container-orgd2f7f60" class="outline-4">
-<h4 id="orgd2f7f60">easing</h4>
-<div class="outline-text-4" id="text-orgd2f7f60">
+<div id="outline-container-orgdd25578" class="outline-4">
+<h4 id="orgdd25578">easing</h4>
+<div class="outline-text-4" id="text-orgdd25578">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -830,7 +491,7 @@ ScrollUtility.global
 <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">ScrollUtility</span><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"easeOutBounce"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">bouncy</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scroll-easings"><div class="button-container"><button class="scroll-button" onclick="example.constructor.easing(&quot;linear&quot;)">linear</button><button class="scroll-button" onclick="example.constructor.easing(&quot;easeInOutQuad&quot;)">easeInOutQuad</button><button class="scroll-button" onclick="example.constructor.easing(&quot;easeOutBounce&quot;)">easeOutBounce</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div></details>
+<div class="scroll-container" id="scroll-easings"><div class="button-container"><button class="scroll-button" onclick="example.constructor.easing(&quot;linear&quot;)">linear</button><button class="scroll-button" onclick="example.constructor.easing(&quot;easeInOutQuad&quot;)">easeInOutQuad</button><button class="scroll-button" onclick="example.constructor.easing(&quot;easeOutBounce&quot;)">easeOutBounce</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div>
 
 <p>
 Learn more about easing functions <a href="https://easings.net/en">here</a>:
@@ -838,9 +499,9 @@ Learn more about easing functions <a href="https://easings.net/en">here</a>:
 </div>
 </div>
 
-<div id="outline-container-org64a4cc5" class="outline-4">
-<h4 id="org64a4cc5">onScroll</h4>
-<div class="outline-text-4" id="text-org64a4cc5">
+<div id="outline-container-orgeb25e0e" class="outline-4">
+<h4 id="orgeb25e0e">onScroll</h4>
+<div class="outline-text-4" id="text-orgeb25e0e">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -861,7 +522,7 @@ ScrollUtility.global <span style="color: #2aa1ae; background-color: #292e34;">//
 <p>
 <b>try scrolling to see results:</b>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scroll-onScroll"><div class="button-container"><button class="scroll-button" onclick="example.constructor.onScroll()">scroll</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div></details>
+<div class="scroll-container" id="scroll-onScroll"><div class="button-container"><button class="scroll-button" onclick="example.constructor.onScroll()">scroll</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div>
 
 <p>
 It can be changed any time:
@@ -874,9 +535,9 @@ scrollManager.onScroll = <span style="color: #4f97d7;">()</span> =&gt; alert<spa
 </div>
 </div>
 
-<div id="outline-container-org34ea212" class="outline-4">
-<h4 id="org34ea212">onStop</h4>
-<div class="outline-text-4" id="text-org34ea212">
+<div id="outline-container-org27fd820" class="outline-4">
+<h4 id="org27fd820">onStop</h4>
+<div class="outline-text-4" id="text-org27fd820">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -891,7 +552,7 @@ ScrollUtility.global <span style="color: #2aa1ae; background-color: #292e34;">//
 <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scroll-onStop"><div class="button-container"><button class="scroll-button" onclick="example.constructor.onStop()">scroll</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div></details>
+<div class="scroll-container" id="scroll-onStop"><div class="button-container"><button class="scroll-button" onclick="example.constructor.onStop()">scroll</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div>
 
 <p>
 It can be changed any time:
@@ -904,9 +565,9 @@ scrollManager.onStop = <span style="color: #4f97d7;">()</span> =&gt; alert<span 
 </div>
 </div>
 
-<div id="outline-container-orgd5c0e54" class="outline-4">
-<h4 id="orgd5c0e54">force</h4>
-<div class="outline-text-4" id="text-orgd5c0e54">
+<div id="outline-container-org5397e35" class="outline-4">
+<h4 id="org5397e35">force</h4>
+<div class="outline-text-4" id="text-org5397e35">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -924,7 +585,7 @@ It ignores external scroll and previous scroll animations
 <p>
 <b>try scrolling to see results:</b>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scroll-force"><div class="button-container"><button class="scroll-button" onclick="example.constructor.force(&quot;no force&quot;)">no force</button><button class="scroll-button" onclick="example.constructor.force(&quot;force&quot;)">force</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div></details>
+<div class="scroll-container" id="scroll-force"><div class="button-container"><button class="scroll-button" onclick="example.constructor.force(&quot;no force&quot;)">no force</button><button class="scroll-button" onclick="example.constructor.force(&quot;force&quot;)">force</button></div><h1>Top</h1><hr class="spacer"/><hr class="spacer"/><h1>Bottom</h1></div>
 
 <p>
 It can be changed any time:
@@ -938,9 +599,9 @@ scrollManager.force = <span style="color: #4f97d7; font-weight: bold;">false</sp
 </div>
 </div>
 
-<div id="outline-container-orged604f0" class="outline-3">
-<h3 id="orged604f0">scrollTo</h3>
-<div class="outline-text-3" id="text-orged604f0">
+<div id="outline-container-org6ef1c77" class="outline-3">
+<h3 id="org6ef1c77">scrollTo</h3>
+<div class="outline-text-3" id="text-org6ef1c77">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -956,21 +617,15 @@ scrollManager.scrollTo<span style="color: #4f97d7;">(</span><span style="color: 
 scrollManager.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span>, <span style="color: #a45bad;">0</span>, options<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to some element and center it</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scrollTo"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo(0)">0</button><button class="scroll-button" onclick="example.scrollTo('#here')">'#here'</button><button class="scroll-button" onclick="example.scrollTo(Infinity)">Infinity</button></div><hr class="spacer"/><div class="some-element" id="here"><h1>#here</h1></div><hr class="spacer"/></div></details>
+<div class="scroll-container" id="scrollTo"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo(0)">0</button><button class="scroll-button" onclick="example.scrollTo('#here')">'#here'</button><button class="scroll-button" onclick="example.scrollTo(Infinity)">Infinity</button></div><hr class="spacer"/><div class="some-element" id="here"><h1>#here</h1></div><hr class="spacer"/></div>
 
 <p>
-See <a href="#org888bb5a">duration</a> for info of option duration<br />
-See <a href="#orgd2f7f60">easing</a> for info of option easing<br />
-See <a href="#orgd5c0e54">force</a> for info of option force<br />
+See <a href="#orgf9002a2">duration</a> for info of option duration<br />
+See <a href="#orgdd25578">easing</a> for info of option easing<br />
+See <a href="#org5397e35">force</a> for info of option force<br />
 </p>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#scrollToValue">value</a></li>
-<li><a href="#scrollToElement">element</a></li>
-</ul>
 </div>
-</div>
-<div id="outline-container-orgd44e490" class="outline-4">
+<div id="outline-container-org750900c" class="outline-4">
 <h4 id="scrollToValue">value</h4>
 <div class="outline-text-4" id="text-scrollToValue">
 <div class="org-src-container">
@@ -985,11 +640,11 @@ scrollManager.scrollTo<span style="color: #4f97d7;">(</span><span style="color: 
 <p>
 Scroll to certain value
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scrollToValue"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo.value(0)">0</button><button class="scroll-button" onclick="example.scrollTo.value(50)">50</button><button class="scroll-button" onclick="example.scrollTo.value(200)">200</button><button class="scroll-button" onclick="example.scrollTo.value(Infinity)">Infinity</button></div><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="scrollToValue"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo.value(0)">0</button><button class="scroll-button" onclick="example.scrollTo.value(50)">50</button><button class="scroll-button" onclick="example.scrollTo.value(200)">200</button><button class="scroll-button" onclick="example.scrollTo.value(Infinity)">Infinity</button></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-org9034eb5" class="outline-4">
+<div id="outline-container-org8731620" class="outline-4">
 <h4 id="scrollToElement">element</h4>
 <div class="outline-text-4" id="text-scrollToElement">
 <div class="org-src-container">
@@ -1005,14 +660,14 @@ scrollManager.scrollTo<span style="color: #4f97d7;">(</span><span style="color: 
 <p>
 Center element at some degree
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="example-scrollToElement"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo.element(0)">0</button><button class="scroll-button" onclick="example.scrollTo.element(0.25)">0.25</button><button class="scroll-button" onclick="example.scrollTo.element(0.5)">0.5</button><button class="scroll-button" onclick="example.scrollTo.element(0.75)">0.75</button><button class="scroll-button" onclick="example.scrollTo.element(1)">1</button></div><hr class="spacer"/><div class="some-element" id="scrollTo-element"><h1>element to center</h1></div><hr class="spacer"/></div></details>
+<div class="scroll-container" id="example-scrollToElement"><div class="button-container"><button class="scroll-button" onclick="example.scrollTo.element(0)">0</button><button class="scroll-button" onclick="example.scrollTo.element(0.25)">0.25</button><button class="scroll-button" onclick="example.scrollTo.element(0.5)">0.5</button><button class="scroll-button" onclick="example.scrollTo.element(0.75)">0.75</button><button class="scroll-button" onclick="example.scrollTo.element(1)">1</button></div><hr class="spacer"/><div class="some-element" id="scrollTo-element"><h1>element to center</h1></div><hr class="spacer"/></div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdddbda6" class="outline-3">
-<h3 id="orgdddbda6">offset</h3>
-<div class="outline-text-3" id="text-orgdddbda6">
+<div id="outline-container-org415cbcc" class="outline-3">
+<h3 id="org415cbcc">offset</h3>
+<div class="outline-text-3" id="text-org415cbcc">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1028,21 +683,15 @@ scrollManager.offset<span style="color: #4f97d7;">(</span><span style="color: #a
 scrollManager.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span>, <span style="color: #a45bad;">1</span>, options<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll by some element size</span>
 </pre>
 </div>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="offset"><div class="button-container"><button class="scroll-button" onclick="example.offset(-100)">-100</button><button class="scroll-button" onclick="example.offset(100)">100</button></div><hr class="spacer"/><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="offset"><div class="button-container"><button class="scroll-button" onclick="example.offset(-100)">-100</button><button class="scroll-button" onclick="example.offset(100)">100</button></div><hr class="spacer"/><hr class="spacer"/><hr class="spacer"/></div>
 
 <p>
-See <a href="#org888bb5a">duration</a> for info of option duration<br />
-See <a href="#orgd2f7f60">easing</a> for info of option easing<br />
-See <a href="#orgd5c0e54">force</a> for info of option force<br />
+See <a href="#orgf9002a2">duration</a> for info of option duration<br />
+See <a href="#orgdd25578">easing</a> for info of option easing<br />
+See <a href="#org5397e35">force</a> for info of option force<br />
 </p>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#offsetValue">value</a></li>
-<li><a href="#offsetElement">element</a></li>
-</ul>
 </div>
-</div>
-<div id="outline-container-org269a991" class="outline-4">
+<div id="outline-container-orga0c7fb6" class="outline-4">
 <h4 id="offsetValue">value</h4>
 <div class="outline-text-4" id="text-offsetValue">
 <div class="org-src-container">
@@ -1057,11 +706,11 @@ scrollManager.offset<span style="color: #4f97d7;">(</span><span style="color: #a
 <p>
 Offset scroll position by certain value
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="offsetValue"><div class="button-container"><button class="scroll-button" onclick="example.offset.value(-100)">-100</button><button class="scroll-button" onclick="example.offset.value(100)">100</button></div><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="offsetValue"><div class="button-container"><button class="scroll-button" onclick="example.offset.value(-100)">-100</button><button class="scroll-button" onclick="example.offset.value(100)">100</button></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-orgbfa0d32" class="outline-4">
+<div id="outline-container-org526e281" class="outline-4">
 <h4 id="offsetElement">element</h4>
 <div class="outline-text-4" id="text-offsetElement">
 <p>
@@ -1081,14 +730,14 @@ scrollManager.offset<span style="color: #4f97d7;">(</span><span style="color: #2
 <p>
 Offset scroll by its container size:
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="offsetElement"><div class="button-container"><button class="scroll-button" onclick="example.offset.element(-1)">-1</button><button class="scroll-button" onclick="example.offset.element(-0.5)">-0.5</button><button class="scroll-button" onclick="example.offset.element(0.5)">0.5</button><button class="scroll-button" onclick="example.offset.element(1)">1</button></div><div class="pspacer" style="top: 50%;"></div><div class="pspacer" style="top: 100%;"></div><div class="pspacer" style="top: 150%;"></div><div class="pspacer" style="top: 200%;"></div><div class="pspacer" style="top: 250%;"></div><div class="pspacer" style="top: 300%;"></div><div class="pspacer" style="top: 350%;"></div><div class="pspacer" style="top: 400%;"></div><div class="pspacer" style="top: 450%;"></div><div class="pspacer" style="top: 500%;"></div><div class="pspacer" style="top: 550%;"></div></div></details>
+<div class="scroll-container" id="offsetElement"><div class="button-container"><button class="scroll-button" onclick="example.offset.element(-1)">-1</button><button class="scroll-button" onclick="example.offset.element(-0.5)">-0.5</button><button class="scroll-button" onclick="example.offset.element(0.5)">0.5</button><button class="scroll-button" onclick="example.offset.element(1)">1</button></div><div class="pspacer" style="top: 50%;"></div><div class="pspacer" style="top: 100%;"></div><div class="pspacer" style="top: 150%;"></div><div class="pspacer" style="top: 200%;"></div><div class="pspacer" style="top: 250%;"></div><div class="pspacer" style="top: 300%;"></div><div class="pspacer" style="top: 350%;"></div><div class="pspacer" style="top: 400%;"></div><div class="pspacer" style="top: 450%;"></div><div class="pspacer" style="top: 500%;"></div><div class="pspacer" style="top: 550%;"></div></div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7fa6241" class="outline-3">
-<h3 id="org7fa6241">stop</h3>
-<div class="outline-text-3" id="text-org7fa6241">
+<div id="outline-container-org87ff53b" class="outline-3">
+<h3 id="org87ff53b">stop</h3>
+<div class="outline-text-3" id="text-org87ff53b">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1099,13 +748,13 @@ scrollManager.stop<span style="color: #4f97d7;">()</span>
 <p>
 Stop all scroll animations
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="stop"><div class="button-container"><button class="scroll-button" onclick="example.stop(false)">scroll</button><button class="scroll-button" onclick="example.stop(true)">stop</button></div><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="stop"><div class="button-container"><button class="scroll-button" onclick="example.stop(false)">scroll</button><button class="scroll-button" onclick="example.stop(true)">stop</button></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-org43c0629" class="outline-3">
-<h3 id="org43c0629">scrollPosition</h3>
-<div class="outline-text-3" id="text-org43c0629">
+<div id="outline-container-orga18d758" class="outline-3">
+<h3 id="orga18d758">scrollPosition</h3>
+<div class="outline-text-3" id="text-orga18d758">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1115,15 +764,15 @@ console.log<span style="color: #4f97d7;">(</span>scrollManager.scrollPosition<sp
 </div>
 <p>
 The position of the scroll of some element. <br />
-Somewhat equivalent of <code>scrollLeft/scrollTop</code>; depending on the direction <a href="#orga64694e">specified</a>
+Somewhat equivalent of <code>scrollLeft/scrollTop</code>; depending on the direction <a href="#org7c2fc20">specified</a>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scrollPosition"><div class="button-container"><button class="scroll-button" onclick="example.scrollPosition()">scrollPosition</button></div><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="scrollPosition"><div class="button-container"><button class="scroll-button" onclick="example.scrollPosition()">scrollPosition</button></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-org371b78c" class="outline-3">
-<h3 id="org371b78c">size</h3>
-<div class="outline-text-3" id="text-org371b78c">
+<div id="outline-container-org36532bb" class="outline-3">
+<h3 id="org36532bb">size</h3>
+<div class="outline-text-3" id="text-org36532bb">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1133,15 +782,15 @@ console.log<span style="color: #4f97d7;">(</span>scrollManager.size<span style="
 </div>
 <p>
 The size of some element. <br />
-Somewhat equivalent of <code>clientWidth/clientHeight</code>; depending on the direction <a href="#orga64694e">specified</a>
+Somewhat equivalent of <code>clientWidth/clientHeight</code>; depending on the direction <a href="#org7c2fc20">specified</a>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="size"><div class="button-container"><button class="scroll-button" onclick="example.size()">size</button></div></div></details>
+<div class="scroll-container" id="size"><div class="button-container"><button class="scroll-button" onclick="example.size()">size</button></div></div>
 </div>
 </div>
 
-<div id="outline-container-org5ecfaca" class="outline-3">
-<h3 id="org5ecfaca">scrollSize</h3>
-<div class="outline-text-3" id="text-org5ecfaca">
+<div id="outline-container-org97172d0" class="outline-3">
+<h3 id="org97172d0">scrollSize</h3>
+<div class="outline-text-3" id="text-org97172d0">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1151,15 +800,15 @@ console.log<span style="color: #4f97d7;">(</span>scrollManager.scrollSize<span s
 </div>
 <p>
 The size of the scroll of some element. <br />
-Somewhat equivalent of <code>scrollWidth(or scrollHeight) - clientWidth(or clientHeight)</code>; depending on the direction <a href="#orga64694e">specified</a>
+Somewhat equivalent of <code>scrollWidth(or scrollHeight) - clientWidth(or clientHeight)</code>; depending on the direction <a href="#org7c2fc20">specified</a>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="scrollSize"><div class="button-container"><button class="scroll-button" onclick="example.scrollSize()">scrollSize</button></div><hr class="spacer"/><hr class="spacer"/></div></details>
+<div class="scroll-container" id="scrollSize"><div class="button-container"><button class="scroll-button" onclick="example.scrollSize()">scrollSize</button></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-org63b774e" class="outline-3">
-<h3 id="org63b774e">relativePosition</h3>
-<div class="outline-text-3" id="text-org63b774e">
+<div id="outline-container-org07b6eb8" class="outline-3">
+<h3 id="org07b6eb8">relativePosition</h3>
+<div class="outline-text-3" id="text-org07b6eb8">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1171,13 +820,13 @@ console.log<span style="color: #4f97d7;">(</span>scrollManager.relativePosition<
 The <code>relativePosition</code> of some element. <br />
 It correlates to  <a href="#scrollToElement">scrollTo element</a>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="relativePosition"><div class="button-container"><button class="scroll-button" onclick="example.relativePosition(0)">0</button><button class="scroll-button" onclick="example.relativePosition(0.5)">0.5</button><button class="scroll-button" onclick="example.relativePosition(1)">1</button><button class="scroll-button" onclick="example.relativePosition()">relativePosition</button></div><hr class="spacer"/><div class="some-element" id="relativePosition-element"><h1>some-element</h1></div><hr class="spacer"/></div></details>
+<div class="scroll-container" id="relativePosition"><div class="button-container"><button class="scroll-button" onclick="example.relativePosition(0)">0</button><button class="scroll-button" onclick="example.relativePosition(0.5)">0.5</button><button class="scroll-button" onclick="example.relativePosition(1)">1</button><button class="scroll-button" onclick="example.relativePosition()">relativePosition</button></div><hr class="spacer"/><div class="some-element" id="relativePosition-element"><h1>some-element</h1></div><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-org5388735" class="outline-3">
-<h3 id="org5388735">distToElement</h3>
-<div class="outline-text-3" id="text-org5388735">
+<div id="outline-container-orgbdda409" class="outline-3">
+<h3 id="orgbdda409">distToElement</h3>
+<div class="outline-text-3" id="text-orgbdda409">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1190,13 +839,13 @@ console.log<span style="color: #4f97d7;">(</span>scrollManager.distToElement<spa
 The distance to center some element <br />
 It correlates to <a href="#scrollToElement">scrollTo element</a>
 </p>
-<details><summary><b>Demo:</b></summary><div class="scroll-container" id="distToElement"><div class="button-container"><button class="scroll-button" onclick="example.distToElement(0)">0</button><button class="scroll-button" onclick="example.distToElement(0.5)">0.5</button><button class="scroll-button" onclick="example.distToElement(1)">1</button></div><hr class="spacer"/><div class="some-element" id="distToElement-element"><h1>some-element</h1></div><hr class="spacer"/></div></details>
+<div class="scroll-container" id="distToElement"><div class="button-container"><button class="scroll-button" onclick="example.distToElement(0)">0</button><button class="scroll-button" onclick="example.distToElement(0.5)">0.5</button><button class="scroll-button" onclick="example.distToElement(1)">1</button></div><hr class="spacer"/><div class="some-element" id="distToElement-element"><h1>some-element</h1></div><hr class="spacer"/></div>
 </div>
 </div>
 
-<div id="outline-container-orgca37186" class="outline-3">
-<h3 id="orgca37186">elementSize</h3>
-<div class="outline-text-3" id="text-orgca37186">
+<div id="outline-container-org51b2d7c" class="outline-3">
+<h3 id="org51b2d7c">elementSize</h3>
+<div class="outline-text-3" id="text-org51b2d7c">
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
 
@@ -1212,7 +861,210 @@ scrollManager.elementSize<span style="color: #4f97d7;">(</span><span style="colo
 </div>
 <p>
 The size of some element <br />
-It correlates to <a href="#org371b78c">size</a>
+It correlates to <a href="#org36532bb">size</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd34e972" class="outline-2">
+<h2 id="orgd34e972">How to</h2>
+<div class="outline-text-2" id="text-orgd34e972">
+</div>
+<div id="outline-container-org3246f18" class="outline-3">
+<h3 id="org3246f18">scroll to an element and/or center it</h3>
+<div class="outline-text-3" id="text-org3246f18">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to element #some-element</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span>, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">center element</span>
+</pre>
+</div>
+<p>
+see <a href="#scrollToElement">scrollTo element</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgce3f404" class="outline-3">
+<h3 id="orgce3f404">scroll to certain position</h3>
+<div class="outline-text-3" id="text-orgce3f404">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to top</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll to 500px</span>
+</pre>
+</div>
+<p>
+see <a href="#scrollToValue">scrollTo value</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgd440820" class="outline-3">
+<h3 id="orgd440820">scroll by certain amount of pixels</h3>
+<div class="outline-text-3" id="text-orgd440820">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll 500px down</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>-<span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll 500px up</span>
+</pre>
+</div>
+<p>
+see <a href="#offsetValue">offset value</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orge508eed" class="outline-3">
+<h3 id="orge508eed">scroll by a screen</h3>
+<div class="outline-text-3" id="text-orge508eed">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll a screen down</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, <span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll half a screen down</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, -<span style="color: #a45bad;">0</span>.<span style="color: #a45bad;">5</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll half a screen up</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span>window, -<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">scroll a screen up</span>
+</pre>
+</div>
+<p>
+see <a href="#offsetElement">offset element</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org1a08b75" class="outline-3">
+<h3 id="org1a08b75">specify easing animation for scroll</h3>
+<div class="outline-text-3" id="text-org1a08b75">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.easing = <span style="color: #2d9574;">"linear"</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> easing: <span style="color: #2d9574;">"linear"</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+<p>
+see <a href="#orgdd25578">easing</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org8001b58" class="outline-3">
+<h3 id="org8001b58">specify duration for scroll</h3>
+<div class="outline-text-3" id="text-org8001b58">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.duration = <span style="color: #a45bad;">750</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> duration: <span style="color: #a45bad;">750</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+<p>
+see <a href="#orgf9002a2">duration</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orga184c93" class="outline-3">
+<h3 id="orga184c93">ignore "user" scroll while scrolling</h3>
+<div class="outline-text-3" id="text-orga184c93">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+ScrollUtility.global.force = <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">for all future scroll</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">only once</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.offset<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ScrollUtility.global.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"some-element"</span>, <span style="color: #a45bad;">500</span>, <span style="color: #bc6ec5;">{</span> force: <span style="color: #4f97d7; font-weight: bold;">true</span> <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+<p>
+see <a href="#org5397e35">force</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org8165068" class="outline-3">
+<h3 id="org8165068">do something "onscroll"</h3>
+<div class="outline-text-3" id="text-org8165068">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onScroll</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
+  console.log<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"scrolled"</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
+
+ScrollUtility.global.onScroll = onScroll
+</pre>
+</div>
+<p>
+see <a href="#orgeb25e0e">onScroll</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orge50a8e2" class="outline-3">
+<h3 id="orge50a8e2">do something when "user" scrolls</h3>
+<div class="outline-text-3" id="text-orge50a8e2">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onUserScroll</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">external</span>: <span style="color: #4f97d7; font-weight: bold;">boolean</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>external<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+    console.log<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"user scrolled!"</span><span style="color: #2d9574;">)</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+ScrollUtility.global.onScroll = onUserScroll
+</pre>
+</div>
+<p>
+see <a href="#orgeb25e0e">onScroll</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org259d311" class="outline-3">
+<h3 id="org259d311">Stop scroll when user scrolls</h3>
+<div class="outline-text-3" id="text-org259d311">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">stop</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">external</span>: <span style="color: #4f97d7; font-weight: bold;">boolean</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>external<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+    ScrollUtility.global.stop<span style="color: #2d9574;">()</span>
+  <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
+
+ScrollUtility.global.onScroll = stop
+</pre>
+</div>
+<p>
+see <a href="#orgeb25e0e">onScroll</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgc936862" class="outline-3">
+<h3 id="orgc936862">do something when scroll ends</h3>
+<div class="outline-text-3" id="text-orgc936862">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility = require<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"scroll-utility"</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">onStop</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
+  console.log<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"scroll animations ended"</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">}</span>
+
+ScrollUtility.global.onStop = onStop
+</pre>
+</div>
+<p>
+see <a href="#org27fd820">onStop</a>
 </p>
 </div>
 </div>
@@ -1220,7 +1072,7 @@ It correlates to <a href="#org371b78c">size</a>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-09-03 Tue 15:46</p>
+<p class="date">Created: 2019-09-04 Wed 15:50</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
