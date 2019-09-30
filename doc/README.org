@@ -15,7 +15,6 @@
 * Features
 	- Simple, fast and small footprint ~10KiB.
 	- Allows specifying the element offset, easing animations.
-	- Scroll events.
 	- Scroll inside an element.
 
 * Installation
@@ -29,10 +28,6 @@
 	#+END_SRC
 
 * API
-** global
-	 #+INCLUDE: "examples/global.ts" src typescript
-	 A default =ScrollUtility= in case you don't need any customization
-
 ** constructor
 	 #+INCLUDE: "examples/constructor/index.ts" src typescript
 	 That will create a new =ScrollUtility= instance, which you can use to scroll. \\
@@ -106,45 +101,6 @@
 		#+END_SRC
 
 		Learn more about easing functions [[https://easings.net/en][here]]:
-
-*** onScroll
-		#+INCLUDE: "examples/constructor/onScroll.ts" src typescript
-
-		*try scrolling to see results:*
-		#+BEGIN_SRC pug :exports results :results html
-			#scroll-onScroll.scroll-container
-				.button-container
-					each item in [ "scroll" ]
-						button.scroll-button(onclick=`example.constructor.onScroll()`)= item
-				h1 Top
-				hr.spacer
-				hr.spacer
-				h1 Bottom
-		#+END_SRC
-
-		It can be changed any time:
-		#+BEGIN_SRC typescript
-			const scrollManager = new ScrollUtility({ onScroll: null })
-			scrollManager.onScroll = () => alert("hi")
-		#+END_SRC
-
-*** onStop
-		#+INCLUDE: "examples/constructor/onStop.ts" src typescript
-		#+BEGIN_SRC pug :exports results :results html
-			#scroll-onStop.scroll-container
-				.button-container
-					button.scroll-button(onclick=`example.constructor.onStop()`) scroll
-				h1 Top
-				hr.spacer
-				hr.spacer
-				h1 Bottom
-		#+END_SRC
-
-		It can be changed any time:
-		#+BEGIN_SRC typescript
-			const scrollManager = new ScrollUtility({ onStop: null })
-			scrollManager.onStop = () => alert("hi")
-		#+END_SRC
 
 *** force
 		#+INCLUDE: "examples/constructor/force.ts" src typescript
@@ -367,15 +323,3 @@
 ** ignore "user" scroll while scrolling
 	 #+INCLUDE: "examples/howto/ignore.ts" src typescript
 	 see [[force]]
-** do something "onscroll"
-	 #+INCLUDE: "examples/howto/onScroll.ts" src typescript
-	 see [[onScroll]]
-** do something when "user" scrolls
-	 #+INCLUDE: "examples/howto/onUserScroll.ts" src typescript
-	 see [[onScroll]]
-** Stop scroll when user scrolls
-	 #+INCLUDE: "examples/howto/stopOnUserScroll.ts" src typescript
-	 see [[onScroll]]
-** do something when scroll ends
-	 #+INCLUDE: "examples/howto/onStop.ts" src typescript
-	 see [[onStop]]

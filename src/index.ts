@@ -1,3 +1,9 @@
-import { Scroll } from "./scroll"
+import { optionalScroll } from "./scroll"
 
-export = Scroll
+export = optionalScroll({
+	container: window,
+	duration: 1000,
+	easing: "easeInOutQuad",
+	force: false,
+	horizontal: false,
+})()

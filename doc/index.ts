@@ -1,8 +1,8 @@
-type IScrollUtility = import("scroll-utility")
 declare const ScrollUtility: typeof import("scroll-utility")
 
 // https://www.cssscript.com/minimal-notification-popup-pure-javascript/
 declare const createNotification: any
+type Params = Required<Exclude<Parameters<typeof ScrollUtility>[0], undefined>>
 
 function notify(message: string) {
 	createNotification({
@@ -11,155 +11,119 @@ function notify(message: string) {
 	})({ message })
 }
 
-function rp(scrollManager: IScrollUtility, element: string, options?) {
-	return scrollManager.scrollTo(
-		element,
-		scrollManager.relativePosition(element) < 0.5 ? 1 : 0,
-		options,
-	)
+function rp(scrollManager: typeof ScrollUtility, element: string) {
+	return scrollManager.scrollTo(element, scrollManager.relativePosition(element) < 0.5 ? 1 : 0)
 }
 
 window.onload = () => {
-	const scrollManager = new ScrollUtility()
 	const examples = {
-		Scroll: {
-			vertical: new ScrollUtility(),
-			horizontal: new ScrollUtility({ horizontal: true }),
-			onScroll: new ScrollUtility({
-				container: "#scroll-onScroll",
-				onScroll: external => external && notify("external scroll detected!"),
-			}),
-			onStop: new ScrollUtility({
-				container: "#scroll-onStop",
-				onStop: () => notify("scroll ended!"),
-			}),
-		},
 		constructor: {
 			container: (wrapper: boolean) => {
 				if (!!wrapper) {
 					const container = "#container"
-					scrollManager.container = container
-					rp(scrollManager, container)
+					rp(ScrollUtility({ container }), container)
 				} else {
 					const element = "#scroll-container"
-					const scrollManager = ScrollUtility.global
-					rp(scrollManager, element)
+					rp(ScrollUtility, element)
 				}
 			},
 			horizontal: (direction: string) => {
 				const container = "#scroll-horizontal"
-				const scrollDirection =
-					direction === "horizontal" ? examples.Scroll.horizontal : scrollManager
-				scrollManager.container = container
-				rp(scrollDirection, container)
+				const horizontal = direction === "horizontal"
+				rp(ScrollUtility({ container, horizontal }), container)
 			},
-			easing: (easing: string) => {
+			easing: (easing: Params["easing"]) => {
 				const container = "#scroll-easings"
-				scrollManager.container = container
-				rp(scrollManager, container, { easing })
+				rp(ScrollUtility({ container, easing }), container)
 			},
 			duration: (duration: number) => {
 				const container = "#scroll-duration"
-				scrollManager.container = container
-				rp(scrollManager, container, { duration })
-			},
-			onScroll: () => {
-				const container = "#scroll-onScroll"
-				const scrollManager = examples.Scroll.onScroll
-				scrollManager.container = container
-				rp(scrollManager, container)
-			},
-			onStop: () => {
-				const container = "#scroll-onStop"
-				const scrollManager = examples.Scroll.onStop
-				scrollManager.container = container
-				rp(scrollManager, container)
+				rp(ScrollUtility({ container, duration }), container)
 			},
 			force: (type: string) => {
 				const container = "#scroll-force"
-				scrollManager.container = container
-				rp(scrollManager, container, {
-					duration: 2000,
-					force: type === "force",
-				})
+				rp(ScrollUtility({ container, duration: 2000, force: type === "force" }), container)
 			},
 		},
 		scrollTo: Object.assign(
-			value => {
+			(value: number) => {
 				const container = "#scrollTo"
-				scrollManager.container = container
-				scrollManager.scrollTo(value)
+				ScrollUtility({ container }).scrollTo(value)
 			},
 			{
 				element: (value: number) => {
 					const container = "#example-scrollToElement"
 					const element = "#scrollTo-element"
-					scrollManager.container = container
-					scrollManager.scrollTo(element, value)
+					ScrollUtility({ container }).scrollTo(element, value)
 				},
 				value: (value: number) => {
 					const container = "#scrollToValue"
-					scrollManager.container = container
-					scrollManager.scrollTo(value)
+					ScrollUtility({ container }).scrollTo(value)
 				},
 			},
 		),
 		offset: Object.assign(
-			value => {
+			(value: number) => {
 				const container = "#offset"
-				scrollManager.container = container
-				scrollManager.offset(value)
+				ScrollUtility({ container }).offset(value)
 			},
 			{
 				element: (value: number) => {
 					const container = "#offsetElement"
-					scrollManager.container = container
-					scrollManager.offset(container, value)
-					scrollManager.elementSize
+					ScrollUtility({ container }).offset(container, value)
 				},
 				value: (value: number) => {
 					const container = "#offsetValue"
-					scrollManager.container = container
-					scrollManager.offset(value)
+					ScrollUtility({ container }).offset(value)
 				},
 			},
 		),
 		scrollPosition: () => {
 			const container = "#scrollPosition"
-			scrollManager.container = container
-			notify(scrollManager.scrollPosition.toString())
+			notify(
+				ScrollUtility({ container })
+					.scrollPosition()
+					.toString(),
+			)
 		},
 		size: () => {
 			const container = "#size"
-			scrollManager.container = container
-			notify(scrollManager.size.toString())
+			notify(
+				ScrollUtility({ container })
+					.size()
+					.toString(),
+			)
 		},
 		scrollSize: () => {
 			const container = "#scrollSize"
-			scrollManager.container = container
-			notify(scrollManager.scrollSize.toString())
+			notify(
+				ScrollUtility({ container })
+					.scrollSize()
+					.toString(),
+			)
 		},
 		relativePosition: (value?: number) => {
 			const container = "#relativePosition"
 			const element = "#relativePosition-element"
-			scrollManager.container = container
 			value !== undefined
-				? scrollManager.scrollTo(element, value)
-				: notify(scrollManager.relativePosition(element).toString())
+				? ScrollUtility({ container }).scrollTo(element, value)
+				: notify(ScrollUtility.relativePosition(element).toString())
 		},
 		distToElement: (value?: number) => {
 			const container = "#distToElement"
 			const element = "#distToElement-element"
-			scrollManager.container = container
-			notify(scrollManager.distToElement(element, value).toString())
+			notify(
+				ScrollUtility({ container })
+					.distToElement(element, value)
+					.toString(),
+			)
 		},
 		stop: (stop: boolean) => {
 			const container = "#stop"
-			scrollManager.container = container
 			if (stop) {
-				scrollManager.stop()
+				ScrollUtility.stop()
 			} else {
-				rp(scrollManager, container, { duration: 2000 })
+				rp(ScrollUtility({ container, duration: 2000 }), container)
 			}
 		},
 	}

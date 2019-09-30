@@ -12,22 +12,38 @@ function maxMin(value: number, max: number) {
 	return Math.max(Math.min(value, max), 0)
 }
 
-export function Scroll(options: {
+export interface IScrollOptions {
 	container: Window | Element | string
 	horizontal: boolean
 	duration: number
 	easing: EasingOrFunction
 	force: boolean
-}) {
+}
+
+export function optionalScroll(defaultOptions: IScrollOptions) {
+	return (
+		options: {
+			container?: Window | Element | string
+			horizontal?: boolean
+			duration?: number
+			easing?: EasingOrFunction
+			force?: boolean
+		} = {},
+	) => {
+		return Scroll({
+			...defaultOptions,
+			...options,
+		})
+	}
+}
+
+export function Scroll(options: IScrollOptions) {
+	const container = getElementFromQuery(options.container)
+	const horizontal = options.horizontal
 	let _scrollAnimations: ScrollAnimation[] = []
 	let virtualPosition: number = scrollPosition()
 	let _to: number | (() => number) = virtualPosition
-	const container = getElementFromQuery(options.container)
-	const horizontal = options.horizontal
-	container.addEventListener("scroll", () => _onScroll)
 
-	// private _scrollAnimations: ScrollAnimation[] = []
-	// private _horizontal: boolean
 	function size() {
 		return Misc.getSize(container, horizontal)
 	}
@@ -50,11 +66,11 @@ export function Scroll(options: {
 		return Misc.getSize(getElementFromQuery(element), horizontal) * value
 	}
 	function stop() {
-		// _scrollAnimations = []
-		// _beforeScroll()
+		_scrollAnimations = []
+		_beforeScroll()
 	}
 	function scrollTo(...args: [number] | [ElementOrQuery, number]) {
-		// _beforeScroll()
+		_beforeScroll()
 		const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
 		const value = typeof args[0] === "number" ? args[0] : args[1] || 0
 		element === null
@@ -62,20 +78,20 @@ export function Scroll(options: {
 			: _scrollToElement(element, value)
 	}
 	function offset(...args: [number] | [ElementOrQuery, number]) {
-		// _beforeScroll()
+		_beforeScroll()
 		const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
 		const value = typeof args[0] === "number" ? args[0] : args[1] || 0
 		element === null ? _offsetValue(value) : _offsetElement(element, value)
 	}
-	// function _beforeScroll() {
-	// 	if (!_scrollAnimations.length) {
-	// 		const position = scrollPosition
-	// 		if (!!Math.round(virtualPosition - position)) {
-	// 			virtualPosition = position
-	// 		}
-	// 		_to = virtualPosition
-	// 	}
-	// }
+	function _beforeScroll() {
+		if (!_scrollAnimations.length) {
+			const position = scrollPosition()
+			if (!!Math.round(virtualPosition - position)) {
+				virtualPosition = position
+			}
+			_to = virtualPosition
+		}
+	}
 	function _createScrollAnimation(from: ScrollAnimationPosition, to: ScrollAnimationPosition) {
 		const easing = typeof options.easing === "string" ? Easings[options.easing] : options.easing
 		_scrollAnimations.push(new ScrollAnimation(from, to, { ...options, easing }))
@@ -91,9 +107,9 @@ export function Scroll(options: {
 			const from = _to
 			_to = () => getValue(from) + diff
 		}
-		// onScroll && onScroll(external)
 	}
 	function _update() {
+		_onScroll()
 		const previousPosition = scrollPosition
 		_scrollAnimations = _scrollAnimations.filter(animation => {
 			virtualPosition =
@@ -155,5 +171,5 @@ export function Scroll(options: {
 			return scroll
 		},
 	}
-	return scroll
+	return Object.assign(optionalScroll(options), scroll)
 }
