@@ -74,100 +74,102 @@ function getWithWindow<T>(
 	}
 }
 
-export const getSize = getWithWindow(windowSize, (element, horizontal) =>
-	horizontal ? element.clientWidth : element.clientHeight,
-)
+export namespace Misc {
+	export const getSize = getWithWindow(windowSize, (element, horizontal) =>
+		horizontal ? element.clientWidth : element.clientHeight,
+	)
 
-export const getSizeWithBorders = getWithWindow(windowSize, (element, horizontal) =>
-	horizontal ? element.offsetWidth : element.offsetHeight,
-)
+	export const getSizeWithBorders = getWithWindow(windowSize, (element, horizontal) =>
+		horizontal ? element.offsetWidth : element.offsetHeight,
+	)
 
-export const getScrollPosition = getWithWindow(
-	horizontal => (horizontal ? window.pageXOffset : window.pageYOffset),
-	(element, horizontal) => (horizontal ? element.scrollLeft : element.scrollTop),
-)
+	export const getScrollPosition = getWithWindow(
+		horizontal => (horizontal ? window.pageXOffset : window.pageYOffset),
+		(element, horizontal) => (horizontal ? element.scrollLeft : element.scrollTop),
+	)
 
-export const getScrollSize = getWithWindow(
-	horizontal => windowScrollSize(horizontal),
-	(element, horizontal) => {
-		return horizontal ? element.scrollWidth : element.scrollHeight
-	},
-)
-const getBorderSize = getWithWindow(
-	() => 0,
-	(element, horizontal) =>
-		parseInt(
-			getComputedStyle(element, null).getPropertyValue(
-				horizontal ? "border-left-width" : "border-top-width",
-			),
-			10,
-		) || 0,
-)
-export const getOffset = getWithWindow(
-	() => 0,
-	(element, horizontal) =>
-		horizontal ? element.getBoundingClientRect().left : element.getBoundingClientRect().top,
-)
-
-export function scrollTo(element: ScrollElement, x: number, y: number) {
-	withWindow(
-		element,
-		() => window.scroll(x, y),
-		element => {
-			element.scrollLeft = x
-			element.scrollTop = y
+	export const getScrollSize = getWithWindow(
+		horizontal => windowScrollSize(horizontal),
+		(element, horizontal) => {
+			return horizontal ? element.scrollWidth : element.scrollHeight
 		},
 	)
-}
-
-export function scrollBy(element: ScrollElement, horizontal: boolean, value: number) {
-	element.scrollBy(horizontal ? value : 0, !horizontal ? value : 0)
-}
-
-export function scroll(element: ScrollElement, value: number, horizontal: boolean = false) {
-	scrollTo(
-		element,
-		horizontal ? value : getScrollPosition(element, !horizontal),
-		!horizontal ? value : getScrollPosition(element, !horizontal),
+	const getBorderSize = getWithWindow(
+		() => 0,
+		(element, horizontal) =>
+			parseInt(
+				getComputedStyle(element, null).getPropertyValue(
+					horizontal ? "border-left-width" : "border-top-width",
+				),
+				10,
+			) || 0,
 	)
-}
+	export const getOffset = getWithWindow(
+		() => 0,
+		(element, horizontal) =>
+			horizontal ? element.getBoundingClientRect().left : element.getBoundingClientRect().top,
+	)
 
-export function getRelativeElementPosition(
-	wrapper: ScrollElement,
-	element: ScrollElement,
-	horizontal = false,
-) {
-	return withElementPosition(
-		(elementPosition, elementProportion) => elementPosition / elementProportion,
-		wrapper,
-		element,
-		horizontal,
-	)
-}
+	export function scrollTo(element: ScrollElement, x: number, y: number) {
+		withWindow(
+			element,
+			() => window.scroll(x, y),
+			element => {
+				element.scrollLeft = x
+				element.scrollTop = y
+			},
+		)
+	}
 
-export function getDistToCenterElement(
-	wrapper: ScrollElement,
-	element: ScrollElement,
-	horizontal = false,
-	value = 0,
-) {
-	return withElementPosition(
-		(elementPosition, elementProportion) => elementPosition - elementProportion * value,
-		wrapper,
-		element,
-		horizontal,
-	)
-}
-function withElementPosition(
-	funct: (elementPosition: number, elementProportion: number) => number,
-	wrapper: ScrollElement,
-	element: ScrollElement,
-	horizontal: boolean,
-) {
-	return funct(
-		getOffset(element, horizontal) -
-			getOffset(wrapper, horizontal) -
-			getBorderSize(wrapper, horizontal),
-		getSize(wrapper, horizontal) - getSizeWithBorders(element, horizontal),
-	)
+	export function scrollBy(element: ScrollElement, horizontal: boolean, value: number) {
+		element.scrollBy(horizontal ? value : 0, !horizontal ? value : 0)
+	}
+
+	export function scroll(element: ScrollElement, value: number, horizontal: boolean = false) {
+		Misc.scrollTo(
+			element,
+			horizontal ? value : getScrollPosition(element, !horizontal),
+			!horizontal ? value : getScrollPosition(element, !horizontal),
+		)
+	}
+
+	export function getRelativeElementPosition(
+		wrapper: ScrollElement,
+		element: ScrollElement,
+		horizontal = false,
+	) {
+		return withElementPosition(
+			(elementPosition, elementProportion) => elementPosition / elementProportion,
+			wrapper,
+			element,
+			horizontal,
+		)
+	}
+
+	export function getDistToCenterElement(
+		wrapper: ScrollElement,
+		element: ScrollElement,
+		horizontal = false,
+		value = 0,
+	) {
+		return withElementPosition(
+			(elementPosition, elementProportion) => elementPosition - elementProportion * value,
+			wrapper,
+			element,
+			horizontal,
+		)
+	}
+	function withElementPosition(
+		funct: (elementPosition: number, elementProportion: number) => number,
+		wrapper: ScrollElement,
+		element: ScrollElement,
+		horizontal: boolean,
+	) {
+		return funct(
+			getOffset(element, horizontal) -
+				getOffset(wrapper, horizontal) -
+				getBorderSize(wrapper, horizontal),
+			getSize(wrapper, horizontal) - getSizeWithBorders(element, horizontal),
+		)
+	}
 }
