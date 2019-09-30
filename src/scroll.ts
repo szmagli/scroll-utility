@@ -37,12 +37,36 @@ export function optionalScroll(defaultOptions: IScrollOptions) {
 	}
 }
 
+type IndexedValue<T> = T[][]
+
+const scrollElements: IndexedValue<Window | Element> = [[], []]
+const virtualPositions: IndexedValue<number> = [[], []]
+const finalPositions: IndexedValue<number | (() => number)> = [[], []]
+const scrollAnimations: IndexedValue<ScrollAnimation[]> = [[], []]
+
 export function Scroll(options: IScrollOptions) {
 	const container = getElementFromQuery(options.container)
 	const horizontal = options.horizontal
-	let _scrollAnimations: ScrollAnimation[] = []
-	let virtualPosition: number = scrollPosition()
-	let _to: number | (() => number) = virtualPosition
+	const indexedDirection = horizontal ? 1 : 0
+	let index = scrollElements[indexedDirection].findIndex(value => container === value)
+	if (index <= 0) {
+		index = scrollElements[indexedDirection].length
+	}
+
+	function IndexerGetter<T>(container: IndexedValue<T>): (value?: T) => T {
+		return (value?: T) =>
+			(container[indexedDirection][index] =
+				value === undefined ? container[indexedDirection][index] : value)
+	}
+
+	const scrollElement = IndexerGetter(scrollElements)
+	scrollElement(container)
+	const scrollAnimation = IndexerGetter(scrollAnimations)
+	scrollAnimation(scrollAnimation() || [])
+	const virtualPosition = IndexerGetter(virtualPositions)
+	virtualPosition(virtualPosition() || Misc.getScrollPosition(container, horizontal))
+	const finalPosition = IndexerGetter(finalPositions)
+	finalPosition(finalPosition() || virtualPosition())
 
 	function size() {
 		return Misc.getSize(container, horizontal)
@@ -66,7 +90,7 @@ export function Scroll(options: IScrollOptions) {
 		return Misc.getSize(getElementFromQuery(element), horizontal) * value
 	}
 	function stop() {
-		_scrollAnimations = []
+		scrollAnimation([])
 		_beforeScroll()
 	}
 	function scrollTo(...args: [number] | [ElementOrQuery, number]) {
@@ -84,42 +108,45 @@ export function Scroll(options: IScrollOptions) {
 		element === null ? _offsetValue(value) : _offsetElement(element, value)
 	}
 	function _beforeScroll() {
-		if (!_scrollAnimations.length) {
+		if (!scrollAnimation().length) {
 			const position = scrollPosition()
-			if (!!Math.round(virtualPosition - position)) {
-				virtualPosition = position
+			if (!!Math.round(virtualPosition() - position)) {
+				virtualPosition(position)
 			}
-			_to = virtualPosition
+			finalPosition(virtualPosition())
 		}
 	}
 	function _createScrollAnimation(from: ScrollAnimationPosition, to: ScrollAnimationPosition) {
 		const easing = typeof options.easing === "string" ? Easings[options.easing] : options.easing
-		_scrollAnimations.push(new ScrollAnimation(from, to, { ...options, easing }))
-		if (_scrollAnimations.length === 1) {
+		scrollAnimation().push(new ScrollAnimation(from, to, { ...options, easing }))
+		if (scrollAnimation().length === 1) {
 			_update()
 		}
 	}
 	function _onScroll() {
-		const diff = Math.round(scrollPosition()) - Math.round(maxMin(virtualPosition, scrollSize()))
+		const diff = Math.round(scrollPosition()) - Math.round(maxMin(virtualPosition(), scrollSize()))
 		const external = !!diff
 		if (external) {
-			virtualPosition = Math.round(scrollPosition())
-			const from = _to
-			_to = () => getValue(from) + diff
+			virtualPosition(Math.round(scrollPosition()))
+			const from = finalPosition()
+			finalPosition(() => getValue(from) + diff)
 		}
 	}
 	function _update() {
 		_onScroll()
 		const previousPosition = scrollPosition
-		_scrollAnimations = _scrollAnimations.filter(animation => {
-			virtualPosition =
-				(animation.options.force ? animation.from : virtualPosition - animation.distance) +
-				animation.updateDistance()
-			return !animation.isPastAnimation()
-		})
-		const value = Math.round(virtualPosition) - previousPosition()
+		scrollAnimation(
+			scrollAnimation().filter(animation => {
+				virtualPosition(
+					(animation.options.force ? animation.from : virtualPosition() - animation.distance) +
+						animation.updateDistance(),
+				)
+				return !animation.isPastAnimation()
+			}),
+		)
+		const value = Math.round(virtualPosition()) - previousPosition()
 		!!value && Misc.scrollBy(container, horizontal, value)
-		_scrollAnimations.length > 0 ? requestAnimationFrame(() => _update()) : stop()
+		scrollAnimation.length > 0 ? requestAnimationFrame(() => _update()) : stop()
 	}
 	// function _getOptions(options: Partial<IScrollOptions> = {}) {
 	// 	const easing = options.easing || easing || "easeInOutQuad"
@@ -130,20 +157,19 @@ export function Scroll(options: IScrollOptions) {
 	// 	}
 	// }
 	function _offsetElement(element: ElementOrQuery, value: number = 1) {
-		const to = elementSize(element, value)
-		_offsetValue(to)
+		_offsetValue(elementSize(element, value))
 	}
 	function _offsetValue(value: number | (() => number)) {
-		const from = options.force ? scrollPosition() : getValue(_to)
-		const to = () => maxMin(getValue(value) + from, scrollSize())
-		_to = options.force ? to : getValue(to)
-		_createScrollAnimation(from, _to)
+		const from = options.force ? scrollPosition() : getValue(finalPosition())
+		const _to = () => maxMin(getValue(value) + from, scrollSize())
+		finalPosition(options.force ? _to : getValue(_to))
+		_createScrollAnimation(from, finalPosition())
 	}
 	function _scrollToValue(value: number | (() => number)) {
-		const from = options.force ? scrollPosition : getValue(_to)
-		const to = () => getValue(value)
-		_to = options.force ? to : getValue(to)
-		_createScrollAnimation(from, _to)
+		const from = options.force ? scrollPosition : getValue(finalPosition())
+		const _to = () => getValue(value)
+		finalPosition(options.force ? _to : getValue(_to))
+		_createScrollAnimation(from, finalPosition())
 	}
 	function _scrollToElement(element: ElementOrQuery, value: number = 0) {
 		const _element = getElementFromQuery(element)
