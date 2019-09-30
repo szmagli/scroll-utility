@@ -13,404 +13,369 @@
 #+STARTUP: content
 
 * Features
-  - Simple, fast and small footprint ~10KiB.
-  - Allows specifying the element offset, easing animations.
-  - Scroll events.
-  - Scroll inside an element.
+	- Simple, fast and small footprint ~10KiB.
+	- Allows specifying the element offset, easing animations.
+	- Scroll events.
+	- Scroll inside an element.
 
 * Installation
-  From npm:
-  #+BEGIN_SRC sh
-    $ npm install --save scroll-utility
-  #+END_SRC
-  From a cdn: [[https://www.jsdelivr.com/package/npm/scroll-utility][jsdelivr]]
-  #+BEGIN_SRC html
-    <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
-  #+END_SRC
-  
+	From npm:
+	#+BEGIN_SRC sh
+		$ npm install --save scroll-utility
+	#+END_SRC
+	From a cdn: [[https://www.jsdelivr.com/package/npm/scroll-utility][jsdelivr]]
+	#+BEGIN_SRC html
+		<script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
+	#+END_SRC
+
 * API
 ** global
-   #+INCLUDE: "examples/global.ts" src typescript
-   A default =ScrollUtility= in case you don't need any customization
+	 #+INCLUDE: "examples/global.ts" src typescript
+	 A default =ScrollUtility= in case you don't need any customization
 
 ** constructor
-   #+INCLUDE: "examples/constructor/index.ts" src typescript
-   That will create a new =ScrollUtility= instance, which you can use to scroll. \\
-   Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
+	 #+INCLUDE: "examples/constructor/index.ts" src typescript
+	 That will create a new =ScrollUtility= instance, which you can use to scroll. \\
+	 Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
 *** container
-    #+INCLUDE: "examples/constructor/container.ts" src typescript
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-container.scroll-container.normal
-       .button-container
-         button.scroll-button(onclick=`example.constructor.container()`) scroll window
-       hr.spacer
-       #container.some-element.scroll-container(position="relative")
-         h1 #container
-         .button-container
-           button.scroll-button(onclick=`example.constructor.container(true)`) scroll container
-         hr.spacer
-         hr.spacer
-    #+END_SRC
+		#+INCLUDE: "examples/constructor/container.ts" src typescript
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-container.scroll-container.normal
+				.button-container
+					button.scroll-button(onclick=`example.constructor.container()`) scroll window
+				hr.spacer
+				#container.some-element.scroll-container(position="relative")
+					h1 #container
+					.button-container
+						button.scroll-button(onclick=`example.constructor.container(true)`) scroll container
+					hr.spacer
+					hr.spacer
+		#+END_SRC
 
-    The =container= option indicates the element in which the scroll takes place; ~window~ by default
+		The =container= option indicates the element in which the scroll takes place; ~window~ by default
 
-    If it's a ~string~, then it will use it as a *querySelector* with
-    ~document.querySelector~ for getting an ~Element~. \\
-    If the *querySelector* doesn't match an element, it will send a warning to the console and use window to scroll
+		If it's a ~string~, then it will use it as a *querySelector* with
+		~document.querySelector~ for getting an ~Element~. \\
+		If the *querySelector* doesn't match an element, it will send a warning to the console and use window to scroll
 
 *** horizontal
-    #+INCLUDE: "examples/constructor/horizontal.ts" src typescript
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-horizontal.scroll-container.horizontal
-       .button-container
-         each item in ["horizontal", "vertical"]
-           button.scroll-button(onclick=`example.constructor.horizontal("${item}")`)= item
-       - const to = 300
-       - for (let i = 50; i < to; i += 50)
-         .pspacer(style=`top: ${i}%; width: ${to}%;`)
-         .horizontal.pspacer(style=`left: ${i}%; height: ${to}%;`)
-    #+END_SRC
+		#+INCLUDE: "examples/constructor/horizontal.ts" src typescript
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-horizontal.scroll-container.horizontal
+				.button-container
+					each item in ["horizontal", "vertical"]
+						button.scroll-button(onclick=`example.constructor.horizontal("${item}")`)= item
+				- const to = 300
+				- for (let i = 50; i < to; i += 50)
+					.pspacer(style=`top: ${i}%; width: ${to}%;`)
+					.horizontal.pspacer(style=`left: ${i}%; height: ${to}%;`)
+		#+END_SRC
 
-
-    The *horizontal* option indicates the direction when scrolling, by default
-    *false*, wich means vertical scroll
+		The *horizontal* option indicates the direction when scrolling, by default
+		*false*, wich means vertical scroll
 
 *** duration
-    #+INCLUDE: "examples/constructor/duration.ts" src typescript
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-duration.scroll-container
-       .button-container
-         each duration in ["1000", "750", "500", "250", "0"]
-           button.scroll-button(onclick=`example.constructor.duration(${duration})`)= duration
-       h1 Top
-       hr.spacer
-       hr.spacer
-       h1 Bottom
-    #+END_SRC
+		#+INCLUDE: "examples/constructor/duration.ts" src typescript
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-duration.scroll-container
+				.button-container
+					each duration in ["1000", "750", "500", "250", "0"]
+						button.scroll-button(onclick=`example.constructor.duration(${duration})`)= duration
+				h1 Top
+				hr.spacer
+				hr.spacer
+				h1 Bottom
+		#+END_SRC
 
-    The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_\\
-    It will be used along with [[easing]] for creating the *smooth* animation when scrolling
+		The *duration* option indicates the default duration of the scroll animations in milliseconds, by default _1000ms_\\
+		It will be used along with [[easing]] for creating the *smooth* animation when scrolling
 
-    If you want to disable the /smooth/ animation, set *duration* to 0.
+		If you want to disable the /smooth/ animation, set *duration* to 0.
 
 *** easing
-    #+INCLUDE: "examples/constructor/easing.ts" src typescript
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-easings.scroll-container
-       .button-container
-         each easing in [ "linear", "easeInOutQuad", "easeOutBounce" ]
-           button.scroll-button(onclick=`example.constructor.easing("${easing}")`)= easing
-       h1 Top
-       hr.spacer
-       hr.spacer
-       h1 Bottom
-    #+END_SRC
+		#+INCLUDE: "examples/constructor/easing.ts" src typescript
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-easings.scroll-container
+				.button-container
+					each easing in [ "linear", "easeInOutQuad", "easeOutBounce" ]
+						button.scroll-button(onclick=`example.constructor.easing("${easing}")`)= easing
+				h1 Top
+				hr.spacer
+				hr.spacer
+				h1 Bottom
+		#+END_SRC
 
-    Learn more about easing functions [[https://easings.net/en][here]]:
+		Learn more about easing functions [[https://easings.net/en][here]]:
 
 *** onScroll
-    #+INCLUDE: "examples/constructor/onScroll.ts" src typescript
+		#+INCLUDE: "examples/constructor/onScroll.ts" src typescript
 
-    *try scrolling to see results:*
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-onScroll.scroll-container
-       .button-container
-         each item in [ "scroll" ]
-           button.scroll-button(onclick=`example.constructor.onScroll()`)= item
-       h1 Top
-       hr.spacer
-       hr.spacer
-       h1 Bottom
-    #+END_SRC
+		*try scrolling to see results:*
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-onScroll.scroll-container
+				.button-container
+					each item in [ "scroll" ]
+						button.scroll-button(onclick=`example.constructor.onScroll()`)= item
+				h1 Top
+				hr.spacer
+				hr.spacer
+				h1 Bottom
+		#+END_SRC
 
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new ScrollUtility({ onScroll: null })
-      scrollManager.onScroll = () => alert("hi")
-    #+END_SRC
+		It can be changed any time:
+		#+BEGIN_SRC typescript
+			const scrollManager = new ScrollUtility({ onScroll: null })
+			scrollManager.onScroll = () => alert("hi")
+		#+END_SRC
 
 *** onStop
-    #+INCLUDE: "examples/constructor/onStop.ts" src typescript
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-onStop.scroll-container
-       .button-container
-         button.scroll-button(onclick=`example.constructor.onStop()`) scroll
-       h1 Top
-       hr.spacer
-       hr.spacer
-       h1 Bottom
-    #+END_SRC
+		#+INCLUDE: "examples/constructor/onStop.ts" src typescript
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-onStop.scroll-container
+				.button-container
+					button.scroll-button(onclick=`example.constructor.onStop()`) scroll
+				h1 Top
+				hr.spacer
+				hr.spacer
+				h1 Bottom
+		#+END_SRC
 
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new ScrollUtility({ onStop: null })
-      scrollManager.onStop = () => alert("hi")
-    #+END_SRC
+		It can be changed any time:
+		#+BEGIN_SRC typescript
+			const scrollManager = new ScrollUtility({ onStop: null })
+			scrollManager.onStop = () => alert("hi")
+		#+END_SRC
 
 *** force
-    #+INCLUDE: "examples/constructor/force.ts" src typescript
+		#+INCLUDE: "examples/constructor/force.ts" src typescript
 
-    It ignores external scroll and previous scroll animations
+		It ignores external scroll and previous scroll animations
 
-    *try scrolling to see results:*
-    #+BEGIN_SRC pug :exports results :results html
-      #scroll-force.scroll-container
-       .button-container
-         each item in [ "no force", "force" ]
-           button.scroll-button(onclick=`example.constructor.force("${item}")`)= item
-       h1 Top
-       hr.spacer
-       hr.spacer
-       h1 Bottom
-    #+END_SRC
+		*try scrolling to see results:*
+		#+BEGIN_SRC pug :exports results :results html
+			#scroll-force.scroll-container
+				.button-container
+					each item in [ "no force", "force" ]
+						button.scroll-button(onclick=`example.constructor.force("${item}")`)= item
+				h1 Top
+				hr.spacer
+				hr.spacer
+				h1 Bottom
+		#+END_SRC
 
-    It can be changed any time:
-    #+BEGIN_SRC typescript
-      const scrollManager = new ScrollUtility({ force: true })
-      scrollManager.force = false
-    #+END_SRC
+		It can be changed any time:
+		#+BEGIN_SRC typescript
+			const scrollManager = new ScrollUtility({ force: true })
+			scrollManager.force = false
+		#+END_SRC
 
 ** scrollTo
-   #+INCLUDE: "examples/scrollTo.ts" src typescript
-   #+BEGIN_SRC pug :exports results :results html
-     #scrollTo.scroll-container
-       .button-container
-         each item in ["0", "\'#here\'", "Infinity"]
-           button.scroll-button(onclick=`example.scrollTo(${item})`)=item
-       hr.spacer
-       #here.some-element
-         h1 #here
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/scrollTo.ts" src typescript
+	 #+BEGIN_SRC pug :exports results :results html
+		 #scrollTo.scroll-container
+			 .button-container
+				 each item in ["0", "\'#here\'", "Infinity"]
+					 button.scroll-button(onclick=`example.scrollTo(${item})`)=item
+			 hr.spacer
+			 #here.some-element
+				 h1 #here
+			 hr.spacer
+	 #+END_SRC
 
-   See [[duration]] for info of option duration\\
-   See [[easing]] for info of option easing\\
-   See [[force]] for info of option force\\
+	 See [[duration]] for info of option duration\\
+	 See [[easing]] for info of option easing\\
+	 See [[force]] for info of option force\\
 *** value
-    :PROPERTIES:
-    :CUSTOM_ID: scrollToValue
-    :END:
-    #+INCLUDE: "examples/scrollTo.value.ts" src typescript
-    Scroll to certain value
-    #+BEGIN_SRC pug :exports results :results html
-      #scrollToValue.scroll-container
-       .button-container
-         each item in ["0", "50", "200", "Infinity"]
-           button.scroll-button(onclick=`example.scrollTo.value(${item})`)=item
-       hr.spacer
-       hr.spacer
-    #+END_SRC
+		:PROPERTIES:
+		:CUSTOM_ID: scrollToValue
+		:END:
+		#+INCLUDE: "examples/scrollTo.value.ts" src typescript
+		Scroll to certain value
+		#+BEGIN_SRC pug :exports results :results html
+			#scrollToValue.scroll-container
+				.button-container
+					each item in ["0", "50", "200", "Infinity"]
+						button.scroll-button(onclick=`example.scrollTo.value(${item})`)=item
+				hr.spacer
+				hr.spacer
+		#+END_SRC
 
 *** element
-    :PROPERTIES:
-    :CUSTOM_ID: scrollToElement
-    :END:
-    #+INCLUDE: "examples/scrollTo.element.ts" src typescript
-    Center element at some degree
-    #+BEGIN_SRC pug :exports results :results html
-      #example-scrollToElement.scroll-container
-       .button-container
-         each item in ["0", "0.25", "0.5", "0.75", "1"]
-           button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
-       hr.spacer
-       #scrollTo-element.some-element
-         h1 element to center
-       hr.spacer
-    #+END_SRC
+		:PROPERTIES:
+		:CUSTOM_ID: scrollToElement
+		:END:
+		#+INCLUDE: "examples/scrollTo.element.ts" src typescript
+		Center element at some degree
+		#+BEGIN_SRC pug :exports results :results html
+			#example-scrollToElement.scroll-container
+				.button-container
+					each item in ["0", "0.25", "0.5", "0.75", "1"]
+						button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
+				hr.spacer
+				#scrollTo-element.some-element
+					h1 element to center
+				hr.spacer
+		#+END_SRC
 
 ** offset
-   #+INCLUDE: "examples/offset.ts" src typescript
-   #+BEGIN_SRC pug :exports results :results html
-     #offset.scroll-container
-       .button-container
-         each item in ["-100", "100"]
-           button.scroll-button(onclick=`example.offset(${item})`)=item
-       hr.spacer
-       hr.spacer
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/offset.ts" src typescript
+	 #+BEGIN_SRC pug :exports results :results html
+		 #offset.scroll-container
+			 .button-container
+				 each item in ["-100", "100"]
+					 button.scroll-button(onclick=`example.offset(${item})`)=item
+			 hr.spacer
+			 hr.spacer
+			 hr.spacer
+	 #+END_SRC
 
-   See [[duration]] for info of option duration\\
-   See [[easing]] for info of option easing\\
-   See [[force]] for info of option force\\
+	 See [[duration]] for info of option duration\\
+	 See [[easing]] for info of option easing\\
+	 See [[force]] for info of option force\\
 *** value
-    :PROPERTIES:
-    :CUSTOM_ID: offsetValue
-    :END:
-    #+INCLUDE: "examples/offset.value.ts" src typescript
-    Offset scroll position by certain value
-    #+BEGIN_SRC pug :exports results :results html
-      #offsetValue.scroll-container
-       .button-container
-         each item in ["-100", "100"]
-           button.scroll-button(onclick=`example.offset.value(${item})`)=item
-       hr.spacer
-       hr.spacer
-    #+END_SRC
+		:PROPERTIES:
+		:CUSTOM_ID: offsetValue
+		:END:
+		#+INCLUDE: "examples/offset.value.ts" src typescript
+		Offset scroll position by certain value
+		#+BEGIN_SRC pug :exports results :results html
+			#offsetValue.scroll-container
+				.button-container
+					each item in ["-100", "100"]
+						button.scroll-button(onclick=`example.offset.value(${item})`)=item
+				hr.spacer
+				hr.spacer
+		#+END_SRC
 
 *** element
-    :PROPERTIES:
-    :CUSTOM_ID: offsetElement
-    :END:
-    Offset scroll position by a percent of the size of some element
-    #+INCLUDE: "examples/offset.element.ts" src typescript
-    Offset scroll by its container size:
-    #+BEGIN_SRC pug :exports results :results html
-      #offsetElement.scroll-container
-       .button-container
-         each item in ["-1", "-0.5", "0.5", "1"]
-           button.scroll-button(onclick=`example.offset.element(${item})`)=item
-       - const to = 600
-       - for (let i = 50; i < to; i += 50)
-         .pspacer(style=`top: ${i}%;`)
-    #+END_SRC
+		:PROPERTIES:
+		:CUSTOM_ID: offsetElement
+		:END:
+		Offset scroll position by a percent of the size of some element
+		#+INCLUDE: "examples/offset.element.ts" src typescript
+		Offset scroll by its container size:
+		#+BEGIN_SRC pug :exports results :results html
+			#offsetElement.scroll-container
+				.button-container
+					each item in ["-1", "-0.5", "0.5", "1"]
+						button.scroll-button(onclick=`example.offset.element(${item})`)=item
+				- const to = 600
+				- for (let i = 50; i < to; i += 50)
+					.pspacer(style=`top: ${i}%;`)
+		#+END_SRC
 
 ** stop
-   #+INCLUDE: "examples/stop.ts" src typescript
-   Stop all scroll animations
-   #+BEGIN_SRC pug :exports results :results html
-     #stop.scroll-container
-       .button-container
-         each item in ["scroll", "stop"]
-           button.scroll-button(onclick=`example.stop(${item === "stop"})`)=item
-       hr.spacer
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/stop.ts" src typescript
+	 Stop all scroll animations
+	 #+BEGIN_SRC pug :exports results :results html
+		 #stop.scroll-container
+			 .button-container
+				 each item in ["scroll", "stop"]
+					 button.scroll-button(onclick=`example.stop(${item === "stop"})`)=item
+			 hr.spacer
+			 hr.spacer
+	 #+END_SRC
 
 ** scrollPosition
-   #+INCLUDE: "examples/scrollPosition.ts" src typescript
-   The position of the scroll of some element. \\
-   Somewhat equivalent of ~scrollLeft/scrollTop~; depending on the direction [[horizontal][specified]]
-   #+BEGIN_SRC pug :exports results :results html
-     #scrollPosition.scroll-container
-       .button-container
-          button.scroll-button(onclick=`example.scrollPosition()`) scrollPosition
-       hr.spacer
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/scrollPosition.ts" src typescript
+	 The position of the scroll of some element. \\
+	 Somewhat equivalent of ~scrollLeft/scrollTop~; depending on the direction [[horizontal][specified]]
+	 #+BEGIN_SRC pug :exports results :results html
+		 #scrollPosition.scroll-container
+			 .button-container
+					button.scroll-button(onclick=`example.scrollPosition()`) scrollPosition
+			 hr.spacer
+			 hr.spacer
+	 #+END_SRC
 
 ** size
-   #+INCLUDE: "examples/size.ts" src typescript
-   The size of some element. \\
-   Somewhat equivalent of ~clientWidth/clientHeight~; depending on the direction [[horizontal][specified]]
-   #+BEGIN_SRC pug :exports results :results html
-     #size.scroll-container
-       .button-container
-          button.scroll-button(onclick=`example.size()`) size
-   #+END_SRC
+	 #+INCLUDE: "examples/size.ts" src typescript
+	 The size of some element. \\
+	 Somewhat equivalent of ~clientWidth/clientHeight~; depending on the direction [[horizontal][specified]]
+	 #+BEGIN_SRC pug :exports results :results html
+		 #size.scroll-container
+			 .button-container
+					button.scroll-button(onclick=`example.size()`) size
+	 #+END_SRC
 
 ** scrollSize
-   #+INCLUDE: "examples/scrollSize.ts" src typescript
-   The size of the scroll of some element. \\
-   Somewhat equivalent of ~scrollWidth(or scrollHeight) - clientWidth(or clientHeight)~; depending on the direction [[horizontal][specified]]
-   #+BEGIN_SRC pug :exports results :results html
-     #scrollSize.scroll-container
-       .button-container
-          button.scroll-button(onclick=`example.scrollSize()`) scrollSize
-       hr.spacer
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/scrollSize.ts" src typescript
+	 The size of the scroll of some element. \\
+	 Somewhat equivalent of ~scrollWidth(or scrollHeight) - clientWidth(or clientHeight)~; depending on the direction [[horizontal][specified]]
+	 #+BEGIN_SRC pug :exports results :results html
+		 #scrollSize.scroll-container
+			 .button-container
+					button.scroll-button(onclick=`example.scrollSize()`) scrollSize
+			 hr.spacer
+			 hr.spacer
+	 #+END_SRC
 
 ** relativePosition
-   #+INCLUDE: "examples/relativePosition.ts" src typescript
-   The ~relativePosition~ of some element. \\
-   It correlates to  [[#scrollToElement][scrollTo element]]
-   #+BEGIN_SRC pug :exports results :results html
-     #relativePosition.scroll-container
-       .button-container
-        each item in ["0", "0.5", "1"]
-          button.scroll-button(onclick=`example.relativePosition(${item})`)=`${item}`
-        button.scroll-button(onclick=`example.relativePosition()`) relativePosition
-       hr.spacer
-       #relativePosition-element.some-element
-         h1 some-element
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/relativePosition.ts" src typescript
+	 The ~relativePosition~ of some element. \\
+	 It correlates to  [[#scrollToElement][scrollTo element]]
+	 #+BEGIN_SRC pug :exports results :results html
+		 #relativePosition.scroll-container
+			 .button-container
+				each item in ["0", "0.5", "1"]
+					button.scroll-button(onclick=`example.relativePosition(${item})`)=`${item}`
+				button.scroll-button(onclick=`example.relativePosition()`) relativePosition
+			 hr.spacer
+			 #relativePosition-element.some-element
+				 h1 some-element
+			 hr.spacer
+	 #+END_SRC
 
 ** distToElement
-   #+INCLUDE: "examples/distToElement.ts" src typescript
-   The distance to center some element \\
-   It correlates to [[#scrollToElement][scrollTo element]]
-   #+BEGIN_SRC pug :exports results :results html
-     #distToElement.scroll-container
-       .button-container
-        each item in ["0", "0.5", "1"]
-          button.scroll-button(onclick=`example.distToElement(${item})`)=`${item}`
-       hr.spacer
-       #distToElement-element.some-element
-         h1 some-element
-       hr.spacer
-   #+END_SRC
+	 #+INCLUDE: "examples/distToElement.ts" src typescript
+	 The distance to center some element \\
+	 It correlates to [[#scrollToElement][scrollTo element]]
+	 #+BEGIN_SRC pug :exports results :results html
+		 #distToElement.scroll-container
+			 .button-container
+				each item in ["0", "0.5", "1"]
+					button.scroll-button(onclick=`example.distToElement(${item})`)=`${item}`
+			 hr.spacer
+			 #distToElement-element.some-element
+				 h1 some-element
+			 hr.spacer
+	 #+END_SRC
 
 ** elementSize
-   #+INCLUDE: "examples/elementSize.ts" src typescript
-   The size of some element \\
-   It correlates to [[size]]
-   # * How to
-   # ** scroll to an element and/or center it
-   #    #+INCLUDE: "examples/howto/scrollToElement.ts" src typescript
-   #    see [[#scrollToElement][scrollTo element]]
-   # ** scroll to certain position
-   #    #+INCLUDE: "examples/howto/scrollToValue.ts" src typescript
-   #    see [[#scrollToValue][scrollTo value]]
-   # ** scroll by certain amount of pixels
-   #    #+INCLUDE: "examples/howto/offsetValue.ts" src typescript
-   #    see [[#offsetValue][offset value]]
-   # ** scroll by a screen
-   #    #+INCLUDE: "examples/howto/offsetElement.ts" src typescript
-   #    see [[#offsetElement][offset element]]
-   # ** specify easing animation for scroll
-   #    #+INCLUDE: "examples/howto/easing.ts" src typescript
-   #    see [[easing]]
-   # ** specify duration for scroll
-   #    #+INCLUDE: "examples/howto/duration.ts" src typescript
-   #    see [[duration]]
-   # ** ignore "user" scroll while scrolling
-   #    #+INCLUDE: "examples/howto/ignore.ts" src typescript
-   #    see [[force]]
-   # ** do something "onscroll"
-   #    #+INCLUDE: "examples/howto/onScroll.ts" src typescript
-   #    see [[onScroll]]
-   # ** do something when "user" scrolls
-   #    #+INCLUDE: "examples/howto/onUserScroll.ts" src typescript
-   #    see [[onScroll]]
-   # ** Stop scroll when user scrolls
-   #    #+INCLUDE: "examples/howto/stopOnUserScroll.ts" src typescript
-   #    see [[onScroll]]
-   # ** do something when scroll ends
-   #    #+INCLUDE: "examples/howto/onStop.ts" src typescript
-   #    see [[onStop]]
+	 #+INCLUDE: "examples/elementSize.ts" src typescript
+	 The size of some element \\
+	 It correlates to [[size]]
 * How to
 ** scroll to an element and/or center it
-   #+INCLUDE: "examples/howto/scrollToElement.ts" src typescript
-   see [[#scrollToElement][scrollTo element]]
+	 #+INCLUDE: "examples/howto/scrollToElement.ts" src typescript
+	 see [[#scrollToElement][scrollTo element]]
 ** scroll to certain position
-   #+INCLUDE: "examples/howto/scrollToValue.ts" src typescript
-   see [[#scrollToValue][scrollTo value]]
+	 #+INCLUDE: "examples/howto/scrollToValue.ts" src typescript
+	 see [[#scrollToValue][scrollTo value]]
 ** scroll by certain amount of pixels
-   #+INCLUDE: "examples/howto/offsetValue.ts" src typescript
-   see [[#offsetValue][offset value]]
+	 #+INCLUDE: "examples/howto/offsetValue.ts" src typescript
+	 see [[#offsetValue][offset value]]
 ** scroll by a screen
-   #+INCLUDE: "examples/howto/offsetElement.ts" src typescript
-   see [[#offsetElement][offset element]]
+	 #+INCLUDE: "examples/howto/offsetElement.ts" src typescript
+	 see [[#offsetElement][offset element]]
 ** specify easing animation for scroll
-   #+INCLUDE: "examples/howto/easing.ts" src typescript
-   see [[easing]]
+	 #+INCLUDE: "examples/howto/easing.ts" src typescript
+	 see [[easing]]
 ** specify duration for scroll
-   #+INCLUDE: "examples/howto/duration.ts" src typescript
-   see [[duration]]
+	 #+INCLUDE: "examples/howto/duration.ts" src typescript
+	 see [[duration]]
 ** ignore "user" scroll while scrolling
-   #+INCLUDE: "examples/howto/ignore.ts" src typescript
-   see [[force]]
+	 #+INCLUDE: "examples/howto/ignore.ts" src typescript
+	 see [[force]]
 ** do something "onscroll"
-   #+INCLUDE: "examples/howto/onScroll.ts" src typescript
-   see [[onScroll]]
+	 #+INCLUDE: "examples/howto/onScroll.ts" src typescript
+	 see [[onScroll]]
 ** do something when "user" scrolls
-   #+INCLUDE: "examples/howto/onUserScroll.ts" src typescript
-   see [[onScroll]]
+	 #+INCLUDE: "examples/howto/onUserScroll.ts" src typescript
+	 see [[onScroll]]
 ** Stop scroll when user scrolls
-   #+INCLUDE: "examples/howto/stopOnUserScroll.ts" src typescript
-   see [[onScroll]]
+	 #+INCLUDE: "examples/howto/stopOnUserScroll.ts" src typescript
+	 see [[onScroll]]
 ** do something when scroll ends
-   #+INCLUDE: "examples/howto/onStop.ts" src typescript
-   see [[onStop]]
+	 #+INCLUDE: "examples/howto/onStop.ts" src typescript
+	 see [[onStop]]
