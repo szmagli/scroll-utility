@@ -9,5 +9,4 @@ export type EasingFunction = (
 	totalSteps: number,
 ) => number
 
-export type ScrollElement = Window | Element
-export type ElementOrQuery = ScrollElement | string
+export type ElementOrQuery = Element | Window | string
