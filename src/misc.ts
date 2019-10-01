@@ -98,7 +98,7 @@ export function getElementWrapper(el: HTMLElement | Window): SElement {
 			return parseInt(getComputedStyle(el, null).getPropertyValue("border-left-width"), 10) || 0
 		},
 		getBorderHeight() {
-			return parseInt(getComputedStyle(el, null).getPropertyValue("border-left-height"), 10) || 0
+			return parseInt(getComputedStyle(el, null).getPropertyValue("border-top-width"), 10) || 0
 		},
 	})
 }

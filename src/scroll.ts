@@ -90,7 +90,11 @@ class ScrollElement {
 		}
 	}
 	public get scrollSize() {
-		return this.horizontal ? this.container.scrollWidth : this.container.scrollHeight
+		return (this.horizontal ? this.container.scrollWidth : this.container.scrollHeight) - this.size
+	}
+
+	public get size() {
+		return this.horizontal ? this.container.clientWidth : this.container.clientHeight
 	}
 }
 
@@ -125,16 +129,9 @@ export function optionalScroll(defaultOptions: IScrollOptions) {
 
 export function Scroll(element: ScrollElement, options: IScrollOptions) {
 	const containerRaw = getElementFromQuery(options.container)
-	const container = getElementWrapper(containerRaw)
-	function size() {
-		return options.horizontal ? container.clientWidth : container.clientHeight
-	}
-	function scrollPosition() {
-		return options.horizontal ? container.scrollLeft : container.scrollTop
-	}
 	function relativePosition(query: ElementOrQuery): number {
 		const elementRaw = getElementFromQuery(query)
-		if (elementRaw === containerRaw) return scrollPosition() / element.scrollSize
+		if (elementRaw === containerRaw) return element.scrollPosition / element.scrollSize
 		const _element = getElementWrapper(elementRaw)
 		return getOffset(_element) / getDiff(_element)
 	}
@@ -163,29 +160,29 @@ export function Scroll(element: ScrollElement, options: IScrollOptions) {
 	function getOffset(el: SElement) {
 		return options.horizontal
 			? el.getBoundingClientRect().left -
-					container.getBoundingClientRect().left -
-					container.getBorderWidth()
+					element.container.getBoundingClientRect().left -
+					element.container.getBorderWidth()
 			: el.getBoundingClientRect().top -
-					container.getBoundingClientRect().top -
-					container.getBorderHeight()
+					element.container.getBoundingClientRect().top -
+					element.container.getBorderHeight()
 	}
 	function getDiff(el: SElement) {
 		return options.horizontal
-			? container.clientWidth - el.offsetWidth
-			: container.clientHeight - el.offsetHeight
+			? element.container.clientWidth - el.offsetWidth
+			: element.container.clientHeight - el.offsetHeight
 	}
 	function _offsetElement(query: ElementOrQuery, value: number = 1) {
 		const to = elementSize(query, value)
 		_offsetValue(to)
 	}
 	function _offsetValue(value: number | (() => number)) {
-		const from = options.force ? scrollPosition() : getValue(element.finalPosition)
+		const from = options.force ? element.scrollPosition : getValue(element.finalPosition)
 		const _to = () => maxMin(getValue(value) + from, element.scrollSize)
 		element.finalPosition = options.force ? _to : getValue(_to)
 		element._createScrollAnimation(from, element.finalPosition, options)
 	}
 	function _scrollToValue(value: number | (() => number)) {
-		const from = options.force ? scrollPosition : getValue(element.finalPosition)
+		const from = options.force ? element.scrollPosition : getValue(element.finalPosition)
 		const _to = () => getValue(value)
 		element.finalPosition = options.force ? _to : getValue(_to)
 		element._createScrollAnimation(from, element.finalPosition, options)
@@ -195,14 +192,14 @@ export function Scroll(element: ScrollElement, options: IScrollOptions) {
 		const to =
 			_element === containerRaw
 				? () => element.scrollSize * value
-				: () => distToElement(_element, value) + scrollPosition()
+				: () => distToElement(_element, value) + element.scrollPosition
 		_scrollToValue(to)
 	}
 
 	const scroll = {
-		size,
+		size: () => element.size,
 		scrollSize: () => element.scrollSize,
-		scrollPosition,
+		scrollPosition: () => element.scrollPosition,
 		relativePosition,
 		distToElement,
 		elementSize,
