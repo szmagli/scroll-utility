@@ -181,3 +181,11 @@ export function Scroll(options: IScrollOptions) {
 	}
 	return Object.assign(optionalScroll(options), scroll)
 }
+
+export function getElementFromQuery(elementOrQuery: ElementOrQuery): HTMLElement | Window {
+	if (!elementOrQuery) throw new Error(`elementOrQuery should not be a ${typeof elementOrQuery}`)
+	const element =
+		typeof elementOrQuery === "string" ? document.querySelector(elementOrQuery) : elementOrQuery
+	if (!element) throw new Error(`no element matched querySelector ${elementOrQuery}`)
+	return element === document.documentElement ? window : (element as HTMLElement)
+}
