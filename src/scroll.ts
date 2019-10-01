@@ -171,8 +171,8 @@ export function Scroll(element: ScrollElement, options: IScrollOptions) {
 	}
 	function getDiff(el: SElement) {
 		return options.horizontal
-			? container.clientWidth - el.clientWidth
-			: container.clientHeight - el.clientHeight
+			? container.clientWidth - el.offsetWidth
+			: container.clientHeight - el.offsetHeight
 	}
 	function _offsetElement(query: ElementOrQuery, value: number = 1) {
 		const to = elementSize(query, value)
