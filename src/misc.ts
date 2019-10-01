@@ -75,16 +75,20 @@ export const windowWrapper: SElement = {
 }
 
 function extend<T extends object, E extends object>(obj: T, ext: E): T & E {
-	return new Proxy(obj, {
-		get(target, key) {
-			if (ext[key] !== undefined) return ext[key]
-			return target[key]
+	return new Proxy(
+		{},
+		{
+			get(_target, key) {
+				if (ext[key] !== undefined) return ext[key]
+				if (typeof obj[key] === "function") return obj[key].bind(obj)
+				return obj[key]
+			},
+			set(_target, key, value) {
+				if (ext[key] !== undefined) return (ext[key] = value)
+				return (obj[key] = value)
+			},
 		},
-		set(target, key, value) {
-			if (ext[key] !== undefined) return (ext[key] = value)
-			return (target[key] = value)
-		},
-	}) as T & E
+	) as T & E
 }
 
 export function getElementWrapper(el: HTMLElement | Window): SElement {
