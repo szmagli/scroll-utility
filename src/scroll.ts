@@ -1,8 +1,7 @@
-import { Misc, getElementFromQuery } from "./misc"
+import { getElementWrapper, SElement } from "./misc"
 import { ScrollAnimation, ScrollAnimationPosition } from "./animation"
-import { ElementOrQuery, EasingOrFunction } from "./types"
+import { EasingOrFunction, ElementOrQuery } from "./types"
 import { Easings } from "./easings"
-// import { Easings } from "./easings"
 
 const getValue = (funct: number | (() => number)) => {
 	return typeof funct === "number" ? funct : funct()
@@ -38,32 +37,35 @@ export function optionalScroll(defaultOptions: IScrollOptions) {
 }
 
 export function Scroll(options: IScrollOptions) {
-	const container = getElementFromQuery(options.container)
+	const containerRaw = getElementFromQuery(options.container)
+	const container = getElementWrapper(containerRaw)
 	const horizontal = options.horizontal
 	let _scrollAnimations: ScrollAnimation[] = []
 	let virtualPosition: number = scrollPosition()
 	let _to: number | (() => number) = virtualPosition
 
 	function size() {
-		return Misc.getSize(container, horizontal)
+		return horizontal ? container.clientWidth : container.clientHeight
 	}
 	function scrollSize() {
-		return Misc.getScrollSize(container, horizontal) - size()
+		return horizontal ? container.scrollWidth : container.scrollHeight
 	}
 	function scrollPosition() {
-		return Misc.getScrollPosition(container, horizontal)
+		return horizontal ? container.scrollLeft : container.scrollTop
 	}
-	function relativePosition(element: ElementOrQuery): number {
-		const _element = getElementFromQuery(element)
-		return _element === container
-			? scrollPosition() / scrollSize()
-			: Misc.getRelativeElementPosition(container, _element, horizontal)
+	function relativePosition(query: ElementOrQuery): number {
+		const elementRaw = getElementFromQuery(query)
+		if (elementRaw === containerRaw) return scrollPosition() / scrollSize()
+		const element = getElementWrapper(elementRaw)
+		return getOffset(element) / getDiff(element)
 	}
-	function distToElement(element: ElementOrQuery, value = 0): number {
-		return Misc.getDistToCenterElement(container, getElementFromQuery(element), horizontal, value)
+	function distToElement(query: ElementOrQuery, value = 0): number {
+		const element = getElementWrapper(getElementFromQuery(query))
+		return getOffset(element) - getDiff(element) * value
 	}
-	function elementSize(element: ElementOrQuery, value = 1): number {
-		return Misc.getSize(getElementFromQuery(element), horizontal) * value
+	function elementSize(query: ElementOrQuery, value = 1): number {
+		const element = getElementWrapper(getElementFromQuery(query))
+		return (horizontal ? element.clientWidth : element.clientHeight) * value
 	}
 	function stop() {
 		_scrollAnimations = []
@@ -82,6 +84,20 @@ export function Scroll(options: IScrollOptions) {
 		const element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
 		const value = typeof args[0] === "number" ? args[0] : args[1] || 0
 		element === null ? _offsetValue(value) : _offsetElement(element, value)
+	}
+	function getOffset(el: SElement) {
+		return horizontal
+			? el.getBoundingClientRect().left -
+					container.getBoundingClientRect().left -
+					container.getBorderWidth()
+			: el.getBoundingClientRect().top -
+					container.getBoundingClientRect().top -
+					container.getBorderHeight()
+	}
+	function getDiff(el: SElement) {
+		return horizontal
+			? container.clientWidth - el.clientWidth
+			: container.clientHeight - el.clientHeight
 	}
 	function _beforeScroll() {
 		if (!_scrollAnimations.length) {
@@ -118,19 +134,11 @@ export function Scroll(options: IScrollOptions) {
 			return !animation.isPastAnimation()
 		})
 		const value = Math.round(virtualPosition) - previousPosition()
-		!!value && Misc.scrollBy(container, horizontal, value)
+		if (value !== 0) horizontal ? container.scrollBy(value, 0) : container.scrollBy(0, value)
 		_scrollAnimations.length > 0 ? requestAnimationFrame(() => _update()) : stop()
 	}
-	// function _getOptions(options: Partial<IScrollOptions> = {}) {
-	// 	const easing = options.easing || easing || "easeInOutQuad"
-	// 	return {
-	// 		easing: typeof easing === "string" ? Easings[easing] : easing,
-	// 		duration: options.duration === undefined ? duration : options.duration,
-	// 		force: options.force === undefined ? force : options.force,
-	// 	}
-	// }
-	function _offsetElement(element: ElementOrQuery, value: number = 1) {
-		const to = elementSize(element, value)
+	function _offsetElement(query: ElementOrQuery, value: number = 1) {
+		const to = elementSize(query, value)
 		_offsetValue(to)
 	}
 	function _offsetValue(value: number | (() => number)) {
@@ -145,12 +153,12 @@ export function Scroll(options: IScrollOptions) {
 		_to = options.force ? to : getValue(to)
 		_createScrollAnimation(from, _to)
 	}
-	function _scrollToElement(element: ElementOrQuery, value: number = 0) {
-		const _element = getElementFromQuery(element)
+	function _scrollToElement(query: ElementOrQuery, value: number = 0) {
+		const element = getElementFromQuery(query)
 		const to =
-			_element === container
+			element === containerRaw
 				? () => scrollSize() * value
-				: () => distToElement(_element, value) + scrollPosition()
+				: () => distToElement(element, value) + scrollPosition()
 		_scrollToValue(to)
 	}
 
