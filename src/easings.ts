@@ -1,7 +1,7 @@
-import { EasingOrFunction } from "./types"
+import { EasingOrFunction, EasingFunction } from "./types"
 
 // tslint:disable
-export function easingFromFunction(easing: EasingOrFunction) {
+export function easingFromFunction(easing: EasingOrFunction): EasingFunction {
 	return typeof easing === "string" ? Easings[easing] : easing
 }
 
