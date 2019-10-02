@@ -20,7 +20,29 @@ interface SElement {
 }
 
 function getElementWrapper(el: HTMLElement | Window, horizontal: boolean): SElement {
-	return {
+	const scrollSize = isWindow(el)
+		? horizontal
+			? () =>
+					Math.max(
+						document.body.scrollWidth,
+						document.body.offsetWidth,
+						documentElement.clientWidth,
+						documentElement.scrollWidth,
+						documentElement.offsetWidth,
+					)
+			: () =>
+					Math.max(
+						document.body.scrollHeight,
+						document.body.offsetHeight,
+						documentElement.clientHeight,
+						documentElement.scrollHeight,
+						documentElement.offsetHeight,
+					)
+		: horizontal
+		? () => el.scrollWidth
+		: () => el.scrollHeight
+
+	const result = {
 		element: el,
 		horizontal,
 		size: isWindow(el)
@@ -30,27 +52,9 @@ function getElementWrapper(el: HTMLElement | Window, horizontal: boolean): SElem
 			: horizontal
 			? () => el.clientWidth
 			: () => el.clientHeight,
-		scrollSize: isWindow(el)
-			? horizontal
-				? () =>
-						Math.max(
-							document.body.scrollWidth,
-							document.body.offsetWidth,
-							documentElement.clientWidth,
-							documentElement.scrollWidth,
-							documentElement.offsetWidth,
-						)
-				: () =>
-						Math.max(
-							document.body.scrollHeight,
-							document.body.offsetHeight,
-							documentElement.clientHeight,
-							documentElement.scrollHeight,
-							documentElement.offsetHeight,
-						)
-			: horizontal
-			? () => el.scrollWidth
-			: () => el.scrollHeight,
+		scrollSize: () => {
+			return scrollSize() - result.size()
+		},
 		scrollPosition: isWindow(el)
 			? horizontal
 				? () => window.pageXOffset
@@ -79,6 +83,7 @@ function getElementWrapper(el: HTMLElement | Window, horizontal: boolean): SElem
 			? (value: number) => el.scrollBy(value, 0)
 			: (value: number) => el.scrollBy(0, value),
 	}
+	return result
 }
 
 function isWindow(element: Element | Window): element is Window {
