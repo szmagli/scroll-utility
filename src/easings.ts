@@ -1,4 +1,11 @@
-import { EasingOrFunction, EasingFunction } from "./types"
+export type EasingFunction = (
+	currentStep: number,
+	offsetValue: number,
+	distance: number,
+	totalSteps: number,
+) => number
+
+export type EasingOrFunction = EasingFunction | string // keyof typeof Easings
 
 // tslint:disable
 export function easingFromFunction(easing: EasingOrFunction): EasingFunction {

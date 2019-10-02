@@ -1,7 +1,8 @@
 import { getElementWrapper, SElement } from "./misc"
-import { EasingOrFunction, ElementOrQuery, EasingFunction } from "./types"
 import ScrollElement from "./core"
-import { easingFromFunction } from "./easings"
+import { easingFromFunction, EasingOrFunction, EasingFunction } from "./easings"
+
+export type ElementOrQuery = Element | Window | string
 
 function maxMin(value: number, max: number) {
 	return Math.max(Math.min(value, max), 0)
@@ -62,7 +63,7 @@ export function Scroll(options: {
 	function relativePosition(query: ElementOrQuery): number {
 		const elementRaw = getElementFromQuery(query)
 		if (elementRaw === options.container.element)
-			return options.container.scrollPosition() / options.container.scrollSize()
+			return options.container.scrollPosition() / scroll.scrollSize()
 		const _element = getElementWrapper(elementRaw, options.container.horizontal)
 		return getOffset(_element) / getDiff(_element)
 	}
@@ -78,7 +79,7 @@ export function Scroll(options: {
 		const _element: ElementOrQuery | null = typeof args[0] === "number" ? null : args[0]
 		const value = typeof args[0] === "number" ? args[0] : args[1] || 0
 		_element === null
-			? _scrollToValue(maxMin(value, options.container.scrollSize()))
+			? _scrollToValue(maxMin(value, scroll.scrollSize()))
 			: _scrollToElement(_element, value)
 	}
 	function offset(...args: [number] | [ElementOrQuery, number]) {
@@ -90,15 +91,18 @@ export function Scroll(options: {
 		return el.relativePosition() - options.container.relativePosition() - options.container.border()
 	}
 	function getDiff(el: SElement) {
-		return options.container.size() - el.offset()
+		return scroll.size() - el.offset()
 	}
 	function _offsetElement(query: ElementOrQuery, value: number = 1) {
 		const to = elementSize(query, value)
 		_offsetValue(to)
 	}
 	function _offsetValue(value: number) {
-		const to = maxMin(value, options.container.scrollSize())
-		options.createScrollAnimation({ ...options, value: to, relative: true })
+		options.createScrollAnimation({
+			...options,
+			value: maxMin(value, scroll.scrollSize()),
+			relative: true,
+		})
 	}
 	function _scrollToValue(value: number) {
 		options.createScrollAnimation({ ...options, value, relative: false })
@@ -107,21 +111,15 @@ export function Scroll(options: {
 		const _element = getElementFromQuery(query)
 		const to =
 			_element === options.container.element
-				? options.container.scrollSize() * value
+				? scroll.scrollSize() * value
 				: distToElement(_element, value) + options.container.scrollPosition()
 		_scrollToValue(to)
 	}
 
 	const scroll = {
-		get size() {
-			return options.container.size
-		},
-		get scrollSize() {
-			return options.container.scrollSize() - scroll.size()
-		},
-		get scrollPosition() {
-			return options.container.scrollPosition
-		},
+		size: options.container.size,
+		scrollSize: options.container.scrollSize,
+		scrollPosition: options.container.scrollPosition,
 		relativePosition,
 		distToElement,
 		elementSize,

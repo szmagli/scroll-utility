@@ -15,8 +15,7 @@ function ScrollElement(container: SElement) {
 	let virtualPosition = container.scrollPosition()
 	let finalPosition: number = virtualPosition
 	let scrollAnimations: ({ position: (time: number) => number; duration: number })[] = []
-	let durations: number[] = []
-	let time = performance.now()
+	let previousTime = performance.now()
 	function beforeUpdate() {
 		const position = container.scrollPosition()
 		const diff = Math.round(position) - Math.round(maxMin(virtualPosition, container.scrollSize()))
@@ -25,17 +24,15 @@ function ScrollElement(container: SElement) {
 	}
 	function update(currentTime: number) {
 		beforeUpdate()
-
 		const previousPosition = container.scrollPosition()
 		scrollAnimations = scrollAnimations.filter(animation => {
-			virtualPosition -=
-				virtualPosition - animation.position(time) + animation.position(currentTime)
-			return currentTime >= animation.duration
+			virtualPosition += animation.position(currentTime) - animation.position(previousTime)
+			return currentTime < animation.duration
 		})
 		const value = Math.round(virtualPosition) - previousPosition
 		if (value !== 0) container.scrollBy(value)
-		time = currentTime
-		scrollAnimations.length > 0 ? requestAnimationFrame(update) : stop()
+		previousTime = currentTime
+		!!scrollAnimations.length ? requestAnimationFrame(update) : stop()
 	}
 	return (options: {
 		value: number
@@ -43,13 +40,19 @@ function ScrollElement(container: SElement) {
 		duration: number
 		easing: EasingFunction
 	}) => {
-		scrollAnimations.length === 0 && beforeUpdate()
-		const value = options.value + (options.relative ? finalPosition : -finalPosition)
 		const initialTime = performance.now()
-		durations.push(options.duration)
+		if (!scrollAnimations.length) beforeUpdate()
+		const value = options.value + (options.relative ? 0 : -finalPosition)
+		finalPosition += value
+		const duration = options.duration + initialTime
 		scrollAnimations.push({
-			duration: options.duration,
-			position: (time: number) => options.easing(time - initialTime, 0, value, options.duration),
+			duration,
+			position: (time: number) =>
+				time >= duration
+					? value
+					: time <= initialTime
+					? 0
+					: options.easing(time - initialTime, 0, value, options.duration),
 		})
 		scrollAnimations.length === 1 && update(initialTime)
 	}
