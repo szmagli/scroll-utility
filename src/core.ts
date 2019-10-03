@@ -15,7 +15,6 @@ function getOptions(
 ): {
 	virtualPosition: number
 	finalPosition: number
-	force: boolean
 	previousTime: number
 	onscroll: (external?: boolean) => void
 	onstop: () => void
@@ -24,7 +23,6 @@ function getOptions(
 	return {
 		virtualPosition: position,
 		finalPosition: position,
-		force: false,
 		previousTime: performance.now(),
 		onscroll: () => null,
 		onstop: () => null,
@@ -38,35 +36,23 @@ function ScrollElement(container: SElement) {
 		duration: number
 		onScroll: (external?: boolean) => void
 		onStop: () => void
-		force: boolean
 	})[] = []
 	function stop() {
 		scrollAnimations = []
 	}
 	function update(currentTime: number) {
-		if (opts.force) {
-			const position = container.scrollPosition()
-			const diff =
-				Math.round(position) - Math.round(maxMin(opts.virtualPosition, container.scrollSize()))
-			opts.virtualPosition = !!diff ? Math.round(position) : opts.virtualPosition
-			opts.finalPosition += diff
-			opts.onscroll(!!diff)
-		} else {
-			opts.onscroll(false)
-		}
+		const position = container.scrollPosition()
+		const diff =
+			Math.round(position) - Math.round(maxMin(opts.virtualPosition, container.scrollSize()))
+		opts.virtualPosition = !!diff ? Math.round(position) : opts.virtualPosition
+		opts.finalPosition += diff
+		opts.onscroll(!!diff)
 		const previousPosition = container.scrollPosition()
-		opts.force = false
 		scrollAnimations = scrollAnimations.filter(animation => {
 			opts.onscroll = animation.onScroll
 			opts.onstop = animation.onStop
-			opts.force = opts.force || animation.force
-			if (!opts.force) {
-				opts.virtualPosition +=
-					animation.position(currentTime) - animation.position(opts.previousTime)
-			}
-			if (animation.force) {
-				opts.virtualPosition = animation.position(currentTime)
-			}
+			opts.virtualPosition +=
+				animation.position(currentTime) - animation.position(opts.previousTime)
 			return currentTime < animation.duration
 		})
 		const value = Math.round(opts.virtualPosition) - previousPosition
@@ -82,16 +68,13 @@ function ScrollElement(container: SElement) {
 			easing: EasingFunction
 			onStop: () => void
 			onScroll: () => void
-			force: boolean
 			relative: boolean
 		}) => {
 			const initialTime = performance.now()
 			if (!scrollAnimations.length) {
 				opts = getOptions(container)
 			}
-			const from = options.force ? container.scrollPosition() : opts.finalPosition
-			const relative = options.relative ? 0 : from
-			const value = options.value - relative
+			const value = options.value - (options.relative ? 0 : opts.finalPosition)
 			opts.finalPosition += value
 			const duration = options.duration + initialTime
 			scrollAnimations.push({
@@ -100,7 +83,7 @@ function ScrollElement(container: SElement) {
 				position: (time: number) =>
 					options.easing(
 						maxMin(time - initialTime, options.duration, 0),
-						from,
+						opts.finalPosition - value,
 						value,
 						options.duration,
 					),
