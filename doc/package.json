@@ -1,9 +1,0 @@
-{
-    "scripts": {
-        "assets": "cp -r assets dist && cp ../dist/scroll-utility.js dist",
-        "orgmode": "emacs --iconic --no-splash -nw README.org -f org-html-export-to-html --kill && mv README.html dist/index.html",
-        "build": "rm -rf dist && tsc",
-        "doc": "npm run build && npm run orgmode && npm run assets"
-    }
-}
-

@@ -1,18 +1,21 @@
-declare const ScrollUtility: typeof import("scroll-utility")
+declare const ScrollUtility: typeof import("../src/index");
 
 // https://www.cssscript.com/minimal-notification-popup-pure-javascript/
-declare const createNotification: any
-type Params = Required<Exclude<Parameters<typeof ScrollUtility>[0], undefined>>
+declare const createNotification: any;
+type Params = Required<Exclude<Parameters<typeof ScrollUtility>[0], undefined>>;
 
 function notify(message: string) {
 	createNotification({
 		showDuration: 1500,
-		theme: "info",
-	})({ message })
+		theme: "info"
+	})({ message });
 }
 
 function rp(scrollManager: typeof ScrollUtility, element: string) {
-	return scrollManager.scrollTo(element, scrollManager.getRelativePosition(element) < 0.5 ? 1 : 0)
+	return scrollManager.scrollTo(
+		element,
+		scrollManager.getRelativePosition(element) < 0.5 ? 1 : 0
+	);
 }
 
 window.onload = () => {
@@ -20,112 +23,115 @@ window.onload = () => {
 		constructor: {
 			container: (wrapper: boolean) => {
 				if (!!wrapper) {
-					const container = "#container"
-					rp(ScrollUtility({ container }), container)
+					const container = "#container";
+					rp(ScrollUtility({ container }), container);
 				} else {
-					const element = "#scroll-container"
-					rp(ScrollUtility, element)
+					const element = "#scroll-container";
+					rp(ScrollUtility, element);
 				}
 			},
 			horizontal: (direction: string) => {
-				const container = "#scroll-horizontal"
-				const horizontal = direction === "horizontal"
-				rp(ScrollUtility({ container, horizontal }), container)
+				const container = "#scroll-horizontal";
+				const horizontal = direction === "horizontal";
+				rp(ScrollUtility({ container, horizontal }), container);
 			},
 			easing: (easing: Params["easing"]) => {
-				const container = "#scroll-easings"
-				rp(ScrollUtility({ container, easing }), container)
+				const container = "#scroll-easings";
+				rp(ScrollUtility({ container, easing }), container);
 			},
 			duration: (duration: number) => {
-				const container = "#scroll-duration"
-				rp(ScrollUtility({ container, duration }), container)
+				const container = "#scroll-duration";
+				rp(ScrollUtility({ container, duration }), container);
 			},
 			force: (type: string) => {
-				const container = "#scroll-force"
-				rp(ScrollUtility({ container, duration: 2000, force: type === "force" }), container)
-			},
+				const container = "#scroll-force";
+				rp(
+					ScrollUtility({ container, duration: 2000, force: type === "force" }),
+					container
+				);
+			}
 		},
 		scrollTo: Object.assign(
 			(value: number) => {
-				const container = "#scrollTo"
-				ScrollUtility({ container }).scrollTo(value)
+				const container = "#scrollTo";
+				ScrollUtility({ container }).scrollTo(value);
 			},
 			{
 				element: (value: number) => {
-					const container = "#example-scrollToElement"
-					const element = "#scrollTo-element"
-					ScrollUtility({ container }).scrollTo(element, value)
+					const container = "#example-scrollToElement";
+					const element = "#scrollTo-element";
+					ScrollUtility({ container }).scrollTo(element, value);
 				},
 				value: (value: number) => {
-					const container = "#scrollToValue"
-					ScrollUtility({ container }).scrollTo(value)
-				},
-			},
+					const container = "#scrollToValue";
+					ScrollUtility({ container }).scrollTo(value);
+				}
+			}
 		),
 		offset: Object.assign(
 			(value: number) => {
-				const container = "#offset"
-				ScrollUtility({ container }).offset(value)
+				const container = "#offset";
+				ScrollUtility({ container }).offset(value);
 			},
 			{
 				element: (value: number) => {
-					const container = "#offsetElement"
-					ScrollUtility({ container }).offset(container, value)
+					const container = "#offsetElement";
+					ScrollUtility({ container }).offset(container, value);
 				},
 				value: (value: number) => {
-					const container = "#offsetValue"
-					ScrollUtility({ container }).offset(value)
-				},
-			},
+					const container = "#offsetValue";
+					ScrollUtility({ container }).offset(value);
+				}
+			}
 		),
 		scrollPosition: () => {
-			const container = "#scrollPosition"
+			const container = "#scrollPosition";
 			notify(
 				ScrollUtility({ container })
 					.scrollPosition()
-					.toString(),
-			)
+					.toString()
+			);
 		},
 		size: () => {
-			const container = "#size"
+			const container = "#size";
 			notify(
 				ScrollUtility({ container })
 					.size()
-					.toString(),
-			)
+					.toString()
+			);
 		},
 		scrollSize: () => {
-			const container = "#scrollSize"
+			const container = "#scrollSize";
 			notify(
 				ScrollUtility({ container })
 					.scrollSize()
-					.toString(),
-			)
+					.toString()
+			);
 		},
 		relativePosition: (value?: number) => {
-			const container = "#relativePosition"
-			const element = "#relativePosition-element"
+			const container = "#relativePosition";
+			const element = "#relativePosition-element";
 			value !== undefined
 				? ScrollUtility({ container }).scrollTo(element, value)
-				: notify(ScrollUtility.getRelativePosition(element).toString())
+				: notify(ScrollUtility.getRelativePosition(element).toString());
 		},
 		distToElement: (value?: number) => {
-			const container = "#distToElement"
-			const element = "#distToElement-element"
+			const container = "#distToElement";
+			const element = "#distToElement-element";
 			notify(
 				ScrollUtility({ container })
 					.distToElement(element, value)
-					.toString(),
-			)
+					.toString()
+			);
 		},
 		stop: (stop: boolean) => {
-			const container = "#stop"
+			const container = "#stop";
 			if (stop) {
-				ScrollUtility.stop()
+				ScrollUtility.stop();
 			} else {
-				rp(ScrollUtility({ container, duration: 2000 }), container)
+				rp(ScrollUtility({ container, duration: 2000 }), container);
 			}
-		},
-	}
-	;(window as any).example = examples
-}
+		}
+	};
+	(window as any).example = examples;
+};
