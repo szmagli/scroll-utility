@@ -8,8 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run build:docs && npm run dev:rollup -- --watch",
-    "build:docs": "node compile-doc-jsx.js",
-    "orgmode": "emacs -q doc/README.org -f org-html-export-to-html --kill",
+    "build:docs": "emacs --batch -l doc/emacsconfig.el doc/README.org -f org-html-export-to-html --kill && mv doc/README.html doc/index.html",
     "dev:rollup": "rollup -c",
     "prebuild": "rm -rf dist",
     "gh-pages": "gh-pages -d doc/dist",

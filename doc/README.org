@@ -11,23 +11,11 @@
 #+KEYWORDS: scroll smooth simple center scrolling centering
 #+OPTIONS: num:nil
 #+STARTUP: content
-#+BEGIN_SRC emacs-lisp :exports results :results none
-	(setq org-confirm-babel-evaluate nil)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp :exports results :results none
-	(defun org-babel-execute:pug (body params)
-		(shell-command-to-string (concat "echo $'"  body "' | pug")))
-#+END_SRC
-
-* Features
-	- Simple, fast and small footprint ~10KiB.
-	- Allows specifying the element offset, easing animations.
-	- Scroll inside an element.
 
 * Installation
 	From npm:
 	#+BEGIN_SRC sh
-		$ npm install --save scroll-utility
+		npm install --save scroll-utility
 	#+END_SRC
 	From a cdn: [[https://www.jsdelivr.com/package/npm/scroll-utility][jsdelivr]]
 	#+BEGIN_SRC html
@@ -35,12 +23,28 @@
 	#+END_SRC
 
 * Basic Usage
+	 	 #+BEGIN_SRC pug :exports results :results html
+			 #scrollTo.scroll-container
+				 .button-container
+					 each item in ["0", "\'#some-element\'", "500"]
+						 button.scroll-button(onclick=`example.basicTo(${item})`)=item
+				 .button-container.left
+					 each item in ["-200", "\'window\'", "200"]
+						 button.scroll-button(onclick=`example.basicBy(${item})`)=item
+				 hr.spacer
+				 hr.spacer
+				 #here.some-element
+					 h1 #here
+				 hr.spacer
+				 hr.spacer
+	 #+END_SRC
 * API
 ** Options
 ** constructor
 	 	 That will create a new =ScrollUtility= instance, which you can use to scroll. \\
 	 Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
 *** container
+		
 		#+BEGIN_SRC pug :exports results :results html
 			#scroll-container.scroll-container.normal
 				.button-container

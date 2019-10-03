@@ -1,6 +1,6 @@
 import { optionalScroll } from "./scroll";
 
-export default optionalScroll({
+const ScrollUtility = optionalScroll({
 	container: window,
 	duration: 1000,
 	easing: "easeInOutQuad",
@@ -9,3 +9,6 @@ export default optionalScroll({
 	onScroll: null,
 	onStop: null
 })();
+
+export default ScrollUtility;
+module.exports = ScrollUtility;
