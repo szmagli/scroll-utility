@@ -17,7 +17,7 @@ export interface IScrollOptions {
 
 const ScrollElements: {
 	container: SElement
-	createScrollAnimation: IScrollElement
+	scrollAnimation: IScrollElement
 }[][] = [[], []]
 
 export interface IScroll {
@@ -27,16 +27,22 @@ export interface IScroll {
 	easing?:
 		| string
 		| ((currentStep: number, offsetValue: number, distance: number, totalSteps: number) => number)
+	onStop?: null | (() => void)
+	onScroll?: null | ((external?: boolean) => void)
+	force?: boolean
 }
 
 export function optionalScroll(defaultOptions: Required<IScroll>) {
-	return (newOptions: IScroll = {}) => {
-		const options = {
+	return (options: IScroll = {}) => {
+		const mappedOptions = {
 			...defaultOptions,
-			...newOptions,
+			...options,
 		}
-		const container = getElementWrapper(getElementFromQuery(options.container), options.horizontal)
-		const horizontal = options.horizontal
+		const container = getElementWrapper(
+			getElementFromQuery(mappedOptions.container),
+			mappedOptions.horizontal,
+		)
+		const horizontal = mappedOptions.horizontal
 		const indexedDirection = horizontal ? 1 : 0
 		let index = ScrollElements[indexedDirection].findIndex(
 			value => container.element === value.container.element,
@@ -45,20 +51,29 @@ export function optionalScroll(defaultOptions: Required<IScroll>) {
 			index = ScrollElements[indexedDirection].length
 			ScrollElements[indexedDirection][index] = {
 				container: container,
-				createScrollAnimation: ScrollElement(container),
+				scrollAnimation: ScrollElement(container),
 			}
 		}
-		const createScrollAnimation = ScrollElements[indexedDirection][index].createScrollAnimation
-		const easing = easingFromFunction(options.easing)
-		return Scroll({ createScrollAnimation, container, duration: options.duration, easing })
+		const easing = easingFromFunction(mappedOptions.easing)
+		return Scroll({
+			...mappedOptions,
+			onStop: mappedOptions.onStop === null ? () => null : mappedOptions.onStop,
+			onScroll: mappedOptions.onScroll === null ? () => null : mappedOptions.onScroll,
+			scrollAnimation: ScrollElements[indexedDirection][index].scrollAnimation,
+			container,
+			easing,
+		})
 	}
 }
 
 export function Scroll(options: {
 	duration: number
 	easing: EasingFunction
-	createScrollAnimation: IScrollElement
+	scrollAnimation: IScrollElement
 	container: SElement
+	onStop: () => void
+	onScroll: () => void
+	force: boolean
 }) {
 	function getRelativePosition(query: ElementOrQuery): number {
 		const elementRaw = getElementFromQuery(query)
@@ -98,14 +113,14 @@ export function Scroll(options: {
 		_offsetValue(to)
 	}
 	function _offsetValue(value: number) {
-		options.createScrollAnimation({
+		options.scrollAnimation.create({
 			...options,
 			value: maxMin(value, scroll.getScrollSize()),
 			relative: true,
 		})
 	}
 	function _scrollToValue(value: number) {
-		options.createScrollAnimation({ ...options, value, relative: false })
+		options.scrollAnimation.create({ ...options, value, relative: false })
 	}
 	function _scrollToElement(query: ElementOrQuery, value: number = 0) {
 		const _element = getElementFromQuery(query)
@@ -135,9 +150,8 @@ export function Scroll(options: {
 	}
 	return Object.assign(
 		optionalScroll({
+			...options,
 			container: options.container.element,
-			duration: options.duration,
-			easing: options.easing,
 			horizontal: options.container.horizontal,
 		}),
 		scroll,

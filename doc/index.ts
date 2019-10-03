@@ -12,7 +12,7 @@ function notify(message: string) {
 }
 
 function rp(scrollManager: typeof ScrollUtility, element: string) {
-	return scrollManager.scrollTo(element, scrollManager.relativePosition(element) < 0.5 ? 1 : 0)
+	return scrollManager.scrollTo(element, scrollManager.getRelativePosition(element) < 0.5 ? 1 : 0)
 }
 
 window.onload = () => {
@@ -107,7 +107,7 @@ window.onload = () => {
 			const element = "#relativePosition-element"
 			value !== undefined
 				? ScrollUtility({ container }).scrollTo(element, value)
-				: notify(ScrollUtility.relativePosition(element).toString())
+				: notify(ScrollUtility.getRelativePosition(element).toString())
 		},
 		distToElement: (value?: number) => {
 			const container = "#distToElement"
