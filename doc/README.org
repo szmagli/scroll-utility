@@ -11,6 +11,13 @@
 #+KEYWORDS: scroll smooth simple center scrolling centering
 #+OPTIONS: num:nil
 #+STARTUP: content
+#+BEGIN_SRC emacs-lisp :exports results :results none
+	(setq org-confirm-babel-evaluate nil)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :exports results :results none
+	(defun org-babel-execute:pug (body params)
+		(shell-command-to-string (concat "echo $'"  body "' | pug")))
+#+END_SRC
 
 * Features
 	- Simple, fast and small footprint ~10KiB.
@@ -27,7 +34,9 @@
 		<script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
 	#+END_SRC
 
+* Basic Usage
 * API
+** Options
 ** constructor
 	 #+INCLUDE: "examples/constructor/index.ts" src typescript
 	 That will create a new =ScrollUtility= instance, which you can use to scroll. \\
@@ -102,29 +111,6 @@
 
 		Learn more about easing functions [[https://easings.net/en][here]]:
 
-*** force
-		#+INCLUDE: "examples/constructor/force.ts" src typescript
-
-		It ignores external scroll and previous scroll animations
-
-		*try scrolling to see results:*
-		#+BEGIN_SRC pug :exports results :results html
-			#scroll-force.scroll-container
-				.button-container
-					each item in [ "no force", "force" ]
-						button.scroll-button(onclick=`example.constructor.force("${item}")`)= item
-				h1 Top
-				hr.spacer
-				hr.spacer
-				h1 Bottom
-		#+END_SRC
-
-		It can be changed any time:
-		#+BEGIN_SRC typescript
-			const scrollManager = new ScrollUtility({ force: true })
-			scrollManager.force = false
-		#+END_SRC
-
 ** scrollTo
 	 #+INCLUDE: "examples/scrollTo.ts" src typescript
 	 #+BEGIN_SRC pug :exports results :results html
@@ -140,7 +126,6 @@
 
 	 See [[duration]] for info of option duration\\
 	 See [[easing]] for info of option easing\\
-	 See [[force]] for info of option force\\
 *** value
 		:PROPERTIES:
 		:CUSTOM_ID: scrollToValue
@@ -187,7 +172,6 @@
 
 	 See [[duration]] for info of option duration\\
 	 See [[easing]] for info of option easing\\
-	 See [[force]] for info of option force\\
 *** value
 		:PROPERTIES:
 		:CUSTOM_ID: offsetValue
@@ -320,6 +304,3 @@
 ** specify duration for scroll
 	 #+INCLUDE: "examples/howto/duration.ts" src typescript
 	 see [[duration]]
-** ignore "user" scroll while scrolling
-	 #+INCLUDE: "examples/howto/ignore.ts" src typescript
-	 see [[force]]
