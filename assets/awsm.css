@@ -781,7 +781,7 @@ samp {
 }
 
 pre {
-	overflow-x: auto;
+	overflow-x: auto !important;
 	font-size: 0.8em;
 	background: linear-gradient(rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%) 0 0,
 		linear-gradient(rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%) 100% 0;

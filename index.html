@@ -3,24 +3,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2019-10-04 vie 22:29 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>scroll-utility</title>
-<!-- 2019-10-04 vie 21:06 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="David Perez Alvarez" />
-<meta  name="keywords" content="scroll smooth simple center scrolling centering" />
+<meta name="generator" content="Org mode" />
+<meta name="author" content="David Perez Alvarez" />
+<meta name="keywords" content="scroll smooth simple center scrolling centering" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -47,30 +54,127 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -87,6 +191,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +206,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -154,20 +259,19 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Installation</a></li>
-<li><a href="#sec-2">Basic Usage</a></li>
+<li><a href="#org184dcf7">Installation</a></li>
+<li><a href="#org942ac6b">Basic Usage</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Installation</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org184dcf7" class="outline-2">
+<h2 id="org184dcf7">Installation</h2>
+<div class="outline-text-2" id="text-org184dcf7">
 <p>
 From npm:
 </p>
 <div class="org-src-container">
-
 <pre class="src src-sh">npm install --save scroll-utility
 </pre>
 </div>
@@ -175,318 +279,32 @@ From npm:
 From a cdn: <a href="https://www.jsdelivr.com/package/npm/scroll-utility">jsdelivr</a>
 </p>
 <div class="org-src-container">
-
-<pre class="src src-html">&lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>=<span style="font-style: italic;">"https://cdn.jsdelivr.net/npm/scroll-utility@5"</span>&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+<pre class="src src-html">&lt;<span style="color: #bc6ec5; font-weight: bold;">script</span> <span style="color: #7590db;">src</span>=<span style="color: #2d9574;">"https://cdn.jsdelivr.net/npm/scroll-utility@5"</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">script</span>&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Basic Usage</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org942ac6b" class="outline-2">
+<h2 id="org942ac6b">Basic Usage</h2>
+<div class="outline-text-2" id="text-org942ac6b">
 <div class="org-src-container">
+<pre class="src src-js"><span style="color: #4f97d7; font-weight: bold;">import</span> ScrollUtility from <span style="color: #2d9574;">"scroll-utility"</span>;
 
-<pre class="src src-typescript">import ScrollUtility from "scroll-utility";
+ScrollUtility.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">50</span><span style="color: #4f97d7;">)</span>;
+ScrollUtility.scrollTo<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"#some-element"</span><span style="color: #4f97d7;">)</span>;
 
-ScrollUtility.scrollTo(50);
-ScrollUtility.scrollTo("#some-element");
-
-ScrollUtility.scrollBy(500);
+ScrollUtility.scrollBy<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">500</span><span style="color: #4f97d7;">)</span>;
 </pre>
 </div>
 
-<div class="scroll-container" id="basic-usage"><div class="button-container"><button class="scroll-button" onclick="example.basicBy(-200)">scrollBy(-200)</button><button class="scroll-button" onclick="example.basicBy(200)">scrollBy(200)</button></div><div class="button-container left"><button class="scroll-button" onclick="example.basicTo(0)">scrollTo(0)</button><button class="scroll-button" onclick="example.basicTo('#some-element')">scrollTo('#some-element')</button><button class="scroll-button" onclick="example.basicTo(500)">scrollTo(500)</button></div><hr class="spacer"/><hr class="spacer"/><div class="some-element" id="some-element"><h1>#here</h1></div><hr class="spacer"/><hr class="spacer"/></div>
-
-<p>
-#                         That will create a new <code>ScrollUtility</code> instance, which you can use to scroll. <br  />
-        #                 Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
-</p>
-<p>
-#                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #scroll-container.scroll-container.normal
-#                                        .button-container
-#                                                button.scroll-button(onclick=`example.constructor.container()`) scroll window
-#                                        hr.spacer
-#                                        #container.some-element.scroll-container(position="relative")
-#                                                h1 #container
-#                                                .button-container
-#                                                        button.scroll-button(onclick=`example.constructor.container(true)`) scroll container
-#                                                hr.spacer
-#                                                hr.spacer
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        The <code>container</code> option indicates the element in which the scroll takes place; <code>window</code> by default
-</p>
-
-<p>
-#                        If it's a <code>string</code>, then it will use it as a <b>querySelector</b> with
-#                        <code>document.querySelector</code> for getting an <code>Element</code>. <br  />
-        #                        If the <b>querySelector</b> doesn't match an element, it will send a warning to the console and use window to scroll
-</p>
-
-<p>
-#                                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #scroll-horizontal.scroll-container.horizontal
-#                                        .button-container
-#                                                each item in ["horizontal", "vertical"]
-#                                                        button.scroll-button(onclick=`example.constructor.horizontal("${item}")`)= item
-#                                        - const to = 300
-#                                        - for (let i = 50; i &lt; to; i += 50)
-#                                                .pspacer(style=`top: ${i}%; width: ${to}%;`)
-#                                                .horizontal.pspacer(style=`left: ${i}%; height: ${to}%;`)
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        The <b>horizontal</b> option indicates the direction when scrolling, by default
-#                        <b>false</b>, wich means vertical scroll
-</p>
-
-<p>
-#                                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #scroll-duration.scroll-container
-#                                        .button-container
-#                                                each duration in ["1000", "750", "500", "250", "0"]
-#                                                        button.scroll-button(onclick=`example.constructor.duration(${duration})`)= duration
-#                                        h1 Top
-#                                        hr.spacer
-#                                        hr.spacer
-#                                        h1 Bottom
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        The <b>duration</b> option indicates the default duration of the scroll animations in milliseconds, by default <span class="underline">1000ms</span><br  />
-        #                        It will be used along with <i>easing</i> for creating the <b>smooth</b> animation when scrolling
-</p>
-
-<p>
-#                        If you want to disable the <i>smooth</i> animation, set <b>duration</b> to 0.
-</p>
-
-<p>
-#                                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #scroll-easings.scroll-container
-#                                        .button-container
-#                                                each easing in [ "linear", "easeInOutQuad", "easeOutBounce" ]
-#                                                        button.scroll-button(onclick=`example.constructor.easing("${easing}")`)= easing
-#                                        h1 Top
-#                                        hr.spacer
-#                                        hr.spacer
-#                                        h1 Bottom
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        Learn more about easing functions <a href="https://easings.net/en">here</a>:
-</p>
-
-<p>
-#                         #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #scrollTo.scroll-container
-#                                 .button-container
-#                                         each item in ["0", "\'#here\'", "Infinity"]
-#                                                 button.scroll-button(onclick=`example.scrollTo(${item})`)=item
-#                                 hr.spacer
-#                                 #here.some-element
-#                                         h1 #here
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                 See <i>duration</i> for info of option duration<br  />
-        #                 See <i>easing</i> for info of option easing<br  />
-</p>
-<p>
-#                        :PROPERTIES:
-#                        :CUSTOM<sub>ID</sub>: scrollToValue
-#                        :END:
-#                                        Scroll to certain value
-#                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #scrollToValue.scroll-container
-#                                        .button-container
-#                                                each item in ["0", "50", "200", "Infinity"]
-#                                                        button.scroll-button(onclick=`example.scrollTo.value(${item})`)=item
-#                                        hr.spacer
-#                                        hr.spacer
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        :PROPERTIES:
-#                        :CUSTOM<sub>ID</sub>: scrollToElement
-#                        :END:
-#                                        Center element at some degree
-#                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #example-scrollToElement.scroll-container
-#                                        .button-container
-#                                                each item in ["0", "0.25", "0.5", "0.75", "1"]
-#                                                        button.scroll-button(onclick=`example.scrollTo.element(${item})`)=item
-#                                        hr.spacer
-#                                        #scrollTo-element.some-element
-#                                                h1 element to center
-#                                        hr.spacer
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #offset.scroll-container
-#                                 .button-container
-#                                         each item in ["-100", "100"]
-#                                                 button.scroll-button(onclick=`example.offset(${item})`)=item
-#                                 hr.spacer
-#                                 hr.spacer
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                 See <i>duration</i> for info of option duration<br  />
-        #                 See <i>easing</i> for info of option easing<br  />
-</p>
-<p>
-#                        :PROPERTIES:
-#                        :CUSTOM<sub>ID</sub>: offsetValue
-#                        :END:
-#                                        Offset scroll position by certain value
-#                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #offsetValue.scroll-container
-#                                        .button-container
-#                                                each item in ["-100", "100"]
-#                                                        button.scroll-button(onclick=`example.offset.value(${item})`)=item
-#                                        hr.spacer
-#                                        hr.spacer
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                        :PROPERTIES:
-#                        :CUSTOM<sub>ID</sub>: offsetElement
-#                        :END:
-#                        Offset scroll position by a percent of the size of some element
-#                                        Offset scroll by its container size:
-#                        #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                                #offsetElement.scroll-container
-#                                        .button-container
-#                                                each item in ["-1", "-0.5", "0.5", "1"]
-#                                                        button.scroll-button(onclick=`example.offset.element(${item})`)=item
-#                                        - const to = 600
-#                                        - for (let i = 50; i &lt; to; i += 50)
-#                                                .pspacer(style=`top: ${i}%;`)
-#                        #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         Stop all scroll animations
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #stop.scroll-container
-#                                 .button-container
-#                                         each item in ["scroll", "stop"]
-#                                                 button.scroll-button(onclick=`example.stop(${item <code>=</code> "stop"})`)=item
-#                                 hr.spacer
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The position of the scroll of some element. <br  />
-        #                 Somewhat equivalent of <code>scrollLeft/scrollTop</code>; depending on the direction <i>specified</i>
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #scrollPosition.scroll-container
-#                                 .button-container
-#                                                button.scroll-button(onclick=`example.scrollPosition()`) scrollPosition
-#                                 hr.spacer
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The size of some element. <br  />
-        #                 Somewhat equivalent of <code>clientWidth/clientHeight</code>; depending on the direction <i>specified</i>
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #size.scroll-container
-#                                 .button-container
-#                                                button.scroll-button(onclick=`example.size()`) size
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The size of the scroll of some element. <br  />
-        #                 Somewhat equivalent of <code>scrollWidth(or scrollHeight) - clientWidth(or clientHeight)</code>; depending on the direction <i>specified</i>
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #scrollSize.scroll-container
-#                                 .button-container
-#                                                button.scroll-button(onclick=`example.scrollSize()`) scrollSize
-#                                 hr.spacer
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The <code>relativePosition</code> of some element. <br  />
-        #                 It correlates to  <i>scrollTo element</i>
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #relativePosition.scroll-container
-#                                 .button-container
-#                                        each item in ["0", "0.5", "1"]
-#                                                button.scroll-button(onclick=`example.relativePosition(${item})`)=`${item}`
-#                                        button.scroll-button(onclick=`example.relativePosition()`) relativePosition
-#                                 hr.spacer
-#                                 #relativePosition-element.some-element
-#                                         h1 some-element
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The distance to center some element <br  />
-        #                 It correlates to <i>scrollTo element</i>
-#                 #+BEGIN<sub>SRC</sub> pug :exports results :results html
-#                         #distToElement.scroll-container
-#                                 .button-container
-#                                        each item in ["0", "0.5", "1"]
-#                                                button.scroll-button(onclick=`example.distToElement(${item})`)=`${item}`
-#                                 hr.spacer
-#                                 #distToElement-element.some-element
-#                                         h1 some-element
-#                                 hr.spacer
-#                 #+END<sub>SRC</sub>
-</p>
-
-<p>
-#                         The size of some element <br  />
-        #                 It correlates to <i>size</i>
-</p>
-<p>
-#                         see <i>scrollTo element</i>
-</p>
-<p>
-#                         see <i>scrollTo value</i>
-</p>
-<p>
-#                         see <i>offset value</i>
-</p>
-<p>
-#                         see <i>offset element</i>
-</p>
-<p>
-#                         see <i>easing</i>
-</p>
-<p>
-#                         see <i>duration</i>
-</p>
+<div class="scroll-container" id="basic-usage"><div class="button-container"><button class="scroll-button" onclick="example.basicBy(-200)">scrollBy(-200)</button><button class="scroll-button" onclick="example.basicBy(200)">scrollBy(200)</button></div><div class="button-container left"><button class="scroll-button" onclick="example.basicTo(0)">scrollTo(0)</button><button class="scroll-button" onclick="example.basicTo('#some-element')">scrollTo('#some-element')</button><button class="scroll-button" onclick="example.basicTo(500)">scrollTo(500)</button></div><hr class="spacer"/><hr class="spacer"/><div class="some-element" id="some-element"><h1>#some-element</h1></div><hr class="spacer"/><hr class="spacer"/></div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: David Perez Alvarez</p>
-<p class="date">Created: 2019-10-04 vie 21:06</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.2 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="date">Created: 2019-10-04 vie 22:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
