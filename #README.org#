@@ -23,7 +23,6 @@
 	#+END_SRC
 
 * Basic Usage
-	Use =scrollTo= and =scrollBy= methods to scroll:
 	#+begin_src js
 		import ScrollUtility from "scroll-utility";
 
