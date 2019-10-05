@@ -35,11 +35,10 @@
 	#+BEGIN_SRC pug :exports results :results html
 		#basic-usage.scroll-container
 			.button-container
-				each item in ["-200", "200"]
-					button.scroll-button(onclick=`example.basicBy(${item})`)=`scrollBy(${item})`
-			.button-container.left
 				each item in ["0", "\'#some-element\'", "500"]
 					button.scroll-button(onclick=`example.basicTo(${item})`)=`scrollTo(${item})`
+				each item in ["-200", "200"]
+					button.scroll-button(onclick=`example.basicBy(${item})`)=`scrollBy(${item})`
 			hr.spacer
 			hr.spacer
 			#some-element.some-element
