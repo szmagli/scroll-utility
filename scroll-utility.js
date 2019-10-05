@@ -1,1 +1,444 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define("ScrollUtility",[],e):"object"==typeof exports?exports.ScrollUtility=e():t.ScrollUtility=e()}(window,function(){return function(t){var e={};function n(i){if(e[i])return e[i].exports;var o=e[i]={i:i,l:!1,exports:{}};return t[i].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(i,o,function(e){return t[e]}.bind(null,o));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=1)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.easingFromFunction=function(t){return"string"==typeof t?e.Easings[t]:t},e.Easings={linear:function(t,e,n,i){return n*t/i+e},easeInQuad:function(t,e,n,i){return n*(t/=i)*t+e},easeOutQuad:function(t,e,n,i){return-n*(t/=i)*(t-2)+e},easeInOutQuad:function(t,e,n,i){return(t/=i/2)<1?n/2*t*t+e:-n/2*(--t*(t-2)-1)+e},easeInCubic:function(t,e,n,i){return n*(t/=i)*t*t+e},easeOutCubic:function(t,e,n,i){return n*((t=t/i-1)*t*t+1)+e},easeInOutCubic:function(t,e,n,i){return(t/=i/2)<1?n/2*t*t*t+e:n/2*((t-=2)*t*t+2)+e},easeInQuart:function(t,e,n,i){return n*(t/=i)*t*t*t+e},easeOutQuart:function(t,e,n,i){return-n*((t=t/i-1)*t*t*t-1)+e},easeInOutQuart:function(t,e,n,i){return(t/=i/2)<1?n/2*t*t*t*t+e:-n/2*((t-=2)*t*t*t-2)+e},easeInQuint:function(t,e,n,i){return n*(t/=i)*t*t*t*t+e},easeOutQuint:function(t,e,n,i){return n*((t=t/i-1)*t*t*t*t+1)+e},easeInOutQuint:function(t,e,n,i){return(t/=i/2)<1?n/2*t*t*t*t*t+e:n/2*((t-=2)*t*t*t*t+2)+e},easeInSine:function(t,e,n,i){return-n*Math.cos(t/i*(Math.PI/2))+n+e},easeOutSine:function(t,e,n,i){return n*Math.sin(t/i*(Math.PI/2))+e},easeInOutSine:function(t,e,n,i){return-n/2*(Math.cos(Math.PI*t/i)-1)+e},easeInExpo:function(t,e,n,i){return 0==t?e:n*Math.pow(2,10*(t/i-1))+e},easeOutExpo:function(t,e,n,i){return t==i?e+n:n*(1-Math.pow(2,-10*t/i))+e},easeInOutExpo:function(t,e,n,i){return 0==t?e:t==i?e+n:(t/=i/2)<1?n/2*Math.pow(2,10*(t-1))+e:n/2*(2-Math.pow(2,-10*--t))+e},easeInCirc:function(t,e,n,i){return-n*(Math.sqrt(1-(t/=i)*t)-1)+e},easeOutCirc:function(t,e,n,i){return n*Math.sqrt(1-(t=t/i-1)*t)+e},easeInOutCirc:function(t,e,n,i){return(t/=i/2)<1?-n/2*(Math.sqrt(1-t*t)-1)+e:n/2*(Math.sqrt(1-(t-=2)*t)+1)+e},easeInElastic:function(t,e,n,i){var o=1.70158,r=0,s=n;if(0==t)return e;if(1==(t/=i))return e+n;if(r||(r=.3*i),s<Math.abs(n)){s=n;o=r/4}else o=r/(2*Math.PI)*Math.asin(n/s);return-s*Math.pow(2,10*(t-=1))*Math.sin((t*i-o)*(2*Math.PI)/r)+e},easeOutElastic:function(t,e,n,i){var o=1.70158,r=0,s=n;if(0==t)return e;if(1==(t/=i))return e+n;if(r||(r=.3*i),s<Math.abs(n)){s=n;o=r/4}else o=r/(2*Math.PI)*Math.asin(n/s);return s*Math.pow(2,-10*t)*Math.sin((t*i-o)*(2*Math.PI)/r)+n+e},easeInOutElastic:function(t,e,n,i){var o=1.70158,r=0,s=n;if(0==t)return e;if(2==(t/=i/2))return e+n;if(r||(r=i*(.3*1.5)),s<Math.abs(n)){s=n;o=r/4}else o=r/(2*Math.PI)*Math.asin(n/s);return t<1?s*Math.pow(2,10*(t-=1))*Math.sin((t*i-o)*(2*Math.PI)/r)*-.5+e:s*Math.pow(2,-10*(t-=1))*Math.sin((t*i-o)*(2*Math.PI)/r)*.5+n+e},easeInBack:function(t,e,n,i,o){return null==o&&(o=1.70158),n*(t/=i)*t*((o+1)*t-o)+e},easeOutBack:function(t,e,n,i,o){return null==o&&(o=1.70158),n*((t=t/i-1)*t*((o+1)*t+o)+1)+e},easeInOutBack:function(t,e,n,i,o){return null==o&&(o=1.70158),(t/=i/2)<1?n/2*(t*t*((1+(o*=1.525))*t-o))+e:n/2*((t-=2)*t*((1+(o*=1.525))*t+o)+2)+e},easeInBounce:function(t,n,i,o){return i-e.Easings.easeOutBounce(o-t,0,i,o)+n},easeOutBounce:function(t,e,n,i){return(t/=i)<1/2.75?n*(7.5625*t*t)+e:t<2/2.75?n*(7.5625*(t-=1.5/2.75)*t+.75)+e:t<2.5/2.75?n*(7.5625*(t-=2.25/2.75)*t+.9375)+e:n*(7.5625*(t-=2.625/2.75)*t+.984375)+e},easeInOutBounce:function(t,n,i,o){return t<o/2?.5*e.Easings.easeInBounce(2*t,0,i,o)+n:.5*e.Easings.easeOutBounce(2*t-o,0,i,o)+.5*i+n}}},function(t,e,n){"use strict";const i=n(2);t.exports=i.Scroll},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=n(3),o=n(4),r=n(0),s=t=>"number"==typeof t?t:t();function l(t,e){return Math.max(Math.min(t,e),0)}class u{constructor(t={}){this._onscroll=(()=>this._onScroll()),this._scrollAnimations=[],this._container=window,this.container=t.container||window,this._horizontal=!!t.horizontal,this.duration=void 0===t.duration?1e3:t.duration,this.onScroll=void 0===t.onScroll?null:t.onScroll,this.onStop=void 0===t.onStop?null:t.onStop,this.easing=void 0===t.easing?"easeInOutQuad":t.easing,this.force=!!t.force,this._to=this.scrollPosition,this._virtualPosition=this.scrollPosition}get container(){return this._container}set container(t){const e=i.getElementFromQuery(t);this._container.removeEventListener("scroll",this._onscroll),this._container=e,this._container.addEventListener("scroll",this._onscroll)}get size(){return i.Misc.getSize(this._container,this._horizontal)}get scrollSize(){return i.Misc.getScrollSize(this._container,this._horizontal)-this.size}get scrollPosition(){return i.Misc.getScrollPosition(this._container,this._horizontal)}relativePosition(t){const e=i.getElementFromQuery(t);return e===this._container?this.scrollPosition/this.scrollSize:i.Misc.getRelativeElementPosition(this._container,e,this._horizontal)}distToElement(t,e=0){return i.Misc.getDistToCenterElement(this._container,i.getElementFromQuery(t),this._horizontal,e)}elementSize(t,e=1){return i.Misc.getSize(i.getElementFromQuery(t),this._horizontal)*e}stop(){this.onStop&&this.onStop(),this._scrollAnimations=[],this._beforeScroll()}scrollTo(...t){this._beforeScroll();const e="number"==typeof t[0]?null:t[0],n="number"==typeof t[0]?t[0]:t[1],i=this._getOptions("number"==typeof t[0]?t[1]:t[2]);return null===e?this._scrollToValue(l(n,this.scrollSize),i):this._scrollToElement(e,n,i),this}offset(...t){this._beforeScroll();const e="number"==typeof t[0]?null:t[0],n="number"==typeof t[0]?t[0]:t[1],i=this._getOptions("number"==typeof t[0]?t[1]:t[2]);return null===e?this._offsetValue(n,i):this._offsetElement(e,n,i),this}_beforeScroll(){if(!this._scrollAnimations.length){const t=this.scrollPosition;Math.round(this._virtualPosition-t)&&(this._virtualPosition=t),this._to=this._virtualPosition}}_createScrollAnimation(t,e,n){this._scrollAnimations.push(new o.ScrollAnimation(t,e,n)),1===this._scrollAnimations.length&&this._update()}_onScroll(){const t=Math.round(this.scrollPosition)-Math.round(l(this._virtualPosition,this.scrollSize)),e=!!t;if(e){this._virtualPosition=Math.round(this.scrollPosition);const e=this._to;this._to=(()=>s(e)+t)}this.onScroll&&this.onScroll(e)}_update(){const t=this.scrollPosition;this._scrollAnimations=this._scrollAnimations.filter(t=>(this._virtualPosition=(t.options.force?t.from:this._virtualPosition-t.distance)+t.updateDistance(),!t.isPastAnimation()));const e=Math.round(this._virtualPosition)-t;e&&i.Misc.scrollBy(this._container,this._horizontal,e),this._scrollAnimations.length>0?requestAnimationFrame(()=>this._update()):this.stop()}_getOptions(t={}){const e=t.easing||this.easing||"easeInOutQuad";return{easing:"string"==typeof e?r.Easings[e]:e,duration:void 0===t.duration?this.duration:t.duration,force:void 0===t.force?this.force:t.force}}_offsetElement(t,e=1,n){const i=this.elementSize(t,e);this._offsetValue(i,n)}_offsetValue(t,e){const n=e.force?this.scrollPosition:s(this._to),i=()=>l(s(t)+n,this.scrollSize);this._to=e.force?i:s(i),this._createScrollAnimation(n,this._to,e)}_scrollToValue(t,e){const n=e.force?this.scrollPosition:s(this._to),i=()=>s(t);this._to=e.force?i:s(i),this._createScrollAnimation(n,this._to,e)}_scrollToElement(t,e=0,n){const o=i.getElementFromQuery(t),r=o===this._container?()=>this.scrollSize*e:()=>this.distToElement(o,e)+this.scrollPosition;this._scrollToValue(r,n)}}u.global=new u,e.Scroll=u},function(t,e,n){"use strict";function i(){return document.body}function o(){return document.documentElement||{clientWidth:0,clientHeight:0,scrollWidth:0,scrollHeight:0,offsetWidth:0,offsetHeight:0}}Object.defineProperty(e,"__esModule",{value:!0});const r=(t=!1)=>t?o().clientWidth||i().clientWidth||window.innerWidth:o().clientHeight||i().clientHeight||window.innerHeight;function s(t){return t===window||t===o()}function l(t,e){return(n,i=!1)=>s(n)?t(i):e(n,i)}e.getElementFromQuery=function(t){if(!t)throw new Error(`elementOrQuery should not be a ${typeof t}`);const e="string"==typeof t?document.querySelector(t):t;if(!e)throw new Error("no element matched querySelector");return e===document.documentElement?window:e},function(t){t.getSize=l(r,(t,e)=>e?t.clientWidth:t.clientHeight),t.getSizeWithBorders=l(r,(t,e)=>e?t.offsetWidth:t.offsetHeight),t.getScrollPosition=l(t=>t?window.pageXOffset:window.pageYOffset,(t,e)=>e?t.scrollLeft:t.scrollTop),t.getScrollSize=l(t=>((t=!1)=>t?Math.max(i().scrollWidth,i().offsetWidth,o().clientWidth,o().scrollWidth,o().offsetWidth):Math.max(i().scrollHeight,i().offsetHeight,o().clientHeight,o().scrollHeight,o().offsetHeight))(t),(t,e)=>e?t.scrollWidth:t.scrollHeight);const e=l(()=>0,(t,e)=>parseInt(getComputedStyle(t,null).getPropertyValue(e?"border-left-width":"border-top-width"),10)||0);function n(n,i,o,r){return n(t.getOffset(o,r)-t.getOffset(i,r)-e(i,r),t.getSize(i,r)-t.getSizeWithBorders(o,r))}t.getOffset=l(()=>0,(t,e)=>e?t.getBoundingClientRect().left:t.getBoundingClientRect().top),t.scrollTo=function(t,e,n){!function(t,e,n){s(t)?e():n(t)}(t,()=>window.scroll(e,n),t=>{t.scrollLeft=e,t.scrollTop=n})},t.scrollBy=function(t,e,n){t.scrollBy(e?n:0,e?0:n)},t.scroll=function(e,n,i=!1){t.scrollTo(e,i?n:t.getScrollPosition(e,!i),i?t.getScrollPosition(e,!i):n)},t.getRelativeElementPosition=function(t,e,i=!1){return n((t,e)=>t/e,t,e,i)},t.getDistToCenterElement=function(t,e,i=!1,o=0){return n((t,e)=>t-e*o,t,e,i)}}(e.Misc||(e.Misc={}))},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=n(0);function o(t){return"number"==typeof t?t:t()}e.ScrollAnimation=class{constructor(t,e,n){this._from=t,this._to=e,this.options=n,this.distance=0,this.initialTime=performance.now()}get from(){return o(this._from)}get to(){return o(this._to)}get value(){return this.to-this.from}updateDistance(){return this.distance=this.isPastAnimation()?this.value:i.easingFromFunction(this.options.easing)(this.currentDuration,0,this.value,this.options.duration),this.distance}isPastAnimation(){return this.currentDuration>=this.options.duration}get currentDuration(){return performance.now()-this.initialTime}}}])});
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global = global || self, global.ScrollUtility = factory());
+}(this, function () { 'use strict';
+
+	const documentElement = document.documentElement || {
+	    clientWidth: 0,
+	    clientHeight: 0,
+	    scrollWidth: 0,
+	    scrollHeight: 0,
+	    offsetWidth: 0,
+	    offsetHeight: 0,
+	};
+	function getElementWrapper(el, horizontal) {
+	    const scrollSize = isWindow(el)
+	        ? horizontal
+	            ? () => Math.max(document.body.scrollWidth, document.body.offsetWidth, documentElement.clientWidth, documentElement.scrollWidth, documentElement.offsetWidth)
+	            : () => Math.max(document.body.scrollHeight, document.body.offsetHeight, documentElement.clientHeight, documentElement.scrollHeight, documentElement.offsetHeight)
+	        : horizontal
+	            ? () => el.scrollWidth
+	            : () => el.scrollHeight;
+	    const result = {
+	        element: el,
+	        horizontal,
+	        size: isWindow(el)
+	            ? horizontal
+	                ? () => documentElement.clientWidth || document.body.clientWidth || window.innerWidth
+	                : () => documentElement.clientHeight || document.body.clientHeight || window.innerHeight
+	            : horizontal
+	                ? () => el.clientWidth
+	                : () => el.clientHeight,
+	        scrollSize: () => {
+	            return scrollSize() - result.size();
+	        },
+	        scrollPosition: isWindow(el)
+	            ? horizontal
+	                ? () => window.pageXOffset
+	                : () => window.pageYOffset
+	            : horizontal
+	                ? () => el.scrollLeft
+	                : () => el.scrollTop,
+	        offset: isWindow(el)
+	            ? horizontal
+	                ? () => documentElement.clientWidth || document.body.clientWidth || window.innerWidth
+	                : () => documentElement.clientHeight || document.body.clientHeight || window.innerHeight
+	            : horizontal
+	                ? () => el.offsetWidth
+	                : () => el.offsetHeight,
+	        border: isWindow(el)
+	            ? () => 0
+	            : horizontal
+	                ? () => parseInt(getComputedStyle(el, null).getPropertyValue("border-left-width"), 10) || 0
+	                : () => parseInt(getComputedStyle(el, null).getPropertyValue("border-top-width"), 10) || 0,
+	        relativePosition: isWindow(el)
+	            ? () => 0
+	            : horizontal
+	                ? () => el.getBoundingClientRect().left
+	                : () => el.getBoundingClientRect().top,
+	        scrollBy: horizontal
+	            ? (value) => el.scrollBy(value, 0)
+	            : (value) => el.scrollBy(0, value),
+	    };
+	    return result;
+	}
+	function isWindow(element) {
+	    return element === window;
+	}
+
+	function maxMin(value, max, min = 0) {
+	    return Math.max(Math.min(value, max), min);
+	}
+	function getOptions(container) {
+	    const position = container.scrollPosition();
+	    return {
+	        virtualPosition: position,
+	        finalPosition: position,
+	        previousTime: performance.now(),
+	        onscroll: () => null,
+	        onstop: () => null
+	    };
+	}
+	function ScrollElement(container) {
+	    let opts = getOptions(container);
+	    let scrollAnimations = [];
+	    function stop() {
+	        scrollAnimations = [];
+	    }
+	    function update(currentTime) {
+	        const position = container.scrollPosition();
+	        const diff = Math.round(position) -
+	            Math.round(maxMin(opts.virtualPosition, container.scrollSize()));
+	        opts.virtualPosition = !!diff ? Math.round(position) : opts.virtualPosition;
+	        opts.finalPosition += diff;
+	        opts.onscroll(!!diff);
+	        const previousPosition = container.scrollPosition();
+	        scrollAnimations = scrollAnimations.filter(animation => {
+	            opts.onscroll = animation.onScroll;
+	            opts.onstop = animation.onStop;
+	            opts.virtualPosition +=
+	                animation.position(currentTime) - animation.position(opts.previousTime);
+	            return currentTime < animation.duration;
+	        });
+	        const value = Math.round(opts.virtualPosition) - previousPosition;
+	        if (value !== 0)
+	            container.scrollBy(value);
+	        opts.previousTime = currentTime;
+	        !!scrollAnimations.length ? requestAnimationFrame(update) : opts.onstop();
+	    }
+	    return {
+	        stop,
+	        create: (options) => {
+	            const initialTime = performance.now();
+	            if (!scrollAnimations.length) {
+	                opts = getOptions(container);
+	            }
+	            const value = maxMin(options.value - (options.relative ? 0 : opts.finalPosition), container.scrollSize() - opts.finalPosition, -opts.finalPosition);
+	            opts.finalPosition += value;
+	            const duration = options.duration + initialTime;
+	            scrollAnimations.push(Object.assign(Object.assign({}, options), { duration, position: (time) => options.easing(maxMin(time - initialTime, options.duration, 0), opts.finalPosition - value, value, options.duration) }));
+	            scrollAnimations.length === 1 && update(initialTime);
+	        }
+	    };
+	}
+
+	// tslint:disable
+	function easingFromFunction(easing) {
+	    return typeof easing === "string" ? Easings[easing] : easing;
+	}
+	const Easings = {
+	    linear: function (t, b, c, d) {
+	        return (c * t) / d + b;
+	    },
+	    easeInQuad: function (t, b, c, d) {
+	        return c * (t /= d) * t + b;
+	    },
+	    easeOutQuad: function (t, b, c, d) {
+	        return -c * (t /= d) * (t - 2) + b;
+	    },
+	    easeInOutQuad: function (t, b, c, d) {
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * t * t + b;
+	        return (-c / 2) * (--t * (t - 2) - 1) + b;
+	    },
+	    easeInCubic: function (t, b, c, d) {
+	        return c * (t /= d) * t * t + b;
+	    },
+	    easeOutCubic: function (t, b, c, d) {
+	        return c * ((t = t / d - 1) * t * t + 1) + b;
+	    },
+	    easeInOutCubic: function (t, b, c, d) {
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * t * t * t + b;
+	        return (c / 2) * ((t -= 2) * t * t + 2) + b;
+	    },
+	    easeInQuart: function (t, b, c, d) {
+	        return c * (t /= d) * t * t * t + b;
+	    },
+	    easeOutQuart: function (t, b, c, d) {
+	        return -c * ((t = t / d - 1) * t * t * t - 1) + b;
+	    },
+	    easeInOutQuart: function (t, b, c, d) {
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * t * t * t * t + b;
+	        return (-c / 2) * ((t -= 2) * t * t * t - 2) + b;
+	    },
+	    easeInQuint: function (t, b, c, d) {
+	        return c * (t /= d) * t * t * t * t + b;
+	    },
+	    easeOutQuint: function (t, b, c, d) {
+	        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+	    },
+	    easeInOutQuint: function (t, b, c, d) {
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * t * t * t * t * t + b;
+	        return (c / 2) * ((t -= 2) * t * t * t * t + 2) + b;
+	    },
+	    easeInSine: function (t, b, c, d) {
+	        return -c * Math.cos((t / d) * (Math.PI / 2)) + c + b;
+	    },
+	    easeOutSine: function (t, b, c, d) {
+	        return c * Math.sin((t / d) * (Math.PI / 2)) + b;
+	    },
+	    easeInOutSine: function (t, b, c, d) {
+	        return (-c / 2) * (Math.cos((Math.PI * t) / d) - 1) + b;
+	    },
+	    easeInExpo: function (t, b, c, d) {
+	        return t == 0 ? b : c * Math.pow(2, 10 * (t / d - 1)) + b;
+	    },
+	    easeOutExpo: function (t, b, c, d) {
+	        return t == d ? b + c : c * (-Math.pow(2, (-10 * t) / d) + 1) + b;
+	    },
+	    easeInOutExpo: function (t, b, c, d) {
+	        if (t == 0)
+	            return b;
+	        if (t == d)
+	            return b + c;
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * Math.pow(2, 10 * (t - 1)) + b;
+	        return (c / 2) * (-Math.pow(2, -10 * --t) + 2) + b;
+	    },
+	    easeInCirc: function (t, b, c, d) {
+	        return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
+	    },
+	    easeOutCirc: function (t, b, c, d) {
+	        return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;
+	    },
+	    easeInOutCirc: function (t, b, c, d) {
+	        if ((t /= d / 2) < 1)
+	            return (-c / 2) * (Math.sqrt(1 - t * t) - 1) + b;
+	        return (c / 2) * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
+	    },
+	    easeInElastic: function (t, b, c, d) {
+	        var s = 1.70158;
+	        var p = 0;
+	        var a = c;
+	        if (t == 0)
+	            return b;
+	        if ((t /= d) == 1)
+	            return b + c;
+	        if (!p)
+	            p = d * 0.3;
+	        if (a < Math.abs(c)) {
+	            a = c;
+	            var s = p / 4;
+	        }
+	        else
+	            var s = (p / (2 * Math.PI)) * Math.asin(c / a);
+	        return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin(((t * d - s) * (2 * Math.PI)) / p)) + b;
+	    },
+	    easeOutElastic: function (t, b, c, d) {
+	        var s = 1.70158;
+	        var p = 0;
+	        var a = c;
+	        if (t == 0)
+	            return b;
+	        if ((t /= d) == 1)
+	            return b + c;
+	        if (!p)
+	            p = d * 0.3;
+	        if (a < Math.abs(c)) {
+	            a = c;
+	            var s = p / 4;
+	        }
+	        else
+	            var s = (p / (2 * Math.PI)) * Math.asin(c / a);
+	        return a * Math.pow(2, -10 * t) * Math.sin(((t * d - s) * (2 * Math.PI)) / p) + c + b;
+	    },
+	    easeInOutElastic: function (t, b, c, d) {
+	        var s = 1.70158;
+	        var p = 0;
+	        var a = c;
+	        if (t == 0)
+	            return b;
+	        if ((t /= d / 2) == 2)
+	            return b + c;
+	        if (!p)
+	            p = d * (0.3 * 1.5);
+	        if (a < Math.abs(c)) {
+	            a = c;
+	            var s = p / 4;
+	        }
+	        else
+	            var s = (p / (2 * Math.PI)) * Math.asin(c / a);
+	        if (t < 1)
+	            return (-0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin(((t * d - s) * (2 * Math.PI)) / p)) + b);
+	        return (a * Math.pow(2, -10 * (t -= 1)) * Math.sin(((t * d - s) * (2 * Math.PI)) / p) * 0.5 + c + b);
+	    },
+	    easeInBack: function (t, b, c, d, s) {
+	        if (s == undefined)
+	            s = 1.70158;
+	        return c * (t /= d) * t * ((s + 1) * t - s) + b;
+	    },
+	    easeOutBack: function (t, b, c, d, s) {
+	        if (s == undefined)
+	            s = 1.70158;
+	        return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+	    },
+	    easeInOutBack: function (t, b, c, d, s) {
+	        if (s == undefined)
+	            s = 1.70158;
+	        if ((t /= d / 2) < 1)
+	            return (c / 2) * (t * t * (((s *= 1.525) + 1) * t - s)) + b;
+	        return (c / 2) * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2) + b;
+	    },
+	    easeInBounce: function (t, b, c, d) {
+	        return c - Easings.easeOutBounce(d - t, 0, c, d) + b;
+	    },
+	    easeOutBounce: function (t, b, c, d) {
+	        if ((t /= d) < 1 / 2.75) {
+	            return c * (7.5625 * t * t) + b;
+	        }
+	        else if (t < 2 / 2.75) {
+	            return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;
+	        }
+	        else if (t < 2.5 / 2.75) {
+	            return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;
+	        }
+	        else {
+	            return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
+	        }
+	    },
+	    easeInOutBounce: function (t, b, c, d) {
+	        if (t < d / 2)
+	            return Easings.easeInBounce(t * 2, 0, c, d) * 0.5 + b;
+	        return Easings.easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+	    },
+	};
+
+	const ScrollElements = [[], []];
+	function optionalScroll(defaultOptions) {
+	    return (options = {}) => {
+	        const mappedOptions = Object.assign(Object.assign({}, defaultOptions), options);
+	        const container = getElementWrapper(getElementFromQuery(mappedOptions.container), mappedOptions.horizontal);
+	        const horizontal = mappedOptions.horizontal;
+	        const indexedDirection = horizontal ? 1 : 0;
+	        let index = ScrollElements[indexedDirection].findIndex(value => container.element === value.container.element);
+	        if (index < 0) {
+	            index = ScrollElements[indexedDirection].length;
+	            ScrollElements[indexedDirection][index] = {
+	                container: container,
+	                scrollAnimation: ScrollElement(container)
+	            };
+	        }
+	        const easing = easingFromFunction(mappedOptions.easing);
+	        return Scroll(Object.assign(Object.assign({}, mappedOptions), { onStop: mappedOptions.onStop === null ? () => null : mappedOptions.onStop, onScroll: mappedOptions.onScroll === null ? () => null : mappedOptions.onScroll, scrollAnimation: ScrollElements[indexedDirection][index].scrollAnimation, container,
+	            easing }));
+	    };
+	}
+	function Scroll(options) {
+	    function getRelativePosition(query) {
+	        const elementRaw = getElementFromQuery(query);
+	        if (elementRaw === options.container.element)
+	            return (options.container.scrollPosition() / options.container.scrollSize());
+	        const _element = getElementWrapper(elementRaw, options.container.horizontal);
+	        return getOffset(_element) / getDiff(_element);
+	    }
+	    function getDistToElement(query, value = 0) {
+	        const element = getElementWrapper(getElementFromQuery(query), options.container.horizontal);
+	        return getOffset(element) - getDiff(element) * value;
+	    }
+	    function getElementSize(query, value = 1) {
+	        const element = getElementWrapper(getElementFromQuery(query), options.container.horizontal);
+	        return element.size() * value;
+	    }
+	    function scrollTo(...args) {
+	        const _element = typeof args[0] === "number" ? null : args[0];
+	        const value = typeof args[0] === "number" ? args[0] : args[1] || 0;
+	        _element === null
+	            ? _scrollToValue(value)
+	            : _scrollToElement(_element, value);
+	    }
+	    function offset(...args) {
+	        const _element = typeof args[0] === "number" ? null : args[0];
+	        const value = typeof args[0] === "number" ? args[0] : args[1] || 0;
+	        _element === null ? _offsetValue(value) : _offsetElement(_element, value);
+	    }
+	    function getOffset(el) {
+	        return (el.relativePosition() -
+	            options.container.relativePosition() -
+	            options.container.border());
+	    }
+	    function getDiff(el) {
+	        return options.container.size() - el.offset();
+	    }
+	    function _offsetElement(query, value = 1) {
+	        const to = getElementSize(query, value);
+	        _offsetValue(to);
+	    }
+	    function _offsetValue(value) {
+	        options.scrollAnimation.create(Object.assign(Object.assign({}, options), { value: value, relative: true }));
+	    }
+	    function _scrollToValue(value) {
+	        options.scrollAnimation.create(Object.assign(Object.assign({}, options), { value, relative: false }));
+	    }
+	    function _scrollToElement(query, value = 0) {
+	        const _element = getElementFromQuery(query);
+	        const to = _element === options.container.element
+	            ? options.container.scrollSize() * value
+	            : getDistToElement(_element, value) +
+	                options.container.scrollPosition();
+	        _scrollToValue(to);
+	    }
+	    const scroll = {
+	        getRelativePosition,
+	        getDistToElement,
+	        getElementSize,
+	        stop,
+	        scrollTo(...args) {
+	            scrollTo(...args);
+	            return scroll;
+	        },
+	        scrollBy: (...args) => {
+	            offset(...args);
+	            return scroll;
+	        }
+	    };
+	    Object.defineProperties(scroll, {
+	        size: {
+	            get() {
+	                return options.container.size();
+	            }
+	        },
+	        scrollSize: {
+	            get() {
+	                return options.container.scrollSize();
+	            }
+	        },
+	        scrollPosition: {
+	            get() {
+	                return options.container.scrollPosition();
+	            }
+	        }
+	    });
+	    return Object.assign(optionalScroll(Object.assign(Object.assign({}, options), { container: options.container.element, horizontal: options.container.horizontal })), scroll);
+	}
+	function getElementFromQuery(elementOrQuery) {
+	    if (!elementOrQuery)
+	        throw new Error(`elementOrQuery should not be a ${typeof elementOrQuery}`);
+	    const element = typeof elementOrQuery === "string"
+	        ? document.querySelector(elementOrQuery)
+	        : elementOrQuery;
+	    if (!element)
+	        throw new Error(`no element matched querySelector ${elementOrQuery}`);
+	    if (element !== window && !(element instanceof HTMLElement))
+	        throw new Error("element should be an instance of HTMLElement"); // TODO improve warning
+	    return element === document.documentElement
+	        ? window
+	        : element;
+	}
+
+	const ScrollUtility = optionalScroll({
+	    container: window,
+	    duration: 1000,
+	    easing: "easeInOutQuad",
+	    horizontal: false,
+	    force: false,
+	    onScroll: null,
+	    onStop: null
+	})();
+
+	return ScrollUtility;
+
+}));

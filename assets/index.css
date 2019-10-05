@@ -22,7 +22,7 @@ summary {
 	overflow: auto;
 }
 
-.scroll-container.horizontal .button-container {
+.button-container.left {
 	top: 15px;
 	left: 15px;
 	float: left;
@@ -33,8 +33,8 @@ summary {
 }
 
 .some-element {
-  border: solid 3px #222;
-  border-radius: 10px;
+	border: solid 3px #222;
+	border-radius: 10px;
 	position: relative;
 	border-left: 0;
 	border-right: 0;
