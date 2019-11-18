@@ -5,7 +5,6 @@ const ScrollUtility = optionalScroll({
 	duration: 1000,
 	easing: "easeInOutQuad",
 	horizontal: false,
-	force: false,
 	onScroll: null,
 	onStop: null
 });

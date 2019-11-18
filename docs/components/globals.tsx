@@ -11,7 +11,7 @@ export const PositionedElement = styled.div<{ top: string; left: string }>(
 		position: "absolute",
 		top,
 		left,
-		border: "2px solid black",
+		border: "3px solid black",
 		width: left ? "50vw" : "100%",
 		height: top ? "50vh" : "100%",
 		...(top ? {} : {}),
@@ -20,15 +20,20 @@ export const PositionedElement = styled.div<{ top: string; left: string }>(
 );
 
 export class MyComponent extends React.Component {
-	state = { value: window.innerHeight };
 	componentDidMount() {
-		console.log("hlelo");
 		window.onresize = () => {
-			console.log("hiii");
-			this.setState({ value: window.innerHeight });
+			this.forceUpdate();
 		};
 	}
 	render() {
-		return <h1>{this.state.value}</h1>;
+		return (
+			<>
+				<h1>innerHeight: {window.innerHeight}</h1>
+				<h1>
+					documentElement.clientHeight: {document.documentElement.clientHeight}
+				</h1>
+				<h1>document.body.clientHeight: {document.body.clientHeight}</h1>
+			</>
+		);
 	}
 }
