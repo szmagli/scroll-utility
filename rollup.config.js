@@ -19,19 +19,9 @@ export default args => {
 			input: "src/index.ts",
 			output: {
 				name: "ScrollUtility",
-				file: 'doc/bundle.js',
+				file: 'dist/bundle.js',
 				format: "umd",
-			},
-			plugins: [
-				commonjs(),
-				resolve(),
-				typescript(),
-				serve({
-					open: true,
-					verbose: true,
-					contentBase: "doc",
-				}),
-			],
+			}
 		}
 	];
 }

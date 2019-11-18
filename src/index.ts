@@ -8,7 +8,7 @@ const ScrollUtility = optionalScroll({
 	force: false,
 	onScroll: null,
 	onStop: null
-})();
+});
 
 export default ScrollUtility;
 module.exports = ScrollUtility;
