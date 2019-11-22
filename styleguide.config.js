@@ -46,5 +46,8 @@ module.exports = {
 			]
 		}
 	},
-	sections
+	sections,
+	theme: {
+		maxWidth: "100vw"
+	}
 };

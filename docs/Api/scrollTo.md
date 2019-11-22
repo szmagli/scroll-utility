@@ -7,18 +7,16 @@ function center(value) {
 	ScrollUtility.scrollTo("#some-element", value);
 }
 
-<LargeScreen>
-	<button onClick={() => center(0)}>
-		Center <b>#some-element</b> at 0
-	</button>
-	<button onClick={() => center(0.5)}>
-		Center <b>#some-element</b> at 0.5
-	</button>
-	<button onClick={() => center(1)}>
-		Center <b>#some-element</b> at 1
-	</button>
-	<PositionedElement id="some-element" top={"50%"}>
+<Template>
+	<Buttons>
+		{[0, 0.5, 1].map(centerValue => (
+			<button key={centerValue} onClick={() => center(centerValue)}>
+				Center <b>#some-element</b> at {centerValue}
+			</button>
+		))}
+	</Buttons>
+	<Element id="some-element">
 		<b> #some-element </b>
-	</PositionedElement>
-</LargeScreen>;
+	</Element>
+</Template>
 ```

@@ -1,39 +1,46 @@
 import styled from "styled-components";
 import React from "react";
 
-export const LargeScreen = styled.div<{ element: string }>(({ element }) => ({
-	height: "200vh",
+interface ITemplate {
+	container: boolean;
+	vertical: boolean;
+	horizontal: boolean;
+}
+
+const Content = styled.div<ITemplate>(({ vertical, horizontal }) => ({
+	height: (vertical ?? !(horizontal ?? false)) ? "200vh" : "100%",
+	width: horizontal ? "200vw" : "100%",
 	position: "relative"
 }));
 
-export const PositionedElement = styled.div<{ top: string; left: string }>(
-	({ top, left }) => ({
+export const Template = styled(({ className, ...rest }) => (
+	<div className={className} {...rest}>
+		<Content {...rest} />
+	</div>
+))<ITemplate>(({ container, vertical, horizontal }) => ({
+	height: !container && (vertical ?? !(horizontal ?? false)) ? "100vh" : "50vh",
+	width: !!container && horizontal ? "100%" : "initial",
+	overflowY: !!container && vertical ? "auto" : "initial",
+	overflowX: !!container && horizontal ? "auto" : "initial"
+}));
+
+export const Element = styled.div<ITemplate>(
+	({horizontal, vertical}) => ({
 		position: "absolute",
-		top,
-		left,
+		top: !!vertical ? "50%" : undefined,
+		left: !!horizontal ? "50%" : undefined,
 		border: "3px solid black",
-		width: left ? "50vw" : "100%",
-		height: top ? "50vh" : "100%",
-		...(top ? {} : {}),
-		...(left ? {} : {})
+		width: `calc(50vw - 6px)`,
+		height: `calc(50vh - 6px)`,
 	})
 );
 
-export class MyComponent extends React.Component {
-	componentDidMount() {
-		window.onresize = () => {
-			this.forceUpdate();
-		};
-	}
-	render() {
-		return (
-			<>
-				<h1>innerHeight: {window.innerHeight}</h1>
-				<h1>
-					documentElement.clientHeight: {document.documentElement.clientHeight}
-				</h1>
-				<h1>document.body.clientHeight: {document.body.clientHeight}</h1>
-			</>
-		);
-	}
-}
+export const Buttons = styled.div({
+	position: "sticky",
+	display: "inline-flex",
+	flexDirection: "column",
+	top: 0,
+	left: 0,
+	maxWidth: "50vw",
+	maxHeight: "50vh"
+})
