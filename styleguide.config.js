@@ -1,15 +1,22 @@
 const path = require("path");
 const { readdirSync } = require("fs");
 
-const sections = readdirSync(path.resolve(__dirname, "docs/components")).filter((file) => file !== "globals.tsx").map(
-	file => ({
-		name: file.slice(0, -3),
-		content: `./docs/components/${file}`
-	})
-);
+const dirTree = require("directory-tree");
+const componentsTree = dirTree("docs", { extensions: /\.md$/ });
+
+function iterate(tree) {
+	return tree.map(child => ({
+		name: !!child.extension
+			? child.name.slice(0, -child.extension.length)
+			: child.name,
+		sections: !!child.children ? iterate(child.children) : undefined,
+		content: !!child.children ? undefined : child.path
+	}));
+}
+const sections = iterate(componentsTree.children);
 
 module.exports = {
-	require: [path.resolve(__dirname, "styleguide/setup.js")],
+	require: [path.resolve(__dirname, "docs/setup.js")],
 	components: "docs/components/**/*.{js,jsx,ts,tsx}",
 	exampleMode: "expand",
 	pagePerSection: true,

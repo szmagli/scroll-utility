@@ -25,7 +25,7 @@ Go [here](https://leddgroup.github.io/scroll-utility) for full documentation
 
 From npm:
 
-```sh
+```shell
 npm install --save scroll-utility
 ```
 
@@ -34,10 +34,6 @@ From a cdn: [jsdelivr](https://www.jsdelivr.com/package/npm/scroll-utility)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/scroll-utility@5"></script>
 ```
-
-# How to Scroll
-
-see documentation [here](https://leddgroup.github.io/scroll-utility)
 
 # License
 

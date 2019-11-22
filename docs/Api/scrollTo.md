@@ -8,7 +8,6 @@ function center(value) {
 }
 
 <LargeScreen>
-	<MyComponent />
 	<button onClick={() => center(0)}>
 		Center <b>#some-element</b> at 0
 	</button>

@@ -39,7 +39,6 @@
 				 hr.spacer
 	 #+END_SRC
 * API
-** Options
 ** constructor
 	 	 That will create a new =ScrollUtility= instance, which you can use to scroll. \\
 	 Sometimes its useful for creating a new ScrollUtility for scrolling with more specific options
