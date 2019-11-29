@@ -29,10 +29,10 @@ const ScrollElements: {
 	element: HTMLElement | Window;
 	horizontal: boolean;
 	scrollAnimation: {
-		scrollAnimations: ({
+		scrollAnimations: {
 			position: (time: number) => number;
 			duration: number;
-		})[];
+		}[];
 		virtualPosition: number;
 		finalPosition: number;
 		previousTime: number;
@@ -77,6 +77,7 @@ function getElement({ horizontal, element }) {
 
 export function optionalScroll(options: Required<IScroll>) {
 	const { container, horizontal, duration, easing, onStop, onScroll } = options;
+	const easingFunction = easingFromFunction(easing);
 	const element = getElementFromQuery(container);
 	const myContainer = getElementWrapper(element, horizontal);
 
@@ -88,15 +89,14 @@ export function optionalScroll(options: Required<IScroll>) {
 	function update(currentTime: number) {
 		const position = myContainer.scrollPosition();
 		const diff =
-			Math.round(position) -
-			Math.round(
-				maxMin(scrollAnimation.virtualPosition, myContainer.scrollSize())
-			);
-		scrollAnimation.virtualPosition = !!diff
+			position -
+			maxMin(scrollAnimation.virtualPosition, myContainer.scrollSize());
+		const isDiff = diff > 2;
+		scrollAnimation.virtualPosition = isDiff
 			? Math.round(position)
 			: scrollAnimation.virtualPosition;
 		scrollAnimation.finalPosition += diff;
-		onScroll && onScroll(!!diff);
+		onScroll && onScroll(isDiff);
 		const previousPosition = myContainer.scrollPosition();
 		scrollAnimation.scrollAnimations = scrollAnimation.scrollAnimations.filter(
 			animation => {
@@ -123,19 +123,24 @@ export function optionalScroll(options: Required<IScroll>) {
 		}
 	}
 
-	function create(position: number) {
-		const value = maxMin(position, myContainer.scrollSize());
+	function create(distance: number) {
+		const value = maxMin(
+			distance,
+			myContainer.scrollSize() - myContainer.scrollPosition(),
+			-myContainer.scrollPosition()
+		);
 		const initialTime = performance.now();
 		scrollAnimation.finalPosition += value;
 		scrollAnimation.scrollAnimations.push({
 			duration: duration + initialTime,
-			position: (time: number) =>
-				easingFromFunction(easing)(
+			position: (time: number) => {
+				return easingFunction(
 					maxMin(time - initialTime, duration, 0),
-					scrollAnimation.finalPosition - value,
+					0,
 					value,
 					duration
-				)
+				);
+			}
 		});
 		scrollAnimation.scrollAnimations.length === 1 && update(initialTime);
 	}
