@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
+import ScrollUtility from "../src/";
 
 interface ITemplate {
 	container: boolean;
@@ -42,9 +43,22 @@ export const Sticky = styled.div<{ absolute: boolean }>(({ absolute }) => ({
 	maxHeight: "50vh"
 }));
 
+function gridButton(direction: string, value: number, distance: number) {
+	return value === undefined ? (
+		<></>
+	) : (
+		<>
+			<button onClick={() => ScrollUtility.offset(distance)}>scroll</button>
+			<label>
+				{direction} <b>{value}</b>: {distance}
+			</label>
+		</>
+	);
+}
+
 export function Grid({ vertical, horizontal }) {
-	const [verticalDistance, setVerticalDistance] = useState(null);
-	const [horizontalDistance, setHorizontalDistance] = useState(null);
+	const [verticalDistance, setVerticalDistance] = useState(0);
+	const [horizontalDistance, setHorizontalDistance] = useState(0);
 	useEffect(() => {
 		window.addEventListener("scroll", () => {
 			if (horizontal !== undefined) {
@@ -55,12 +69,11 @@ export function Grid({ vertical, horizontal }) {
 			}
 		});
 	});
+
 	return (
 		<div>
-			{verticalDistance !== null && <label>vertical: {verticalDistance}</label>}
-			{horizontalDistance !== null && (
-				<label>horizontal: {horizontalDistance}</label>
-			)}
+			{gridButton("vertical", vertical, verticalDistance)}
+			{gridButton("horizontal", horizontal, horizontalDistance)}
 		</div>
 	);
 }
