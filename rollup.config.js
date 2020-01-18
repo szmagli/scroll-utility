@@ -11,11 +11,11 @@ export default () => {
 					format: "iife"
 				},
 				{
-					file: "dist/scroll-utility.umd.js",
+					file: "dist/scroll-utility.cjs.js",
 					format: "cjs"
 				},
 				{
-					file: "dist/scroll-utility.amd.js",
+					file: "dist/scroll-utility.esm.js",
 					format: "esm"
 				}
 			],
