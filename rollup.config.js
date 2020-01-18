@@ -7,18 +7,16 @@ export default () => {
 			output: [
 				{
 					name: "ScrollUtility",
-					file: "dist/scroll-utility.umd.js",
-					format: "umd"
-				},
-				{
-					name: "ScrollUtility",
 					file: "dist/scroll-utility.iife.js",
 					format: "iife"
 				},
 				{
-					name: "ScrollUtility",
+					file: "dist/scroll-utility.umd.js",
+					format: "cjs"
+				},
+				{
 					file: "dist/scroll-utility.amd.js",
-					format: "amd"
+					format: "esm"
 				}
 			],
 			plugins: [typescript()]
