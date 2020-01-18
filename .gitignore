@@ -4,3 +4,4 @@ makefile
 node_modules
 npm-debug.log
 .vscode
+.docz
