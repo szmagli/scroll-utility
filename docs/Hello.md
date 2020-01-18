@@ -7,6 +7,4 @@ route: /
 
 Hello, I'm a mdx file!
 
-import ScrollUtility from "../src/index"
-
 <button onClick={() => console.log({ScrollUtility})}>Click Me</button>
